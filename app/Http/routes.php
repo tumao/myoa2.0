@@ -11,11 +11,14 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+Route::get('/', function()
+{
+	return Redirect::to('admin');
+});
 
-Route::get('home', 'HomeController@index');
+Route::get('admin', 'Admin\User\UserController@show');	//登录页
+Route::get('admin/login', 'Admin\User\UserController@show');
+Route::post('admin/auth', 'Admin\User\UserController@auth');	//用户认证
 
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
+#user
+Route::get('admin/logout', 'Admin\User\UserController@logout');	//登出
