@@ -22,3 +22,4 @@ Route::post('admin/auth', 'Admin\User\UserController@auth');	//用户认证
 
 #user
 Route::get('admin/logout', 'Admin\User\UserController@logout');	//登出
+Route::get('admin/user/create_user', 'Admin\User\UserController@createUser');

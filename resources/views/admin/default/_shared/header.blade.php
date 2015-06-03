@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
+
     <meta charset="utf-8">
     <title>后台管理系统</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content="{{csrf_token()}}" />
 
     <!-- The styles -->
     <link href='/default/framework/css/bootstrap-cerulean.min.css' rel="stylesheet">
@@ -29,7 +30,7 @@
     <script src="/default/framework/bower_components/jquery/jquery.min.js"></script>
     <script src="/default/framework/js/artDialog.source.js"></script>
     <script src="/default/framework/js/iframeTools.source.js"></script>
-
+    <script src="/default/app/js/ajaxcsrf.js"></script>
     <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>

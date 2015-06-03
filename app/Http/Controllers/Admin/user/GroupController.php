@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Admin\ABaseController;
 
-class GroupController extends ABaseController {
+class RoleController extends ABaseController {
 
 	/**
 	 * Display a listing of the resource.
