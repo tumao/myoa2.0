@@ -1,6 +1,9 @@
-<?php namespace Admin\Menu;
+<?php namespace App\Http\Controllers\Admin\Menu;
 
-class MenuController extends \BaseController {
+use App\Http\Controllers\Admin\ABaseController;
+use App\Menu_catelogue;
+
+class MenuController extends ABaseController {
 
 
 	private $_menu_son_arr= array();
@@ -24,15 +27,15 @@ class MenuController extends \BaseController {
 	public function show()
 	{
 		//
-		$menuList = \Menu_catelogue::all();
-		$this->layout->content = \View::make('default.conf.menu.menu')->with('menuList', $menuList);
+		$menuList = Menu_catelogue::all();
+		return view('default.conf.menu.menu')->with('menuList', $menuList);
 	}
 
 	public function addMenuForm($id = '')
 	{
 		if($id !='')
 		{
-			$menu = \Menu_catelogue::find($id);	
+			$menu = Menu_catelogue::find($id);
 		}
 		else
 		{
@@ -44,7 +47,7 @@ class MenuController extends \BaseController {
 					'path'	=> ''
 				);
 		}
-		
+
 		return \View::make('default.conf.menu.menuForm')->with('menu', $menu);
 	}
 
@@ -60,7 +63,7 @@ class MenuController extends \BaseController {
 		{
 			return array('message'=> '路径不可以为空!', 'code' => -2);
 		}
-		$menu = \Menu_catelogue::create($menuArr);
+		$menu = Menu_catelogue::create($menuArr);
 		if($menu)
 		{
 			return array('message'=> '插入成功!', 'code'=>1);
@@ -84,13 +87,13 @@ class MenuController extends \BaseController {
 		{
 			return array('message'=>'缺少删除参数!', 'code' => -1);
 		}
-		$menu = \Menu_catelogue::all();
+		$menu = Menu_catelogue::all();
 		$this->_init_son_arr($menu, $id);
 		array_push($this->_menu_son_arr, $id);
-		$affectRow = \Menu_catelogue::destroy($this->_menu_son_arr);
+		$affectRow = Menu_catelogue::destroy($this->_menu_son_arr);
 		if($affectRow)
 		{
-			return array('info' => $this->_menu_son_arr,'message'=>'删除成功!', 'code'=>1);	
+			return array('info' => $this->_menu_son_arr,'message'=>'删除成功!', 'code'=>1);
 		}
 	}
 

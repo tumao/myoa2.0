@@ -1,4 +1,4 @@
-@extend('default.main')
+@extends('default.main')
 @section('content')
 <script src="/default/app/js/permissions.js"></script>
 <div class="box-inner">
@@ -20,7 +20,7 @@
                 <tr id='row_{{$permission->id}}'>
                     <td>{{$permission->id}}</td>
                     <td>{{$permission->name}}</td>
-                    <td>{{$permission->code}}</td>
+                    <td>{{$permission->display_name}}</td>
                     <td class="center">
                         <a class="btn btn-info" href="#" onclick='Permissions.form({{json_encode($permission)}})'>
                             <i class="glyphicon glyphicon-edit icon-white"></i>

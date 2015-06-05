@@ -873,7 +873,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/overtrue/laravel-lang/zipball/5f4c8cb61b05e3aa7021832bb5af2c311147ae50",
+                "url": "https://api.github.com/repos/overtrue/laravel-lang/zipball/bc0a9ae9866f486fdcdca6443e272eb7e8968815",
                 "reference": "5f4c8cb61b05e3aa7021832bb5af2c311147ae50",
                 "shasum": ""
             },

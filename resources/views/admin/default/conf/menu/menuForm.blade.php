@@ -5,5 +5,5 @@
 	<!-- <p><span>&nbsp;</span><label>父&nbsp;&nbsp;ID ： <input id="menu-form-root" name="root" type="text" value=''></label></p> -->
 	<p><span>&nbsp;</span><label>排&nbsp;&nbsp;序 ： <input id="menu-form-sort" name="sort" type="text" value='{{$menu['sort']}}'></label></p>
 	<p><span>&nbsp;</span><label>路&nbsp;&nbsp;径 ： <input id="menu-form-path" name="path" type="text" value='{{$menu['path']}}'></label></p>
-	
+
 </form>

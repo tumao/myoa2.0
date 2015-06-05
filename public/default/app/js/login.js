@@ -25,15 +25,14 @@ function userlogin()
 		},
 		'success':function(rp)
 		{
-			console.log(rp);
 			if(rp.code > 0)
 			{
-				alert(rp.message);
+				alert(rp.info);
 				window.location.href= rp.redirect_url;
 			}
 			else
 			{
-				alert(rp.message);
+				alert(rp.info);
 				return false;
 			}
 		}

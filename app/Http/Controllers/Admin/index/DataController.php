@@ -1,6 +1,8 @@
-<?php namespace Admin\Index;
+<?php namespace App\Http\Controllers\Admin\Index;
 
-class DataController extends \BaseController {
+use App\Http\Controllers\Admin\ABaseController;
+
+class DataController extends ABaseController {
 
 	/**
 	 * Display a listing of the resource.

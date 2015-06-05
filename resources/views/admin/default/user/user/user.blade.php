@@ -1,4 +1,4 @@
-@extend('default.main')
+@extends('default.main')
 @section('content')
 <script src="/default/app/js/user.js"></script>
 <div class="box-inner">

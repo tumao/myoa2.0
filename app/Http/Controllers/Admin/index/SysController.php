@@ -1,6 +1,8 @@
-<?php namespace Admin\Index;
+<?php namespace App\Http\Controllers\Admin\Index;
 
-class SysController extends \BaseController {
+use App\Http\Controllers\Admin\ABaseController;
+
+class SysController extends ABaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -10,7 +12,7 @@ class SysController extends \BaseController {
 	public function index()
 	{
 		//
-		// var_dump( $_SERVER);
+		return view('default.index.sys.index');
 	}
 
 

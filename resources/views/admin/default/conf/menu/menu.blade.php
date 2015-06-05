@@ -1,4 +1,4 @@
-@extend('default.main')
+@extends('default.main')
 @section('content')
 <script src="/default/app/js/menu.js"></script>
 <div class="box-inner">
@@ -22,7 +22,7 @@
                @foreach($menuList as $item)
                 <tr id='row_{{$item->id}}'>
                     <td>{{$item->id}}</td>
-                    <td>{{$item->name}}</td>                                        
+                    <td>{{$item->name}}</td>
                     <td>{{$item->icon}}</td>
                     <td>{{$item->root}}</td>
                     <td>{{$item->sort}}</td>
@@ -32,7 +32,7 @@
                             <i class="glyphicon glyphicon-qrcode icon-white"></i>
                             添加子菜单
                         </a>
-                        
+
                         <a class="btn btn-info" href="#" onclick="Menu.edit({{$item->id}})">
                             <i class="glyphicon glyphicon-edit icon-white"></i>
                             编辑

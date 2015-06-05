@@ -1,6 +1,7 @@
-<?php namespace Admin\User;
+<?php namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Admin\ABaseController;
+use App\Role;
 
 class RoleController extends ABaseController {
 
@@ -19,10 +20,10 @@ class RoleController extends ABaseController {
 	 *
 	 * @return Response
 	 */
-	public function groups()
+	public function roles()
 	{
-		$groups = \Group::all();
-		$this->layout->content = \View::make('default.user.group.group')->with('groups', $groups);
+		$groups = Role::all();
+		return \View::make('default.user.group.group')->with('groups', $groups);
 	}
 
 	/**

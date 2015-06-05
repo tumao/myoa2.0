@@ -23,13 +23,13 @@ abstract class ABaseController extends Controller {
 	 *
 	 * @return void
 	 */
-	protected function setupLayout()
-	{
-		if ( ! is_null($this->layout))
-		{
-			$this->layout = \View::make($this->layout);
-		}
-	}
+	// protected function setupLayout()
+	// {
+	// 	if ( ! is_null($this->layout))
+	// 	{
+	// 		$this->layout = \View::make($this->layout);
+	// 	}
+	// }
 
 	/**
 	 * 初始化页面

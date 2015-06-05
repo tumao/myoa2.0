@@ -1,6 +1,8 @@
-<?php namespace Admin\Resource;
+<?php namespace App\Http\Controllers\Admin\Resource;
 
-class RcController extends \BaseController {
+use App\Http\Controllers\Admin\ABaseController;
+
+class RcController extends ABaseController {
 
 	/**
 	 * Display a listing of the resource.
