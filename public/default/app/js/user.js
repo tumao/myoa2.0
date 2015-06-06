@@ -22,7 +22,7 @@ var User = {
 				var fields = [
 					'username',
 					'email',
-					'first_name'
+					// 'first_name'
 				];
 				for( var x in fields){
 					formData[fields[x]] = $.trim(form[fields[x]].value);

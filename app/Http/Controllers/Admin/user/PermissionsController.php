@@ -33,7 +33,7 @@ class PermissionsController extends ABaseController {
 	 */
 	public function savePermissons()
 	{
-		$input = \Input::only('name', 'display_name', 'description');
+		$input = \Input::only('name', 'code');
 		$per = Permission::firstOrCreate($input);
 		return array('code'=>1, 'message'=>'ok');
 	}
@@ -46,11 +46,10 @@ class PermissionsController extends ABaseController {
 	public function editPermissions($id)
 	{
 		//
-		$input = \Input::only('name', 'display_name', 'description');
+		$input = \Input::only('name', 'code');
 		$permission = Permission::find($id);
 		$permission->name = $input['name'];
-		$permission->display_name = $input['display_name'];
-		$permission->description = $input['description'];
+		$permission->code = $input['code'];
 		$permission->save();
 		return array('code'=>1, 'message'=>'ok');
 	}

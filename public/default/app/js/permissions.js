@@ -6,39 +6,32 @@ var Permissions = {
 			form_title = '修改权限';
 			ajaxUrl = '/admin/user/edit_permissions';
 			ajaxUrl += '/'+permission.id;
-			html_content = '权限编码:&nbsp;<input id="pname" type="text" value="'+permission.name+'"><br/>';
-			html_content += '权限名称:&nbsp;<input id="display_name" type="text" value="'+permission.display_name+'" style="margin-top:10px;"><br/>';
-			html_content += '描述:&nbsp;<input id="description" type="text" value="'+permission.description+'">';
+			html_content = '权限名称:&nbsp;<input id="permissionName" type="text" value="'+permission.name+'"><br/>';
+			html_content += '权限编码:&nbsp;<input id="permissionCode" type="text" value="'+permission.code+'" style="margin-top:10px;">';
 		}else{
-			html_content = '权限编码:&nbsp;<input id="pname" type="text" value=""><br/>';
-			html_content += '权限名称:&nbsp;<input id="display_name" type="text" value="" style="margin-top:10px;"><br/>';
-			html_content += '描&nbsp;&nbsp;述:&nbsp;<input id="description" type="text" value="" style="margin-top:10px;">';
+			html_content = '权限名称:&nbsp;<input id="permissionName" type="text" value=""><br/>';
+			html_content += '权限编码:&nbsp;<input id="permissionCode" type="text" value="" style="margin-top:10px;">';
 		}
 
 		art.dialog({
 			title   : form_title,
 			content : html_content,
 			ok 		: function(){
-				var pname = document.getElementById('pname').value;
-				var display_name = document.getElementById('display_name').value;
-				var description = document.getElementById('description').value;
-				if(pname == ''){
-					art.dialog.tips('权限编码!', 1.5);
-					return false;
-				}
-				if( display_name == ''){
+				var permissionName = document.getElementById('permissionName').value;
+				var permissionCode = document.getElementById('permissionCode').value;
+				if(permissionName == ''){
 					art.dialog.tips('权限名称不可为空!', 1.5);
 					return false;
 				}
-				if( description == '')
-				{
-					art.dialog.tips('描述不可为空')
+				if( permissionCode == ''){
+					art.dialog.tips('权限编码不可为空!', 1.5);
+					return false;
 				}
 				$.ajax({
 					type : 'GET',
 					url  : ajaxUrl,
 					dataType : 'json',
-					data : {name:pname,display_name:display_name,description:description},
+					data : {name:permissionName,code:permissionCode},
 					success : function(rp){
 						if(rp.code == 1){
 							art.dialog.tips(rp.message, 1.5);

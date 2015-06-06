@@ -146,6 +146,7 @@ return [
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
 		'Zizaco\Entrust\EntrustServiceProvider',		//权限控制
+		'Cartalyst\Sentry\SentryServiceProvider',				//sentry plugin
 
 	],
 
@@ -195,7 +196,7 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
 		'Entrust'   => 'Zizaco\Entrust\EntrustFacade',
-
+		'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
 	],
 
 ];

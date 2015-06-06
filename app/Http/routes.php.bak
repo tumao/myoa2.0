@@ -17,13 +17,15 @@ Route::get('/', function()
 });
 
 Route::get('admin', 'Admin\User\UserController@show');	//登录页
-Route::get('admin/login', array('uses'=>'Admin\User\UserController@show', 'as'=>'login'));
+Route::get('admin/login', 'Admin\User\UserController@show');
 Route::post('admin/auth', 'Admin\User\UserController@auth');	//用户认证
 
 #user
 Route::get('admin/logout', 'Admin\User\UserController@logout');	//登出
+
 Route::get('admin/user', 'Admin\User\UserController@index');
-Route::post('admin/user/create_user', 'Admin\User\UserController@createUser');	//添加新用户
+Route::get('admin/user/create_user', 'Admin\User\UserController@createUser');
+
 Route::get('admin/user/userconf', 'Admin\User\UserController@userList');	//用户列表
 Route::get('admin/user/user_form/{id?}', 'Admin\User\UserController@userForm');		//添加用户的对话框
 Route::post('admin/user/update_user', 'Admin\User\UserController@updateUser');	//更新用户信息
@@ -31,11 +33,11 @@ Route::get('admin/user/del_user/{id}', 'Admin\User\UserController@delUser');
 Route::get('admin/user/self', 'Admin\User\UserController@userSelf');
 Route::post('admin/user/pass_reset', 'Admin\User\UserController@passReset');
 
-Route::get('admin/user/groups', 'Admin\User\GroupController@groups');	//分组列表
-Route::get('admin/user/group_form/{id?}', 'Admin\User\GroupController@groupForm'); 	//添加(修改)用户组 对话框
-Route::get('admin/user/create_group', 'Admin\User\GroupController@createGroup');	//创建分组
-Route::get('admin/user/update_group/{id}', 'Admin\User\GroupController@updateGroup');	//更新组
-Route::get('admin/user/del_group/{id}', 'Admin\User\GroupController@delGroup'); 	//删除组
+Route::get('admin/user/roles', 'Admin\User\RoleController@roles');	//分组列表
+Route::get('admin/user/group_form/{id?}', 'Admin\User\RoleController@groupForm'); 	//添加(修改)用户组 对话框
+Route::get('admin/user/create_group', 'Admin\User\RoleController@createGroup');	//创建分组
+Route::get('admin/user/update_group/{id}', 'Admin\User\RoleController@updateGroup');	//更新组
+Route::get('admin/user/del_group/{id}', 'Admin\User\RoleController@delGroup'); 	//删除组
 
 Route::get('admin/user/permissions', 'Admin\User\PermissionsController@permissions');	//权限列表
 Route::get('admin/user/save_permissions', 'Admin\User\PermissionsController@savePermissons');

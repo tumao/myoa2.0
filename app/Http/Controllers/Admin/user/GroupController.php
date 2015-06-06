@@ -1,9 +1,11 @@
 <?php namespace App\Http\Controllers\Admin\User;
 
-use App\Http\Controllers\Admin\ABaseController;
-use App\Role;
+use	App\Http\Controllers\Admin\ABaseController;
+use App\Group;
+use App\Permission;
+// use Cartalyst\Sentry\Facades\Laravel\Sentry;
 
-class RoleController extends ABaseController {
+class GroupController extends ABaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -20,9 +22,9 @@ class RoleController extends ABaseController {
 	 *
 	 * @return Response
 	 */
-	public function roles()
+	public function groups()
 	{
-		$groups = Role::all();
+		$groups = Group::all();
 		return \View::make('default.user.group.group')->with('groups', $groups);
 	}
 
@@ -34,8 +36,7 @@ class RoleController extends ABaseController {
 	public function groupForm($id = '')
 	{
 		$data = array();
-		$permissions = \Permission::all();
-		// $permissionsVal = $this->fetchArrayVal($permissions, 'code');
+		$permissions = Permission::all();
 		if($id != '')
 		{
 			$group = \Sentry::findGroupById($id);
