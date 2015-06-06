@@ -11,22 +11,23 @@ var Group = {
 			title 	: form_title,
 			ok 		: function(){
 				var formData = {};
-				var permissions = {};
+				var permissions = new Array();;
 				var iframe = this.iframe.contentWindow;
 				if(!iframe.document.body)		//iframe 加载失败
 				{
 					$.dialog({content: 'form 未加载完成'});
 					return false;
 				}
-				var form = iframe.document.getElementById('group-form');
-				formData['name'] = $.trim(form['groupname'].value);
+				var form = iframe.document.getElementById('role-form');
+				formData['name'] = $.trim(form['rolename'].value);
+				formData['display_name'] = $.trim(form['role_display_name'].value);
 				var g = iframe.document.getElementsByName('permission-group');
 				$(g).each(function(){
 					if(this.checked == true){
-						permissions[this.value] = 1;
-					}else{
+						permissions.push(this.value);
+					}/*else{
 						permissions[this.value] = 0
-					}
+					}*/
 				});
 				formData['permissions'] = permissions;
 				$.ajax({
@@ -43,6 +44,7 @@ var Group = {
 				});
 				return true;
 			},
+			width	: 350,
 			cancel 	: true,
 			lock 	: true,
 			resize 	: false,
@@ -52,7 +54,7 @@ var Group = {
 	edit 	: function(id){
 
 	},
-	del 	: function( id){
+	del 	: function(id){
 		art.dialog({
 			lock 	:true,
 			content : '删除后无法恢复',

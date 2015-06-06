@@ -8,11 +8,11 @@ var Permissions = {
 			ajaxUrl += '/'+permission.id;
 			html_content = '权限编码:&nbsp;<input id="pname" type="text" value="'+permission.name+'"><br/>';
 			html_content += '权限名称:&nbsp;<input id="display_name" type="text" value="'+permission.display_name+'" style="margin-top:10px;"><br/>';
-			html_content += '描述:&nbsp;<input id="description" type="text" value="'+permission.description+'">';
+			html_content += '权限描述:&nbsp;<input id="description" type="text" value="'+permission.description+'" style="margin-top:10px;">';
 		}else{
 			html_content = '权限编码:&nbsp;<input id="pname" type="text" value=""><br/>';
 			html_content += '权限名称:&nbsp;<input id="display_name" type="text" value="" style="margin-top:10px;"><br/>';
-			html_content += '描&nbsp;&nbsp;述:&nbsp;<input id="description" type="text" value="" style="margin-top:10px;">';
+			html_content += '权限描述:&nbsp;<input id="description" type="text" value="" style="margin-top:10px;">';
 		}
 
 		art.dialog({

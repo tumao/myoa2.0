@@ -10,8 +10,8 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>组名称</th>
-                    <th>权限</th>
+                    <th>角色英文名称</th>
+                    <th>角色中文名称</th>
                     <th>操作</th>
                 </tr>
             </thead>
@@ -20,7 +20,7 @@
                 <tr id='row_{{$group->id}}'>
                     <td>{{$group->id}}</td>
                     <td>{{$group->name}}</td>
-                    <td>{{$group->permissions}}</td>
+                    <td>{{$group->display_name}}</td>
                     <td class="center">
                         <a class="btn btn-info" href="#" onclick="Group.form({{$group->id}})">
                             <i class="glyphicon glyphicon-edit icon-white"></i>

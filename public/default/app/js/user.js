@@ -22,7 +22,6 @@ var User = {
 				var fields = [
 					'username',
 					'email',
-					'first_name'
 				];
 				for( var x in fields){
 					formData[fields[x]] = $.trim(form[fields[x]].value);
@@ -36,7 +35,7 @@ var User = {
 				var g = iframe.document.getElementsByName('user-group');
 				$(g).each(function(){
 					if( this.checked == true){
-						formData['groupName'] = this.value;
+						formData['roleId'] = this.value;
 					}
 				});
 				if( Check.user_form(formData,form,id)){

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ABaseController;
 use App\Role;
+use App\Permission;
 
 class RoleController extends ABaseController {
 
@@ -34,14 +35,14 @@ class RoleController extends ABaseController {
 	public function groupForm($id = '')
 	{
 		$data = array();
-		$permissions = \Permission::all();
-		// $permissionsVal = $this->fetchArrayVal($permissions, 'code');
+		$dbrole = new Role();
+		$permissions = Permission::all();
 		if($id != '')
 		{
-			$group = \Sentry::findGroupById($id);
+			$role = Role::findOrFail($id);
 			foreach($permissions as & $permission)
 			{
-				if($group->hasAccess($permission['code']))
+				if($dbrole->hasPermission($role, $permission['id']))
 				{
 					$permission['checked'] = true;
 				}
@@ -53,12 +54,13 @@ class RoleController extends ABaseController {
 		}
 		else
 		{
-			$group = array(
+			$role = array(
 				'id'	=> '',
 				'name'	=> '',
+				'display_name'	=> '',
 				);
 		}
-		$data['group'] = $group;
+		$data['group'] = $role;
 		$data['permissions'] = $permissions;
 		return \View::make('default.user.group.groupForm')->with('data', $data);
 	}
@@ -85,85 +87,80 @@ class RoleController extends ABaseController {
 	 */
 	public function createGroup()
 	{
-		$input = \Input::only('name', 'permissions');
+		$input = \Input::only('name', 'display_name', 'permissions');
 		//
-		try
+		$role =  new Role();
+		$role->name = $input['name'];
+		$role->display_name = $input['display_name'];
+		$result = $role->save();
+		$permissions = $input['permissions'];
+		foreach($permissions as $permission)
 		{
-		    // Create the group
-		    $group = \Sentry::createGroup($input);
-		    return array('code'=>1, 'message'=>'GROUP_CREATE_SUCCESS');
+			$per = Permission::where('name', '=', $permission)->first();
+			$role->attachPermission($per);
 		}
-		catch (\Cartalyst\Sentry\Groups\NameRequiredException $e)
+		if( $result)
 		{
-		    return array('code'=>-1, 'message'=>'GROUP_NAME_REQUIRED');
+			return array('code'=>1, 'message'=>trans('user.ROLE_CREATE_SUCCESS'));
 		}
-		catch (\Cartalyst\Sentry\Groups\GroupExistsException $e)
+		else
 		{
-		    return array('code'=>-2, 'message'=>'GROUP_ALREADY_EXISTS');
+			return array('code'=>0, 'message'=>trans('user.ROLE_CREATE_FAILS'));
 		}
 	}
 
 	/**
-	 * 创建用户组
+	 * 更新角色
 	 *
 	 * @return Response
 	 */
 	public function updateGroup($id)
 	{
+		$dbRole = new Role();
 		$input = \Input::all();
-		try
+		$role = Role::findOrFail($id);
+		if($role)
 		{
-			$group = \Sentry::findGroupById($id);
-			if( isset($input['name']))
+			if(isset($input['name']))
 			{
-				$group->name = $input['name'];	
+				$role->name = $input['name'];
 			}
-			if( isset( $input['permissions']))
+			if(isset($input['display_name']))
 			{
-				$group->permissions = $input['permissions'];	
+				$role->display_name = $input['display_name'];
 			}
-			if($group->save())
+			$role->save();
+		}
+		else
+		{
+			return array('code'=> 0, 'message'=>trans('user.ROLE_NOT_EXISTS'));
+		}
+		if($permissions = $input['permissions'])
+		{
+			$dbRole->delAllPerms($role);		//删除当前角色所有的权限
+			foreach($permissions as $permission)	//为角色依次重新添加权限
 			{
-				return array('code'=> 1, 'message'=> 'GROUP_UPDATED_SUCCESS');
-			}
-			else
-			{
-				return array('code'=>-1, 'message'=> 'GROUP_UPDATED_FAILED');
+				$perms = Permission::where('name', '=', $permission)->first();
+				if(!$dbRole->hasPermission($role, $perms['id']))
+				{
+					$role->attachPermission($perms);
+				}
 			}
 		}
-		catch (\Cartalyst\Sentry\Groups\NameRequiredException $e)
-		{
-		    return array('code'=>-2, 'message'=> 'GROUP_NAME_REQUIRED');
-		}
-		catch (\Cartalyst\Sentry\Groups\GroupExistsException $e)
-		{
-			return array('code'=>-3, 'message'=> 'GROUP_EXISTS');
-		}
-		catch (\Cartalyst\Sentry\Groups\GroupNotFoundException $e)
-		{
-			return array('code'=>-4, 'message'=> 'GROUP_NOT_FOUND');
-		}
+		return array('code'=>1, 'message'=> trans('user.ROLE_UPDATE_SUCCESS'));
 	}
 
 	/**
-	 * 删除组
+	 * 删除角色
 	 *
 	 * @return Response
 	 */
 	public function delGroup($id)
 	{
-		try
-		{
-		    // 查找组
-		    $group = \Sentry::findGroupById($id);
-
-		    // 删除该组
-		    $group->delete();
-		    return array('code'=>1, 'message'=>'DEL_SUCCESS');
-		}
-		catch (\Cartalyst\Sentry\Groups\GroupNotFoundException $e)
-		{
-		    return array('code'=>-1, 'message'=>'GROUP_NOT_FOUND');
-		}
+		$role = Role::findOrFail($id);
+		$role->users()->sync([]);
+		$role->perms()->sync([]);
+		$role->forceDelete();
+		return array('code'=>1, 'message'=>trans('user.ROLE_DELETE_SUCCESS'));
 	}
 }

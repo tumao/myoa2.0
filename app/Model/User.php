@@ -32,4 +32,28 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+	/**
+	 *	用户移除某个角色
+	 *
+	 *
+	 *
+	 */
+	public function userRemoveRoles($user, $roleId)
+	{
+		\DB::delete("DELETE FROM `role_user` WHERE `user_id` = {$user['id']} AND `role_id` = {$roleId}");
+		return true;
+	}
+
+	/**
+	 *	用户移除所有角色
+	 *
+	 *
+	 *
+	 */
+	public function userRemoveAllRoles($user)
+	{
+		\DB::delete("DELETE FROM `role_user` WHERE `user_id` = {$user['id']}");
+		return true;
+	}
+
 }

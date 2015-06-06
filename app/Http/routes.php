@@ -24,7 +24,7 @@ Route::post('admin/auth', 'Admin\User\UserController@auth');	//用户认证
 Route::get('admin/logout', 'Admin\User\UserController@logout');	//登出
 
 Route::get('admin/user', 'Admin\User\UserController@index');
-Route::get('admin/user/create_user', 'Admin\User\UserController@createUser');
+Route::post('admin/user/create_user', 'Admin\User\UserController@createUser');
 
 Route::get('admin/user/userconf', 'Admin\User\UserController@userList');	//用户列表
 Route::get('admin/user/user_form/{id?}', 'Admin\User\UserController@userForm');		//添加用户的对话框

@@ -11,8 +11,8 @@
                 <tr>
                     <th>ID</th>
                     <th>邮箱</th>
-                    <th>真实姓名</th>
-                    <th>分组</th>
+                    <th>用户名</th>
+                    <th>角色</th>
                     <th>状态</th>
                     <th>操作</th>
                 </tr>
@@ -22,7 +22,7 @@
                 <tr id='row_{{$user->id}}'>
                     <td>{{$user->id}}</td>
                     <td>{{$user->email}}</td>
-                    <td>{{$user->first_name}}</td>
+                    <td>{{$user->name}}</td>
                     <td>{{$user->group}}</td>
                     <td><span class="label-warning label label-default">激活</span></td>
                     <td class="center">
@@ -30,7 +30,7 @@
                             <i class="glyphicon glyphicon-qrcode icon-white"></i>
                             重置密码
                         </a>
-                        
+
                         <a class="btn btn-info" href="#" onclick="User.form({{$user->id}})">
                             <i class="glyphicon glyphicon-edit icon-white"></i>
                             编辑

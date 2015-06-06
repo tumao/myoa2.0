@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ABaseController;
 
 use Illuminate\Http\Request;
 use App\User;			//model
+use App\Role;
 use Auth;
 use App\Services\Registrar;
 
@@ -57,11 +58,11 @@ class UserController extends ABaseController {
 	 */
 	public function createUser()
 	{
-		// if(\Request::isMethod('post'))
-		// {
-		// 	$user = \Input::all();
-		// }
-		    // Create the user
+		if(\Request::isMethod('post'))
+		{
+			$user = \Input::all();
+		}
+	    // Create the user
 		    // $user_info = \Sentry::createUser(array(
 		    // 	'real_name'	=> $user['real_name'],
 		    //     'email'     => $user['email'],
@@ -69,18 +70,19 @@ class UserController extends ABaseController {
 		    //     'activated' => true,
 		    // ));
 		$data = array(
-			'name'	=> 'admins',
-			'email'	=> 'admin@admin.comd',
-			'password'	=> '12345'
+			'name'	=> $user['username'],
+			'email'	=> $user['email'],
+			'password'	=> $user['password']
 			);
 		$register = new Registrar;
 		$validator = $register->validator($data);	//通过Registrar类中的验证方法验证输入信息
 
 		if(!$validator->fails())
 		{
-			$result = $register->create($data);
+			$registeredUser = $register->create($data);		//添加用户
+			$registeredUser->roles()->attach($user['roleId']);	//为用户添加分组
 
-			if($result)
+			if($registeredUser)
 			{
 			    return array('code' => 1, 'info' => '用户创建成功');
 			}
@@ -114,38 +116,83 @@ class UserController extends ABaseController {
 	 */
 	public function userForm($id = '')
 	{
-		$groups = \Sentry::findAllGroups();
+		$roles = Role::all();
 		$user = array(
 			'id'	=> '',
 			'name'	=> '',
 			'email'	=> '',
-			'first_name' => ''
 			);
 		if( $id != '')
 		{
-			$user = \Sentry::findUserById($id);
-			$group = $user->getGroups();
-		}
-		foreach($groups as & $x)
-		{
-			if( $id != '' && $x['name'] == $group[0]['name'])	//如果是修改页面则设置分组
+			$user = User::findOrFail($id);
+			foreach($roles as & $x)
 			{
-				$x['checked'] = true;
-			}
-			else if( $id == '' && $x['name'] == 'Users')	//如果是添加页面则设置默认分组为users
-			{
-				$x['checked'] = true;
-			}
-			else
-			{
-				$x['checked'] = false;
+				if($user->hasRole([$x['name']]))
+				{
+					$x['checked'] = true;
+				}
+				else
+				{
+					$x['checked'] = false;
+				}
 			}
 		}
 		$data = array(
 			'user'	=> $user,
-			'group'	=> $groups
+			'group'	=> $roles
 			);
 		return \View::make('default.user.user.userForm')->with('data', $data);
+	}
+
+	/**
+	 * 更新用户信息
+	 *
+	 * @param
+	 *
+	 * @return
+	 */
+	public function updateUser()
+	{
+		$dbUser = new User();
+		if(\Request::isMethod('post'))
+		{
+			$user = \Input::all();
+		}
+	    $user_info = User::findOrFail($user['id']);		//通过id查找用户
+
+	    // 更新用户信息
+	    // $user_info->name = $user['username'];
+	    $user_info->email = $user['email'];
+	    $user_info->name = $user['username'];
+	    $dbUser->userRemoveAllRoles($user_info);
+	    // $this->assign_group_to_user($user['id'],array($user['groupName']));
+	    $user_info->roles()->attach($user['roleId']);
+	    if ($user_info->save())									//保存修改
+	    {
+	        return array('code'	=>1, 'info' => '数据修改成功');
+	    }
+	    else
+	    {
+	        // User information was not updated
+	        return array('code' => 0, 'info' => '数据保存失败，请联系管理员！');
+	    }
+	}
+
+	/**
+	 * 用户注册/管理员创建用户
+	 *
+	 * @return Response
+	 */
+	public function passReset()
+	{
+		if(\Request::isMethod('post'))
+		{
+			$input = \Input::only('id','password');
+		}
+		$user = \Sentry::findUserById($input['id']);
+		$user->password = $input['password'];
+		$user->save();
+		return array('code'=> 1, 'message'=> 'PASSWORD_RESET_SUCCESS');
 	}
 
 	public function logout()
