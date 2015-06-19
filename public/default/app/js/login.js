@@ -28,7 +28,7 @@ function userlogin()
 			if(rp.code > 0)
 			{
 				alert(rp.message);
-				// window.location.href= rp.redirect_url;
+				window.location.href= rp.redirect_url;
 			}
 			else
 			{

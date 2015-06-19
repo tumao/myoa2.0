@@ -20,6 +20,7 @@ Route::get('admin', 'Admin\User\UserController@show');	//登录页
 Route::get('admin/login', array('uses'=>'Admin\User\UserController@show', 'as'=>'login'));
 Route::post('admin/auth', 'Admin\User\UserController@auth');	//用户认证
 
+Route::group(['middleware'=> ['auth.sentry']],function(){
 #user
 Route::get('admin/logout', 'Admin\User\UserController@logout');	//登出
 Route::get('admin/user', 'Admin\User\UserController@index');
@@ -61,3 +62,4 @@ Route::get('admin/conf/save_menu_form', 'Admin\Menu\MenuController@saveMenuForm'
 Route::get('admin/conf/del_menu_item/{id}', 'Admin\Menu\MenuController@delMenuItem');
 Route::get('admin/conf/edit_menu/', 'Admin\Menu\MenuController@editMenuItem');
 
+});
