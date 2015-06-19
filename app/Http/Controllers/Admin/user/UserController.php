@@ -254,11 +254,11 @@ class UserController extends ABaseController {
 		}
 		catch (\Cartalyst\Sentry\Users\UserNotFoundException $e)
 		{
-		    return array('code' => -1, 'message'=> trans('user.USER_NOT_FOUND'))
+		    return array('code' => -1, 'message'=> trans('user.USER_NOT_FOUND'));
 		}
 		catch (\Cartalyst\Sentry\Groups\GroupNotFoundException $e)
 		{
-		    return array('code' => -1, 'message'=> trans('user.GROUP_NOT_FOUND'))
+		    return array('code' => -1, 'message'=> trans('user.GROUP_NOT_FOUND'));
 		}
 	}
 
