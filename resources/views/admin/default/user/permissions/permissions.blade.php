@@ -10,8 +10,8 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>权限名称</th>
                     <th>权限编码</th>
-                    <th>权限名</th>
                     <th>操作</th>
                 </tr>
             </thead>
@@ -20,7 +20,7 @@
                 <tr id='row_{{$permission->id}}'>
                     <td>{{$permission->id}}</td>
                     <td>{{$permission->name}}</td>
-                    <td>{{$permission->display_name}}</td>
+                    <td>{{$permission->code}}</td>
                     <td class="center">
                         <a class="btn btn-info" href="#" onclick='Permissions.form({{json_encode($permission)}})'>
                             <i class="glyphicon glyphicon-edit icon-white"></i>
