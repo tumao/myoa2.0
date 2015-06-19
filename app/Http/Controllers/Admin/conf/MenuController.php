@@ -28,6 +28,11 @@ class MenuController extends ABaseController {
 	{
 		//
 		$menuList = Menu_catelogue::all();
+		if(\Request::ajax())
+		{
+			$menuTree = $this->_init_menu_tree($menuList, 0);
+			return $menuTree;
+		}
 		return view('default.conf.menu.menu')->with('menuList', $menuList);
 	}
 
@@ -97,6 +102,11 @@ class MenuController extends ABaseController {
 		}
 	}
 
+	/**
+	 *	通过某个节点id递归查找下面所有的子菜单
+	 *
+	 *
+	 */
 	private function _init_son_arr($list, $rid)
 	{
 		$condition = array();
@@ -118,6 +128,11 @@ class MenuController extends ABaseController {
 		return $condition;
 	}
 
+	/**
+	 *	找出所有子菜单不分层次
+	 *
+	 *
+	 */
 	private function _find_children($list, $rid)
 	{
 		$child = array();
@@ -129,7 +144,6 @@ class MenuController extends ABaseController {
 				array_push($this->_menu_son_arr, $x['id']);
 			}
 		}
-
 		return $child;
 	}
 

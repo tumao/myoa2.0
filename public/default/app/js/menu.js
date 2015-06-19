@@ -84,8 +84,24 @@ var Menu = {
 			},
 			cancel 	: true
 		});
-	}
-
+	},
+	// init : function(menuTree){	//初始化菜单列表
+	// 	var item;
+	// 	var key;
+	// 	for(key in menuTree)
+	// 	{
+	// 		item = menuTree[key];
+	// 		while(item.children != ''){
+	// 			alert(item);
+	// 			// if(typeof item.children != 'undefined'){
+	// 			// 	alert(1111);
+	// 			// 	item = item.children;
+	// 			// }else{
+	// 			// 	return;
+	// 			// }
+	// 		}
+	// 	}
+	// },
 };
 
 var Check = {
@@ -102,4 +118,15 @@ var Check = {
 		}
 		return true;
 	},
-}
+};
+
+$(document).ready(function(){
+	$.ajax({
+		type 	: 'GET',
+		url 	: '/admin/conf/menu',
+		dataType: 'json',
+		success : function(data){
+			Menu.init(data);
+		}
+	});
+});

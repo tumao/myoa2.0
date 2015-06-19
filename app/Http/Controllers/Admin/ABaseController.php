@@ -19,19 +19,6 @@ abstract class ABaseController extends Controller {
 	}
 
 	/**
-	 * Setup the layout used by the controller.
-	 *
-	 * @return void
-	 */
-	// protected function setupLayout()
-	// {
-	// 	if ( ! is_null($this->layout))
-	// 	{
-	// 		$this->layout = \View::make($this->layout);
-	// 	}
-	// }
-
-	/**
 	 * 初始化页面
 	 *
 	 * @return void
@@ -49,7 +36,7 @@ abstract class ABaseController extends Controller {
 	 *
 	 * @return menu 包括 main_menu,sub_menu
 	 */
-	private function _find_main_menu($list)
+	protected function _find_main_menu($list)
 	{
 		$navbar = $this->navbar($list);
 		$main_menu = array();
@@ -64,7 +51,6 @@ abstract class ABaseController extends Controller {
 				if($this->_find_uri_curr($x->path))
 				{
 					$item['active'] = true;
-					// $sub_menu =  $this->_find_sub_menu($list, $x->id);
 					$sub_menu = $this->_init_menu_tree($list, $x->id);
 				}
 				else
@@ -98,6 +84,10 @@ abstract class ABaseController extends Controller {
 			if($res != NULL)
 			{
 				$child[$k]['children'] = $res;
+			}
+			else
+			{
+				$child[$k]['children'] = '';
 			}
 		}
 		return $child;
