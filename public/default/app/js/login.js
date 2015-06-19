@@ -27,12 +27,12 @@ function userlogin()
 		{
 			if(rp.code > 0)
 			{
-				alert(rp.info);
-				window.location.href= rp.redirect_url;
+				alert(rp.message);
+				// window.location.href= rp.redirect_url;
 			}
 			else
 			{
-				alert(rp.info);
+				alert(rp.message);
 				return false;
 			}
 		}

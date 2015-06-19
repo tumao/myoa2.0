@@ -49,31 +49,31 @@ class UserController extends ABaseController {
 			$result = \Sentry::authenticate( $auths, $remember);
 			if($result)
 			{
-				return array('code'=>1, 'message'=>'LOGIN_SUCCESS', 'redirect_url' => '/admin/dashboard');
+				return array('code'=>1, 'message'=>trans("user.LOGIN_SUCCESS"), 'redirect_url' => '/admin/dashboard');
 			}
 		}
 		catch (\Cartalyst\Sentry\Users\LoginRequiredException $e)
 		{
-		    return array('code'=>-1, 'message'=>'LOGIN_FIELD_REQUIRED');
+		    return array('code'=>-1, 'message'=>trans('user.LOGIN_FIELD_REQUIRED'));
 		}
 		catch (\Cartalyst\Sentry\Users\UserNotFoundException $e)
 		{
-		    return array('code'=>-2, 'message'=> 'USER_NOT_FOUND');
+		    return array('code'=>-2, 'message'=> trans('user.USER_NOT_FOUND'));
 		}
 		catch (\Cartalyst\Sentry\Users\UserNotActivatedException $e)
 		{
-		    return array('code'=>-3, 'message'=>'USER_NOT_ACTIVATED');
+		    return array('code'=>-3, 'message'=>trans('user.USER_NOT_ACTIVATED'));
 		}
 
 		catch (\Cartalyst\Sentry\Throttling\UserSuspendedException $e)
 		{
 		    $time = $throttle->getSuspensionTime();
 
-		    return array('code'=>-4, 'message'=>'USER_SUSPENDED '.$time.'MINUTES');
+		    return array('code'=>-4, 'message'=>trans('user.USER_SUSPENDED ').$time.trans('common.MINUTES'));
 		}
 		catch (\Cartalyst\Sentry\Throttling\UserBannedException $e)
 		{
-		    return array('code'=>-5, 'message'=> 'USER_BANNED');
+		    return array('code'=>-5, 'message'=> trans('user.USER_BANNED'));
 		}
 	}
 
@@ -101,23 +101,23 @@ class UserController extends ABaseController {
 		    $group = \Sentry::findGroupByName($user['groupName']);	//通过组名查找组
 
 		    $user_info->addGroup($group);			//把用户加入组中
-		    return array('code' => 1, 'info' => '用户创建成功');
+		    return array('code' => 1, 'info' => trans('user.USER_CREATED_SUCCESS'));
 		}
 		catch (\Cartalyst\Sentry\Users\LoginRequiredException $e)
 		{
-		    return array('code' => -1, 'info'=> '用户名不可为空');
+		    return array('code' => -1, 'info'=> trans('user.LOGIN_FIELD_REQUIRED'));
 		}
 		catch (\Cartalyst\Sentry\Users\PasswordRequiredException $e)
 		{
-		    return array('code' => -2, 'info'=> '密码不可为空');
+		    return array('code' => -2, 'info'=> trans('user.PASSWORD_FIELD_REQUIRED'));
 		}
 		catch (\Cartalyst\Sentry\Users\UserExistsException $e)
 		{
-		    return array('code' => -3, 'info'=> '用户名已经存在，请直接登录');
+		    return array('code' => -3, 'info'=> trans('user.USER_ALREADY_EXISTS'));
 		}
 		catch (\Cartalyst\Sentry\Groups\GroupNotFoundException $e)
 		{
-		    return array('code' => -4, 'info'=> '未找到分组');
+		    return array('code' => -4, 'info'=> trans('user.GROUP_NOT_FOUND'));
 		}
 	}
 
@@ -207,21 +207,21 @@ class UserController extends ABaseController {
 		    $this->assign_group_to_user($user['id'],array($user['groupName']));
 		    if ($user_info->save())									//保存修改
 		    {
-		        return array('code'	=>1, 'info' => '数据修改成功');
+		        return array('code'	=>1, 'info' => trans('user.DATA_UPDATE_SUCCESSED'));
 		    }
 		    else
 		    {
 		        // User information was not updated
-		        return array('code' => 0, 'info' => '数据保存失败，请联系管理员！');
+		        return array('code' => 0, 'info' => trans('user.DATA_UPDATE_FAILED'));
 		    }
 		}
 		catch (\Cartalyst\Sentry\Users\UserExistsException $e)
 		{
-		    return array('code' => -1, 'info' => '用户名已经存在');
+		    return array('code' => -1, 'info' => trans('user.USER_ALREADY_EXISTS'));
 		}
 		catch (\Cartalyst\Sentry\Users\UserNotFoundException $e)
 		{
-			return array('code' => -2, 'info' => '未找到要修改的用户');
+			return array('code' => -2, 'info' => trans('user.USER_NOT_FOUND'));
 		}
 	}
 
@@ -254,11 +254,11 @@ class UserController extends ABaseController {
 		}
 		catch (\Cartalyst\Sentry\Users\UserNotFoundException $e)
 		{
-		    echo 'User was not found.';
+		    return array('code' => -1, 'message'=> trans('user.USER_NOT_FOUND'))
 		}
 		catch (\Cartalyst\Sentry\Groups\GroupNotFoundException $e)
 		{
-		    echo 'Group was not found.';
+		    return array('code' => -1, 'message'=> trans('user.GROUP_NOT_FOUND'))
 		}
 	}
 
@@ -278,17 +278,17 @@ class UserController extends ABaseController {
 			{
 				$user = \Sentry::findUserById($id);	// 通过id查找用户
 		    	$user->delete();	// 删除用户
-		    	return array('code' => 1, 'info'=> '删除成功');
+		    	return array('code' => 1, 'info'=> trans('user.DELETE_SUCCESS'));
 			}
 			else
 			{
-				return array('code' => -1,'info'=> '当前用户无权限删除用户!');
+				return array('code' => -1,'info'=> trans('user.PRIVILEGES_NOT_ENOUGH'));
 			}
 
 		}
 		catch (\Cartalyst\Sentry\Users\UserNotFoundException $e)
 		{
-		    return array('code' => -2, 'info' => '用户不存在');	//用户不存在 （用户不存在或者被软删除）
+		    return array('code' => -2, 'info' => trans('user.USER_NOT_FOUND'));	//用户不存在 （用户不存在或者被软删除）
 		}
 	}
 
@@ -306,7 +306,7 @@ class UserController extends ABaseController {
 		$user = \Sentry::findUserById($input['id']);
 		$user->password = $input['password'];
 		$user->save();
-		return array('code'=> 1, 'message'=> 'PASSWORD_RESET_SUCCESS');
+		return array('code'=> 1, 'message'=> trans('user.PASSWORD_RESET_SUCCESS'));
 	}
 
 	/**

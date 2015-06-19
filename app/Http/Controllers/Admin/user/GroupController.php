@@ -92,15 +92,15 @@ class GroupController extends ABaseController {
 		{
 		    // Create the group
 		    $group = \Sentry::createGroup($input);
-		    return array('code'=>1, 'message'=>'GROUP_CREATE_SUCCESS');
+		    return array('code'=>1, 'message'=>trans('group.GROUP_CREATE_SUCCESS'));
 		}
 		catch (\Cartalyst\Sentry\Groups\NameRequiredException $e)
 		{
-		    return array('code'=>-1, 'message'=>'GROUP_NAME_REQUIRED');
+		    return array('code'=>-1, 'message'=>trans('group.GROUP_NAME_REQUIRED'));
 		}
 		catch (\Cartalyst\Sentry\Groups\GroupExistsException $e)
 		{
-		    return array('code'=>-2, 'message'=>'GROUP_ALREADY_EXISTS');
+		    return array('code'=>-2, 'message'=>trans('group.GROUP_ALREADY_EXISTS'));
 		}
 	}
 
@@ -125,24 +125,24 @@ class GroupController extends ABaseController {
 			}
 			if($group->save())
 			{
-				return array('code'=> 1, 'message'=> 'GROUP_UPDATED_SUCCESS');
+				return array('code'=> 1, 'message'=> trans('group.GROUP_UPDATED_SUCCESS'));
 			}
 			else
 			{
-				return array('code'=>-1, 'message'=> 'GROUP_UPDATED_FAILED');
+				return array('code'=>-1, 'message'=> trans('group.GROUP_UPDATED_FAILED'));
 			}
 		}
 		catch (\Cartalyst\Sentry\Groups\NameRequiredException $e)
 		{
-		    return array('code'=>-2, 'message'=> 'GROUP_NAME_REQUIRED');
+		    return array('code'=>-2, 'message'=> trans('group.GROUP_NAME_REQUIRED'));
 		}
 		catch (\Cartalyst\Sentry\Groups\GroupExistsException $e)
 		{
-			return array('code'=>-3, 'message'=> 'GROUP_EXISTS');
+			return array('code'=>-3, 'message'=> trans('group.GROUP_ALREADY_EXISTS'));
 		}
 		catch (\Cartalyst\Sentry\Groups\GroupNotFoundException $e)
 		{
-			return array('code'=>-4, 'message'=> 'GROUP_NOT_FOUND');
+			return array('code'=>-4, 'message'=> trans('group.GROUP_NOT_FOUND'));
 		}
 	}
 
@@ -160,11 +160,11 @@ class GroupController extends ABaseController {
 
 		    // 删除该组
 		    $group->delete();
-		    return array('code'=>1, 'message'=>'DEL_SUCCESS');
+		    return array('code'=>1, 'message'=>trans('group.DELETE_SUCCESS'));
 		}
 		catch (\Cartalyst\Sentry\Groups\GroupNotFoundException $e)
 		{
-		    return array('code'=>-1, 'message'=>'GROUP_NOT_FOUND');
+		    return array('code'=>-1, 'message'=>trans('group.GROUP_NOT_FOUND'));
 		}
 	}
 }

@@ -35,7 +35,7 @@ class PermissionsController extends ABaseController {
 	{
 		$input = \Input::only('name', 'code');
 		$per = Permission::firstOrCreate($input);
-		return array('code'=>1, 'message'=>'ok');
+		return array('code'=>1, 'message'=>trans('permissons.PERMISSON_ADD_SUCCESS'));
 	}
 
 	/**
@@ -51,7 +51,7 @@ class PermissionsController extends ABaseController {
 		$permission->name = $input['name'];
 		$permission->code = $input['code'];
 		$permission->save();
-		return array('code'=>1, 'message'=>'ok');
+		return array('code'=>1, 'message'=>trans('permissons.PERMISSON_UPDATE_SUCCESS'));
 	}
 
 	/**
@@ -62,7 +62,7 @@ class PermissionsController extends ABaseController {
 	public function delPermission($id)
 	{
 		Permission::destroy($id);
-		return array('code'=>1, 'message'=> 'PERMISSION_DELETE_SUCCESS');
+		return array('code'=>1, 'php'=> trans('permissions.PERMISSION_DELETE_SUCCESS'));
 	}
 
 }
