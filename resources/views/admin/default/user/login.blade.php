@@ -33,8 +33,8 @@
                             <span class="input-group-addon"><i class="red"></i>验证码</span>
                             <input id="captcha" type="text" class="form-control">
                         </div>
-                        <div class="captcha" style="line-height:54px;">
-                            <img id="captchaImg" src="/captcha/1" alt="验证码"> <a href="#" title="更换验证码" onclick="updateCaptcha()">更换验证码</a>
+                        <div class="captcha" style="line-height:54px;" onclick="updateCaptcha()">
+                            <img id="captchaImg" src="/captcha/1" alt="验证码"> <a href="#" title="刷新验证码">更换验证码</a>
                         </div>
 
                         <div class="clearfix"></div>

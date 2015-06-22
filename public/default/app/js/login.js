@@ -34,12 +34,12 @@ function userlogin()
 		{
 			if(rp.code > 0)
 			{
-				alert(rp.message);
+				art.dialog.tips(rp.message,2);
 				window.location.href= rp.redirect_url;
 			}
 			else
 			{
-				alert(rp.message);
+				art.dialog.tips(rp.message,2);
 				updateCaptcha();
 				return false;
 			}
