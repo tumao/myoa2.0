@@ -3,6 +3,7 @@ function userlogin()
 {
 	var username = $.trim($('#username').val());
 	var password = $.trim($('#password').val());
+	var captcha = $.trim($('#captcha').val());
 	var remember = $('#remember').prop('checked');
 	if( username == '')
 	{
@@ -14,6 +15,11 @@ function userlogin()
 		$('#password').trigger('focus');
 		return false;
 	}
+	else if( captcha == '')
+	{
+		$('#captcha').trigger('focus');
+		return false;
+	}
 	$.ajax({
 		'url'	:'/admin/auth',
 		'type'	:'post',
@@ -21,6 +27,7 @@ function userlogin()
 		'data'	:{
 			username:username,
 			password:password,
+			captcha : captcha,
 			remember:remember
 		},
 		'success':function(rp)
@@ -33,8 +40,15 @@ function userlogin()
 			else
 			{
 				alert(rp.message);
+				updateCaptcha();
 				return false;
 			}
 		}
 	})
+}
+
+function updateCaptcha(){
+	var timestamp = (new Date()).valueOf();
+	var content = '<img id="captchaImg" src="/captcha/'+timestamp+'">';
+	$("#captchaImg").replaceWith(content);
 }

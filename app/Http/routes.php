@@ -63,3 +63,5 @@ Route::get('admin/conf/del_menu_item/{id}', 'Admin\Menu\MenuController@delMenuIt
 Route::get('admin/conf/edit_menu/', 'Admin\Menu\MenuController@editMenuItem');
 
 });
+
+Route::get('captcha/{tmp}', 'CaptchaController@captcha');

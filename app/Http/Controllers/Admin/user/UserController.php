@@ -2,7 +2,7 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Admin\ABaseController;
-
+use App\Http\Controllers\CaptchaController;
 use Illuminate\Http\Request;
 use App\User;			//model
 use Auth;
@@ -38,7 +38,12 @@ class UserController extends ABaseController {
 	public function auth()
 	{
 		//获取用户输入的信息
-		$request = \Request::only('username', 'password', 'remember');
+		$request = \Request::only('username', 'password', 'captcha','remember');
+		$captcha = new CaptchaController;
+		if(!$captcha->captchaCheck($request['captcha']))
+		{
+			return array('code'=>-1, 'message'=> trans('common.CAPTCHA_CODE_WRONG'));
+		}
 		try
 		{
 			$auths = array(
