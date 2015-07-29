@@ -17,6 +17,12 @@ class SentryAuthMiddleware {
 		{
 			return \Redirect::to('admin');
 		}
+		$user = \Session::get('currentUser');
+		if($user->hasAccess('user.notLoadAdmin'))		//如果用户不被允许登录后台
+		{
+			\Sentry::logout();
+			return \Redirect::to('/');
+		}
 		return $next($request);
 	}
 

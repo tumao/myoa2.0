@@ -9,7 +9,7 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                     <th>菜单ID</th>
+                    <th>菜单ID</th>
                     <th>菜单名</th>
                     <th>图标</th>
                     <th>父ID</th>
@@ -18,17 +18,18 @@
                     <th>操作</th>
                 </tr>
             </thead>
-            <tbody>
-               @foreach($menuList as $item)
+            @foreach($menuList as $listGroup)
+            <tbody style="border-top:3px solid gray;">
+               @foreach($listGroup as $item)
                 <tr id='row_{{$item->id}}'>
                     <td>{{$item->id}}</td>
-                    <td>{{$item->name}}</td>
+                    <td style="padding-left:{{40*$item->level}}px;">{{$item->name}}</td>
                     <td>{{$item->icon}}</td>
                     <td>{{$item->root}}</td>
                     <td>{{$item->sort}}</td>
                     <td>{{$item->path}}</td>
                     <td class="center">
-                        <a class="btn btn-warning" href="#" onclick="Menu.add_son_menu({{$item->id}})">
+                        <a class="btn btn-warning" href="#" onclick="Menu.add_son_menu({{$item->id}}, {{$item->group}},{{$item->level}})">
                             <i class="glyphicon glyphicon-qrcode icon-white"></i>
                             添加子菜单
                         </a>
@@ -44,7 +45,9 @@
                     </td>
                 </tr>
                 @endforeach
+
             </tbody>
+            @endforeach
         </table>
         <!-- 分页开始 -->
       <!--   <div class="row">

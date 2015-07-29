@@ -8,7 +8,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index.html"> <img alt="Charisma Logo" src="/default/framework/img/logo20.png" class="hidden-xs"/>
+        <a class="navbar-brand" href="index.html"> <!-- <img alt="Charisma Logo" src="/default/framework/img/logo20.png" class="hidden-xs"/> -->
             <span>后台管理</span></a>
 
         <!-- user dropdown starts -->

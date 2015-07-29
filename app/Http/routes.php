@@ -39,7 +39,7 @@ Route::get('admin/user/update_group/{id}', 'Admin\User\GroupController@updateGro
 Route::get('admin/user/del_group/{id}', 'Admin\User\GroupController@delGroup'); 	//删除组
 
 Route::get('admin/user/permissions', 'Admin\User\PermissionsController@permissions');	//权限列表
-Route::get('admin/user/save_permissions', 'Admin\User\PermissionsController@savePermissons');
+Route::get('admin/user/save_permissions', 'Admin\User\PermissionsController@savePermissions');
 Route::get('admin/user/edit_permissions/{id}', 'Admin\User\PermissionsController@editPermissions');
 Route::get('admin/user/del_permission/{id}', 'Admin\User\PermissionsController@delPermission');
 

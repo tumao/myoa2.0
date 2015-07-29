@@ -7,6 +7,7 @@ class MenuController extends ABaseController {
 
 
 	private $_menu_son_arr= array();
+	private $menu_group = array();
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -27,15 +28,16 @@ class MenuController extends ABaseController {
 	public function show()
 	{
 		//
-		$menuList = Menu_catelogue::all();
-		if(\Request::ajax())
-		{
-			$menuTree = $this->_init_menu_tree($menuList, 0);
-			return $menuTree;
-		}
+		$menu = new Menu_catelogue();
+		$menuList = $menu->menuGroup();
 		return view('default.conf.menu.menu')->with('menuList', $menuList);
 	}
 
+	/**
+	 *	添加菜单的页面弹出框
+	 *
+	 * @return Response
+	 */
 	public function addMenuForm($id = '')
 	{
 		if($id !='')
@@ -56,6 +58,11 @@ class MenuController extends ABaseController {
 		return \View::make('default.conf.menu.menuForm')->with('menu', $menu);
 	}
 
+	/**
+	*	保存新添加的菜单
+	*
+	*
+	*/
 	public function saveMenuForm()
 	{
 		$vali = array('name', 'icon', 'path', 'root', 'sort');
@@ -76,6 +83,11 @@ class MenuController extends ABaseController {
 		return array('message'=>'插入失败!', 'code'=>-3);
 	}
 
+	/**
+	*	保存修改的菜单
+	*
+	*
+	*/
 	public function editMenuItem()
 	{
 		$vali = array('id','name', 'icon', 'path', 'sort');
@@ -86,6 +98,11 @@ class MenuController extends ABaseController {
 		return array('message'=>'数据更新成功！', 'code'=>1);
 	}
 
+	/**
+	*	删除菜单项
+	*
+	*
+	*/
 	public function delMenuItem($id='')
 	{
 		if($id == '')
@@ -147,6 +164,24 @@ class MenuController extends ABaseController {
 		return $child;
 	}
 
+	public function menuGroup()
+	{
+		$menus = Menu_catelogue::all();
+
+	}
+
+	private function findChildMenu($arr, $rid)
+	{
+
+		$child =  array();
+		foreach($arr as $x)
+		{
+			if($x['root'] == $rid)
+			{
+
+			}
+		}
+	}
 
 
 }

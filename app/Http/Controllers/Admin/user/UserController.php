@@ -54,6 +54,7 @@ class UserController extends ABaseController {
 			$result = \Sentry::authenticate( $auths, $remember);
 			if($result)
 			{
+				\Session::put('currentUser', $result);		//对象存入sesson
 				return array('code'=>1, 'message'=>trans("user.LOGIN_SUCCESS"), 'redirect_url' => '/admin/dashboard');
 			}
 		}

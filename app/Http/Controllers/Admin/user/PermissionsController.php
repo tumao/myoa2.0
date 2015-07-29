@@ -31,7 +31,7 @@ class PermissionsController extends ABaseController {
 	 *
 	 * @return Response
 	 */
-	public function savePermissons()
+	public function savePermissions()
 	{
 		$input = \Input::only('name', 'code');
 		$per = Permission::firstOrCreate($input);

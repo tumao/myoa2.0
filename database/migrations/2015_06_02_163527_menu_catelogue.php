@@ -19,6 +19,7 @@ class MenuCatelogue extends Migration {
 			$table->string('name',50);
 			$table->string('icon',50)->nullable();
 			$table->integer('root');
+			$table->integer('group');
 			$table->integer('sort');
 			$table->string('path',100);
 			// $table->timestamps();
