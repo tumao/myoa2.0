@@ -11,10 +11,7 @@
 |
 */
 
-Route::get('/', function()
-{
-	return Redirect::to('admin');
-});
+Route::get('/','Website\Home\IndexController@index');
 
 Route::get('admin', 'Admin\User\UserController@show');	//登录页
 Route::get('admin/login', array('uses'=>'Admin\User\UserController@show', 'as'=>'login'));
@@ -52,6 +49,8 @@ Route::get('admin/dashboard/census', 'Admin\Index\CensusController@index');
 
 #rc 资源
 Route::get('admin/rc', 'Admin\Resource\RcController@index');
+Route::get('admin/rc/merchandise', 'Admin\Resource\MerchandiseController@lists');	//货源
+Route::get('admin/rc/vehicle', 'Admin\Resource\VehicleController@lists');	//车源
 
 
 #conf
@@ -65,3 +64,6 @@ Route::get('admin/conf/edit_menu/', 'Admin\Menu\MenuController@editMenuItem');
 });
 
 Route::get('captcha/{tmp}', 'CaptchaController@captcha');
+
+Route::get('vehicles', 'Website\Resources\VehiclesController@lists');	//搜索车源
+Route::get('merchandise', 'Website\Resources\MerchandiseController@lists');

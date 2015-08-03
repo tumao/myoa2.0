@@ -1,0 +1,82 @@
+.search_box{
+	font-family: 黑体;
+	font-size: 24px;
+	font-weight: bold;
+}
+.search_box input{
+	width :379px;
+	height: 55px;
+	color: #6e6e6e;
+}
+.search_it{
+	width: 208px;
+	height: 55px;
+	background: #ff6600;
+	font-size: 24px;
+	border-radius: 10px;
+	color: white;
+}
+.search_it:hover{
+	background: #ff6600;
+
+}
+.tags{
+	margin-top: 26px;
+	font-size: 24px;
+	font-family: 黑体;
+}
+.att_val ul{
+	margin-left: 70px;
+}
+.att_val li{
+	list-style: none;
+	float: left;
+	margin-left: 10px;
+	cursor: pointer;
+}
+.att_key{
+	float: left;
+}
+.att{
+	clear: both;
+	margin-bottom: 15px;
+}
+.att_val{
+	display: block;
+	width: 1100px;
+}
+.search_tag{
+	clear: both;
+	font-size: 30px;
+	margin-top: 50px;
+	color: #ff6600;
+	border-bottom: 3px solid #ff6600;
+	padding-left: 17px;
+}
+.sr_cell{
+	border-bottom: 1px solid #9c9c9c;
+	font-size: 24px;
+}
+.sr_title{
+	float: left;
+	font-size: 36px;
+	font-weight: bold;
+	display: block;
+	margin-right: 34px;
+	clear: both;
+}
+.sr_status{
+	clear: both;
+}
+.add_from_to{
+	font-size: 24px;
+	padding-top: 6px;
+	height: 36px;
+}
+.sr_status > span{
+	margin-right: 10px;
+	padding-right: 10px;
+}
+.sr_cell > div{
+	margin-bottom: 5px;
+}
