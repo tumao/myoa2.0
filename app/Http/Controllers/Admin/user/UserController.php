@@ -52,7 +52,6 @@ class UserController extends ABaseController {
 				);
 			$remember = $request['remember'] ? $request['remember'] : false;
 			$result = \Sentry::authenticate( $auths, $remember);
-			var_dump( $result);exit;
 			if($result)
 			{
 				\Session::put('currentUser', $result);		//对象存入sesson
