@@ -50,7 +50,6 @@ class UserController extends ABaseController {
 				'email'	=> $request['username'],
 				'password'	=> $request['password']
 				);
-			echo 444;exit;
 			$remember = $request['remember'] ? $request['remember'] : false;
 			echo 333;exit;
 			$result = \Sentry::authenticate( $auths, $remember);
