@@ -9,9 +9,10 @@ return [
     |
     | The following language lines contain the default error messages used by
     | the validator class. Some of these rules have multiple versions such
-    | such as the size rules. Feel free to tweak each of these messages.
+    | as the size rules. Feel free to tweak each of these messages here.
     |
     */
+
     "accepted"         => ":attribute deve essere accettato.",
     "active_url"       => ":attribute non è un URL valido.",
     "after"            => ":attribute deve essere una data successiva al :date.",
@@ -40,6 +41,7 @@ return [
     "in"               => ":attribute selezionato non è valido.",
     "integer"          => ":attribute deve essere un numero intero.",
     "ip"               => ":attribute deve essere un indirizzo IP valido.",
+    'json'             => 'The :attribute must be a valid JSON string.',
     "max"              => [
         "numeric" => ":attribute deve essere minore di :max.",
         "file"    => ":attribute non deve essere più grande di :max kilobytes.",

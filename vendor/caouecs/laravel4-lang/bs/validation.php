@@ -39,6 +39,7 @@ return [
     "in"                => "Odabrano polje :attribute nije validno.",
     "integer"           => "Polje :attribute mora biti broj.",
     "ip"                => "Polje :attribute mora biti validna IP adresa.",
+    'json'              => 'The :attribute must be a valid JSON string.',
     "max"               => [
         "numeric"       => "Polje :attribute mora biti manje od :max.",
         "file"          => "Polje :attribute mora biti manje od :max kilobajta.",
@@ -68,7 +69,7 @@ return [
         "string"        => "Polje :attribute mora biti :size karaktera.",
         "array"         => "Polje :attribute mora biti :size karaktera.",
     ],
-    "string"            => "The :attribute must be a string.",
+    "string"            => "Polje :attribute mora sadrzavati slova.",
     "timezone"          => "Polje :attribute mora biti ispravna vremenska zona.",
     "unique"            => "Polje :attribute već postoji.",
     "url"               => "Format polja :attribute nije validan.",

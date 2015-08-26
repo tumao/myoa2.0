@@ -19,8 +19,8 @@ return [
 
     "token"    => "Dit wachtwoord reset token is niet geldig.",
 
-    "sent"     => "Wachtwoord herinnering verzonden!",
+    "sent"     => "We hebben een e-mail verstuurd met instructies om een nieuw wachtwoord in te stellen.",
 
-    "reset"    => "Wachtwoord is veranderd!",
+    "reset"    => "Het wachtwoord van uw account is gewijzigd.",
 
 ];
