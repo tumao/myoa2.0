@@ -46,7 +46,6 @@ class UserController extends ABaseController {
 		}
 		try
 		{
-			echo 111;exit;
 			$auths = array(
 				'email'	=> $request['username'],
 				'password'	=> $request['password']
