@@ -38,6 +38,7 @@ class UserController extends ABaseController {
 	public function auth()
 	{
 		//获取用户输入的信息
+		echo 111;exit;
 		$request = \Request::only('username', 'password', 'captcha','remember');
 		$captcha = new CaptchaController;
 		if(!$captcha->captchaCheck($request['captcha']))
