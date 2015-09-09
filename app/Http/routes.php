@@ -50,8 +50,13 @@ Route::get('admin/dashboard/census', 'Admin\Index\CensusController@index');
 #rc 资源
 Route::get('admin/rc', 'Admin\Resource\RcController@index');
 Route::get('admin/rc/merchandise', 'Admin\Resource\MerchandiseController@lists');	//货源
-Route::get('admin/rc/vehicle', 'Admin\Resource\VehicleController@lists');	//车源
+Route::get('admin/merchandise/add', 'Admin\Resource\MerchandiseController@add');
 
+Route::get('admin/rc/vehicle', 'Admin\Resource\VehicleController@lists');	//车源
+// Route::match(['get','post'], 'admin/vehicle/add', 'Admin\Resource\VehicleController@add');
+
+Route::get('admin/rc/lists', 'Admin\Resource\RcController@lists');
+Route::match(['get','post'],'admin/rc/add', 'Admin\Resource\RcController@add');
 
 #conf
 Route::get('admin/conf', 'Admin\Menu\MenuController@index');
@@ -65,5 +70,5 @@ Route::get('admin/conf/edit_menu/', 'Admin\Menu\MenuController@editMenuItem');
 
 Route::get('captcha/{tmp}', 'CaptchaController@captcha');
 
-Route::get('vehicles', 'Website\Resources\VehiclesController@lists');	//搜索车源
-Route::get('merchandise', 'Website\Resources\MerchandiseController@lists');
+// Route::get('vehicles', 'Website\Resources\VehiclesController@lists');	//搜索车源
+// Route::get('merchandise', 'Website\Resources\MerchandiseController@lists');

@@ -51,7 +51,8 @@ class MenuController extends ABaseController {
 					'name'	=> '',
 					'icon'	=> '',
 					'sort'	=> '',
-					'path'	=> ''
+					'path'	=> '',
+					'level'	=> ''
 				);
 		}
 
@@ -65,7 +66,7 @@ class MenuController extends ABaseController {
 	*/
 	public function saveMenuForm()
 	{
-		$vali = array('name', 'icon', 'path', 'root', 'sort');
+		$vali = array('name', 'icon', 'path', 'root', 'sort', 'group', 'level');
 		$menuArr = \Input::only($vali);
 		if($menuArr['name'] == '')
 		{

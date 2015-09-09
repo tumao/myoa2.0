@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Admin\Resource;
 
 use App\Http\Controllers\Admin\ABaseController;
+use App\Picture;
 
 class RcController extends ABaseController {
 
@@ -12,7 +13,7 @@ class RcController extends ABaseController {
 	public function index()
 	{
 		//
-		return \Redirect::to('admin/rc/vehicle');
+		// return \Redirect::to('admin/rc/vehicle');
 	}
 
 
@@ -21,69 +22,22 @@ class RcController extends ABaseController {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function lists()
 	{
-		//
+		$pics = Picture::all();
+		return view('default.rc.resources.lists')->with('pics', $pics);
 	}
 
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
+	public function add()
 	{
-		//
+		if(\Request::hasFile('photo'))
+		{
+			$file = \Request::file('photo');
+			$pic = $this->addPic($file); 	//参数 file
+			// return \Redirect::to('admin/rc/lists');
+			echo '图片上传成功...';exit;
+		}
+		return view('default.rc.resources.uploadForm');
 	}
-
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
-
 
 }

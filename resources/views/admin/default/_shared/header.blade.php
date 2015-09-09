@@ -22,9 +22,9 @@
     <link href='/default/framework/css/elfinder.min.css' rel='stylesheet'>
     <link href='/default/framework/css/elfinder.theme.css' rel='stylesheet'>
     <link href='/default/framework/css/jquery.iphone.toggle.css' rel='stylesheet'>
-    <link href='/default/framework/css/uploadify.css' rel='stylesheet'>
     <link href='/default/framework/css/animate.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="/default/framework/css/artDialog.default.css">
+    <link rel="stylesheet" type="text/css" href="/default/app/css/common.css">
 
     <!-- jQuery -->
     <script src="/default/framework/bower_components/jquery/jquery.min.js"></script>

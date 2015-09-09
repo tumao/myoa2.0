@@ -3,7 +3,7 @@
 <script src="/default/app/js/vehicle.js"></script>
 <div class="box-inner">
     <div class="box-header well" data-original-title="">
-        <h2><a href="#" onclick="User.form()"><i class="glyphicon glyphicon-plus-sign"></i>添加</a></h2>
+        <h2><a href="#" onclick="Vehicle.form()"><i class="glyphicon glyphicon-plus-sign"></i>添加</a></h2>
     </div>
     <div class="box-content">
         <table class="table table-striped table-bordered bootstrap-datatable datatable responsive">

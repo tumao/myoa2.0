@@ -29,7 +29,7 @@
                     <td>{{$item->sort}}</td>
                     <td>{{$item->path}}</td>
                     <td class="center">
-                        <a class="btn btn-warning" href="#" onclick="Menu.add_son_menu({{$item->id}}, {{$item->group}},{{$item->level}})">
+                        <a class="btn btn-warning" href="#" onclick="Menu.add_son_menu({{$item->id}}, {{$item->id}},{{$item->level}})">
                             <i class="glyphicon glyphicon-qrcode icon-white"></i>
                             添加子菜单
                         </a>

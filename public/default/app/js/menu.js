@@ -1,5 +1,5 @@
 var Menu = {
-	form : function(id,rid){		//id为要修改的菜单的id，rid为rootid即父id
+	form : function(id,rid,level){		//id为要修改的菜单的id，rid为rootid即父id
 		var form_title = '添加菜单';
 		var url = '/admin/conf/add_menu_form';
 		var ajaxUrl = '/admin/conf/save_menu_form';
@@ -38,6 +38,12 @@ var Menu = {
 					formData['id'] = id;
 				}
 
+				formData['level'] = level + 1;
+				if(rid !='' && rid != 0)
+				{
+					formData['group'] = rid;
+				}
+
 				if(Check.menu_form(formData, form)){
 					$.ajax({
 						type 	: 'GET',
@@ -45,7 +51,6 @@ var Menu = {
 						dataType: 'json',
 						data 	: formData,
 						success : function(rp){
-							// art.dialog.tips(rp.message, 2);
 							location.reload();
 						}
 					});
@@ -60,8 +65,8 @@ var Menu = {
 		});
 
 	},
-	add_son_menu : function(id){
-		Menu.form('',id);
+	add_son_menu : function(id,group,level){
+		Menu.form('',id,level);
 	},
 	edit : function(id){
 		Menu.form(id);
@@ -70,7 +75,6 @@ var Menu = {
 		art.dialog({
 			lock 	: true,
 			content : '删除的目录包括其子目录会<br/>一并删除，且删除后无法恢复！',
-			// icon 	: 'error',
 			ok 		: function(){
 				$.ajax({
 					type 	: 'GET',
