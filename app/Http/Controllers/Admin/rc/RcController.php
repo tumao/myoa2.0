@@ -13,7 +13,7 @@ class RcController extends ABaseController {
 	public function index()
 	{
 		//
-		// return \Redirect::to('admin/rc/vehicle');
+		return \Redirect::to('admin/rc/merchandise');
 	}
 
 

@@ -7,7 +7,7 @@ class Vehicle extends Model {
 	//
 	protected $table = 'vehicle';
 
-	protected $fillable = array(
+	public $fillable = array(
 							'from_area_id',
 							'to_area_id',
 							'driver_name',

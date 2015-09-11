@@ -50,10 +50,14 @@ Route::get('admin/dashboard/census', 'Admin\Index\CensusController@index');
 #rc 资源
 Route::get('admin/rc', 'Admin\Resource\RcController@index');
 Route::get('admin/rc/merchandise', 'Admin\Resource\MerchandiseController@lists');	//货源
-Route::get('admin/merchandise/add', 'Admin\Resource\MerchandiseController@add');
+Route::match(['get','post'],'admin/merchandise/add', 'Admin\Resource\MerchandiseController@add');
+Route::match(['get','post'],'admin/merchandise/edit/{id}', 'Admin\Resource\MerchandiseController@edit');
+Route::get('admin/merchandise/delete/{id}', 'Admin\Resource\MerchandiseController@delete');
 
 Route::get('admin/rc/vehicle', 'Admin\Resource\VehicleController@lists');	//车源
-// Route::match(['get','post'], 'admin/vehicle/add', 'Admin\Resource\VehicleController@add');
+Route::match(['get', 'post'], 'admin/vehicle/add', 'Admin\Resource\VehicleController@add');
+Route::match(['get', 'post'], 'admin/vehicle/edit/{id}', 'Admin\Resource\VehicleController@edit');
+Route::get('admin/vehicle/delete/{id}', 'Admin\Resource\VehicleController@delete');
 
 Route::get('admin/rc/lists', 'Admin\Resource\RcController@lists');
 Route::match(['get','post'],'admin/rc/add', 'Admin\Resource\RcController@add');

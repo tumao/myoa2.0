@@ -3,7 +3,7 @@
 <script src="/default/app/js/merchandise.js"></script>
 <div class="box-inner">
     <div class="box-header well" data-original-title="">
-        <h2><a href="#" onclick="User.form()"><i class="glyphicon glyphicon-plus-sign"></i>添加</a></h2>
+        <h2><a href="javascript:void(0)" onclick="Merchandise.form()"><i class="glyphicon glyphicon-plus-sign"></i>添加</a></h2>
     </div>
     <div class="box-content">
         <table class="table table-striped table-bordered bootstrap-datatable datatable responsive">
@@ -12,15 +12,15 @@
                     <th>ID</th>
                     <th>从</th>
                     <th>到</th>
-                    <th>司机</th>
-                    <th>xx</th>
+                    <th>发货时间</th>
+                    <th>联系人</th>
                     <th>联系电话</th>
-                    <th>车牌</th>
-                    <th>车辆类型</th>
-                    <th>车体状况</th>
-                    <th>车长</th>
-                    <th>载重</th>
-                    <th>location_id</th>
+                    <th>货物名称</th>
+                    <th>货物类型</th>
+                    <th>运输类型</th>
+                    <th>货物重量</th>
+                    <th>货物体积</th>
+                    <th>货物状态</th>
                     <th>备注</th>
                     <th>账户id</th>
                     <th>发布时间</th>
@@ -46,11 +46,11 @@
                     <td>{{$x->user_id}}</td>
                     <td>{{$x->create_time}}</td>
                     <td class="center">
-                        <a class="btn btn-info" href="#" onclick="User.form({{$user->id}})">
+                        <a class="btn btn-info" href="#" onclick="Merchandise.edit({{$x->id}})">
                             <i class="glyphicon glyphicon-edit icon-white"></i>
                             编辑
                         </a>
-                        <a class="btn btn-danger" href="#" onclick="User.del({{$user->id}})">
+                        <a class="btn btn-danger" href="#" onclick="Merchandise.delete({{$x->id}})">
                             <i class="glyphicon glyphicon-trash icon-white"></i>
                             删除
                         </a>

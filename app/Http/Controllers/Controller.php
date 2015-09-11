@@ -51,4 +51,22 @@ abstract class Controller extends BaseController {
 		return $ext;
 	}
 
+	public function getAllProvinces()
+	{
+		$province = \DB::select("SELECT * FROM `province`");
+		return $province;
+	}
+
+	public function getAllCities($province_id)
+	{
+		$cities = \DB::select("SELECT * FROM `city` WHERE `father` = $province_id ");
+		return $cities;
+	}
+
+	public function getAllAreas($city_id)
+	{
+		$areas = \DB::select("SELECT * FROM `area` WHERE `father` = $city_id");
+		return $areas;
+	}
+
 }
