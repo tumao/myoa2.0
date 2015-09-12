@@ -74,5 +74,13 @@ Route::get('admin/conf/edit_menu/', 'Admin\Menu\MenuController@editMenuItem');
 
 Route::get('captcha/{tmp}', 'CaptchaController@captcha');
 
-Route::get('vehicles', 'Website\Resources\VehiclesController@lists');	//搜索车源
-Route::get('merchandise', 'Website\Resources\MerchandiseController@lists');
+Route::get('vehicles', 'Website\Resources\VehiclesController@lists');	//搜索车源,车源列表
+Route::get('merchandise', 'Website\Resources\MerchandiseController@lists'); //搜索货源，货源列表
+
+Route::match(['get','post'], 'publish/merchandise', 'Website\Resources\MerchandiseController@add');	// 发布信息--货源
+Route::match(['get','post'], 'publish/vehicle', 'Website\Resources\VehiclesController@add');	//发布信息--车源
+
+Route::match(['get', 'post'], 'user/self', 'Website\User\UserController@self');
+Route::match(['get', 'post'], 'user/secret', 'Website\User\UserController@secret');
+Route::match(['get', 'post'], 'user/vehicle', 'Website\User\UserController@vehicle');
+Route::match(['get', 'post'], 'user/merchandise', 'Website\User\UserController@merchandise');

@@ -30,6 +30,7 @@ return array(
     'App\\Http\\Controllers\\Website\\Home\\IndexController' => $baseDir . '/app/Http/Controllers/Website/home/IndexController.php',
     'App\\Http\\Controllers\\Website\\Resources\\MerchandiseController' => $baseDir . '/app/Http/Controllers/Website/resources/MerchandiseController.php',
     'App\\Http\\Controllers\\Website\\Resources\\VehiclesController' => $baseDir . '/app/Http/Controllers/Website/resources/VehiclesController.php',
+    'App\\Http\\Controllers\\Website\\User\\UserController' => $baseDir . '/app/Http/Controllers/Website/user/UserController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
     'App\\Http\\Middleware\\RedirectIfAuthenticated' => $baseDir . '/app/Http/Middleware/RedirectIfAuthenticated.php',
