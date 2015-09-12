@@ -13,7 +13,7 @@ class MerchandiseController extends BaseController
 	public function lists()
 	{
 		$mer = \DB::table('merchandise')->get();
-		return view('website::resources.merchandise.list')->with('lists', $mer);
+		return view('website::resources.merchandise.lists')->with('lists', $mer);
 	}
 
 }

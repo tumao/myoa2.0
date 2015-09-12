@@ -6,9 +6,9 @@
 		</div>
 		<div class="nav">
 			<ul>
-				<li><a href="" title="">首页</a></li>
-				<li><a href="" title="">搜索车源</a></li>
-				<li><a href="" title="">搜索货源</a></li>
+				<li><a href="/" title="">首页</a></li>
+				<li><a href="/vehicles" title="">搜索车源</a></li>
+				<li><a href="/merchandise" title="">搜索货源</a></li>
 				<li><a href="" title="">发布信息</a></li>
 				<li><a href="" title="">个人信息</a></li>
 			</ul>

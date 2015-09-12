@@ -15,5 +15,4 @@ class VehiclesController extends BaseController
 		$vehicles = \DB::table('vehicle')->get();
 		return view('website::resources.vehicles.lists')->with('lists',$vehicles);
 	}
-
 }

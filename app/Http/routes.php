@@ -74,5 +74,5 @@ Route::get('admin/conf/edit_menu/', 'Admin\Menu\MenuController@editMenuItem');
 
 Route::get('captcha/{tmp}', 'CaptchaController@captcha');
 
-// Route::get('vehicles', 'Website\Resources\VehiclesController@lists');	//搜索车源
-// Route::get('merchandise', 'Website\Resources\MerchandiseController@lists');
+Route::get('vehicles', 'Website\Resources\VehiclesController@lists');	//搜索车源
+Route::get('merchandise', 'Website\Resources\MerchandiseController@lists');
