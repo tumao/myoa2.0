@@ -1,4 +1,4 @@
-@extends('website::main')
+	@extends('website::main')
 @section('content')
 <link rel="stylesheet" type="text/css" href="/default/app/css/vehicles.css">
 <div class="containers">
@@ -32,17 +32,21 @@
 				</div>
 			</div>
 			<div class="att">
-				<div class="att_key">车辆类型:</div>
+				<div class="att_key">车体状况:</div>
 				<div class="att_val">
 					<ul>
 						<li>不限</li>
-						<li>货车</li>
-						<li>自卸车</li>
-						<li>冷藏车</li>
-						<li>油罐车</li>
-						<li>保温车</li>
-						<li>起重车</li>
-						<li>中型罐车</li>
+						<li>平板车</li>
+						<li>高栏</li>
+						<li>前四后八</li>
+						<li>半挂</li>
+						<li>箱式</li>
+						<li>单桥</li>
+						<li>四桥</li>
+						<li>低桥</li>
+						<li>三桥</li>
+						<li>后八轮</li>
+						<li>敞篷</li>
 					</ul>
 				</div>
 			</div>

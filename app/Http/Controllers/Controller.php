@@ -69,4 +69,48 @@ abstract class Controller extends BaseController {
 		return $areas;
 	}
 
+	public function getArea($id)
+	{
+		$area = \DB::select('SELECT * FROM `area` WHERE `areaID` = :areaID LIMIT 1', ['areaID'=>$id]);
+		return $area[0];
+	}
+
+	public function getCity($id)
+	{
+		$city = \DB::select('SELECT * FROM `city` WHERE `cityID` = :cityID ', ['cityID'=> $id]);
+		return $city[0];
+	}
+
+	public function getProvince($id)
+	{
+		$province = \DB::select('SELECT * FROM `province` WHERE `provinceID`=:provinceID', ['provinceID'=> $id]);
+		return $province[0];
+	}
+
+	public function getMerchandiseType($id)
+	{
+		$type = \DB::select('SELECT * FROM `merchandise_type` WHERE `id`=:id', ['id'=> $id]);
+		return $type['0'];
+	}
+
+	public function getMerchandiseStatus($id)
+	{
+		$status = \DB::select('SELECT * FROM `merchandise_status` WHERE `id` =:id', ['id'=>$id]);
+		return $status['0'];
+	}
+
+	public function getVehicleBodyType($id)
+	{
+		$type = \DB::select('SELECT * FROM `vehicle_body_type` WHERE `id` =:id', ['id'=> $id]);
+		return $type['0'];
+	}
+
+	public function getVehicleType($id)
+	{
+		$type = \DB::select('SELECT * FROM `vehicle_type` WHERE `id` =:id', ['id'=>$id]);
+		return $type['0'];
+	}
+
+
+
 }
