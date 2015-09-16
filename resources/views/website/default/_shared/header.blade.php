@@ -15,5 +15,12 @@
   <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
   <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="/default/framework/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- add++++ -->
+	<script src="/default/app/js/shipping-home.js"></script>
 	<link rel="shortcut icon" href="/default/app/img/favicon.ico">
 </head>

@@ -63,7 +63,6 @@ var Vehicle = {
 
 	},
 	edit : function(id){
-		alert(id);
 		Vehicle.form(id);
 	},
 	delete: function(id){
