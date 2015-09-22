@@ -21,8 +21,9 @@ class VehiclesController extends BaseController
 
 	public function lists()
 	{
-		$vali = array('vehicle_type', 'vehicle_body_type', 'vehicle_length', 'vehicle_weight');
+		$vali = array('vehicle_type', 'vehicle_body_type', 'vehicle_length', 'vehicle_weight','page');
 		$checked = array();
+
 		foreach($vali as $item)
 		{
 			if(\Request::input($item) != 0)
@@ -56,7 +57,13 @@ class VehiclesController extends BaseController
 		$vehicle_type = $this->getAllVehicleTypes(); //所有的货车类型
 		$vehicle_body_type = $this->getAllVehicleBodyTypes(); //获取所有的货车车身类型
 		$where = '';
-		$vehicles = $this->vehicle->search($checked['from'], $checked['to'],$checked['vehicle_type'],$checked['vehicle_body_type'],$checked['vehicle_weight'], $checked['vehicle_length']);
+		if($checked['page'] == '')
+		{
+			$checked['page'] = 1;
+		}
+		$xdata = $this->vehicle->search($checked['from'], $checked['to'],$checked['vehicle_type'],$checked['vehicle_body_type'],$checked['vehicle_weight'], $checked['vehicle_length'], $checked['page']);
+		$vehicles = $xdata['vehicles'];	//货车信息
+		$sum_page = $xdata['sum_page'];	//总页数
 		foreach($vehicles as & $x)
 		{
 			$vt = $this->getVehicleType($x->vehicle_type);
@@ -87,6 +94,7 @@ class VehiclesController extends BaseController
 		$data['vehicle_length'] = $this->vehicle_length_formate();
 		$data['vehicle_weight'] = $this->vehicle_weight_formate();
 		$data['vehicles'] = $vehicles;
+		$data['sum_page'] = $sum_page;
 		return view('website::resources.vehicles.lists')->with('data',$data);
 	}
 
@@ -97,6 +105,7 @@ class VehiclesController extends BaseController
 
 		$input_arr = array();
 		$data_frame = $this->data_frame();
+		$this->areaSelectPlugin();
 		if($method == 'POST')
 		{
 			foreach($validate as $x)
@@ -106,6 +115,8 @@ class VehiclesController extends BaseController
 					$input_arr[$x] = \Request::input($x);
 				}
 			}
+			$user_id = 1;
+			$input_arr['user_id'] = $user_id;
 			$vehicle = Vehicle::create($input_arr);
 			if($vehicle)
 			{
@@ -116,6 +127,8 @@ class VehiclesController extends BaseController
 				return array('code'=>-1, 'message'=> '添加失败');
 			}
 		}
+		$data_frame['vehicle_type'] = $this->getAllVehicleType();
+		$data_frame['vehicle_body_type'] = $this->getAllVehicleBodyType();
 		return view('website::resources.vehicles.publish')->with('vehicle', $data_frame);
 	}
 
@@ -221,6 +234,39 @@ class VehiclesController extends BaseController
 			$ids[] = $item->areaID;
 		}
 		return implode(',', $ids);
+	}
+
+	public function getAreas()
+	{
+		$provinceID = \Request::input('provinceID');
+		$cityID = \Request::input('cityID');
+
+		if(!empty( $provinceID))
+		{
+			$city = $this->getAllCities($provinceID);
+			if(!empty($city))
+			{
+				return $city;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		if(!empty( $cityID))
+		{
+			$area = $this->getAllAreas($cityID);
+			if(!empty($area))
+			{
+				return $area;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
 	}
 
 }

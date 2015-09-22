@@ -126,10 +126,11 @@ class Vehicle extends Model {
 	}
 
 	//  from 为始发地 to 为终点
-	public function search($from = '', $to = '', $vehicle_type ='', $vehicle_body_type = '', $vehicle_weight = '', $vehicle_length= '')
+	public function search($from = '', $to = '', $vehicle_type ='', $vehicle_body_type = '', $vehicle_weight = '', $vehicle_length= '', $page = 1)
 	{
 		$from_ids = '';
 		$to_ids = '';
+		$page_limit = 5; // 每页显示的信息的条数
 		if($from != '')
 		{
 			$from_ids = $this->search_area_ids($from);
@@ -190,7 +191,15 @@ class Vehicle extends Model {
 		}
 		$sql = $sql.$where;
 		$vehicles = \DB::select($sql);
-		return $vehicles;
-
+		$sum_pages = ceil(count($vehicles) / $page_limit);	//总页数
+		if($page)
+		{
+			$offset = ($page - 1) * $page_limit;
+			$limit = " ORDER BY id DESC LIMIT $offset, $page_limit ";
+			$vehicles = \DB::select($sql.$limit);
+		}
+		$data['vehicles'] = $vehicles;
+		$data['sum_page'] = $sum_pages;
+		return $data;
 	}
 }

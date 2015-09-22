@@ -13,8 +13,8 @@ class IndexController extends BaseController
 	public function index()
 	{
 		$data = array();
-		$merchandise = \DB::select('SELECT * FROM `merchandise` ORDER BY id desc LIMIT 5');
-		$vehicle = \DB::select('SELECT * FROM `vehicle` ORDER BY id desc LIMIT 5');
+		$merchandise = \DB::select('SELECT * FROM `merchandise` ORDER BY id DESC LIMIT 5');
+		$vehicle = \DB::select('SELECT * FROM `vehicle` ORDER BY id DESC LIMIT 5');
 		foreach($merchandise as & $x)
 		{
 			$from_area = $this->getArea($x->from_area_id);

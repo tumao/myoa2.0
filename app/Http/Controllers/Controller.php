@@ -99,6 +99,24 @@ abstract class Controller extends BaseController {
 		return $status['0'];
 	}
 
+	public function getMerchandiseShippiingMethod($id)
+	{
+		$shipping_method = \DB::select('SELECT * FROM `merchandise_shipping_method` WHERE `id`=:id', ['id'=>$id]);
+		return $shipping_method[0];
+	}
+
+	public function getAllMerchandiseType()
+	{
+		$merchandise_type = \DB::select('SELECT * FROM `merchandise_type`');
+		return $merchandise_type;
+	}
+
+	public function getAllMerchandiseSM()
+	{
+		$m_shipping_method = \DB::select('SELECT * FROM `merchandise_shipping_method`');
+		return $m_shipping_method;
+	}
+
 	public function getVehicleBodyType($id)
 	{
 		$type = \DB::select('SELECT * FROM `vehicle_body_type` WHERE `id` =:id', ['id'=> $id]);
@@ -111,6 +129,39 @@ abstract class Controller extends BaseController {
 		return $type['0'];
 	}
 
+	public function getAllVehicleType()
+	{
+		$vehicleType = \DB::select('SELECT * FROM `vehicle_type` ORDER BY id ASC');
+		return $vehicleType;
+	}
+
+	public function getAllVehicleBodyType()
+	{
+		$vbodyType = \DB::select('SELECT * FROM `vehicle_body_type` ORDER BY id ASC');
+		return $vbodyType;
+	}
+
+	// 地址级联选选项
+	public function areaSelectPlugin()
+	{
+		$province = $this->getAllProvinces();
+		$default_pro = $province['0'];
+		$city = $this->getAllCities($default_pro->provinceID);
+		$default_city = $city['0'];
+		$area = $this->getAllAreas($default_city->id);
+		$select['province'] = $province;
+		$select['city'] = $city;
+		$select['area'] = $area;
+		\View::share('area', $select);
+	}
+
+	// 发送电子邮件
+	public function sendMail($to, $subject, $message)
+	{
+		\Mail::send('default._shared.mail',['key'=> 'val'],function($message){
+			$message->to('rchangchun@126.com', 'John Smith')->subject('Welcome!');
+		});
+	}
 
 
 

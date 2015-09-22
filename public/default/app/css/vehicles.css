@@ -80,3 +80,18 @@
 .sr_cell > div{
 	margin-bottom: 5px;
 }
+.page{
+	text-align: center;
+	margin-top: 15px;
+}
+.page > a{
+	border: 1px solid #f3f3f3;
+	padding: 4px;
+}
+.checkedon{
+	color: white;
+	background: #ff4300;
+}
+.check{
+	color: #ff6600;
+}
