@@ -48,23 +48,33 @@ class UserController extends BaseController
 		$method = \Request::method();
 		if($method == 'POST')
 		{
+			$input = array();
 			$email = \Request::input('email');
 			$password = \Request::input('password');
 			$phone = \Request::input('phone');
+			$username = \Request::input('nickname');
+
+			$input['email'] = $email;
+			$input['password'] = $password;
+			if($phone)
+			{
+				$input['phone'] = $phone;
+			}
+			if($username)
+			{
+				$input['username'] = $username;
+			}
 			try
 			{
 			    // Let's register a user.
-			    $user = \Sentry::register(array(
-			        'email'    	=> $email,
-			        'password' 	=> $password,
-			        'phone'		=> $phone,
-			    ));
+			    $user = \Sentry::register($input);
+			    $group = \Sentry::findGroupByName('普通用户');
+			    $user->addGroup($group);
 
 			    // Let's get the activation code
 			    $activationCode = $user->getActivationCode();
-			    
-
 			    // Send activation code to the user so he can activate the account
+			    return array('code' => 1, 'message'=> '注册成功!');
 			}
 			catch (\Cartalyst\Sentry\Users\LoginRequiredException $e)
 			{
@@ -72,12 +82,10 @@ class UserController extends BaseController
 			}
 			catch (\Cartalyst\Sentry\Users\PasswordRequiredException $e)
 			{
-			    // echo 'Password field is required.';
 			    return array('code' => -1, 'message'=> '密码栏必须填写');
 			}
 			catch (\Cartalyst\Sentry\Users\UserExistsException $e)
 			{
-			    // echo 'User with this login already exists.';
 			    return array('code' => -2, 'message' => '用户名已经存在');
 			}
 		}
@@ -115,5 +123,55 @@ class UserController extends BaseController
 		    // echo 'User is already activated.';
 		    return array('code'=> -2, 'message' => '用户已经被激活');
 		}
+	}
+
+	// 用户登录
+	public function load()
+	{
+		$method = \Request::method();
+
+		if($method == 'POST')
+		{
+			$input = \Request::only('email','password','remember');
+			try
+			{
+				$remember = $input['remember'] ? $input['remember'] : false;
+				$auths = array(
+					'email'	=> $input['email'],
+					'password'	=> $input['password']
+					);
+				$result = \Sentry::authenticate( $auths, $remember);
+				if($result)
+				{
+					\Session::put('currentUser', $result);		//对象存入sesson
+					return array('code'=>1, 'message'=>trans("user.LOGIN_SUCCESS"), 'redirect_url' => '/admin/dashboard');
+				}
+			}
+			catch (\Cartalyst\Sentry\Users\LoginRequiredException $e)
+			{
+			    return array('code'=>-1, 'message'=>trans('user.LOGIN_FIELD_REQUIRED'));
+			}
+			catch (\Cartalyst\Sentry\Users\UserNotFoundException $e)
+			{
+			    return array('code'=>-2, 'message'=> trans('user.USER_NOT_FOUND'));
+			}
+			catch (\Cartalyst\Sentry\Users\UserNotActivatedException $e)
+			{
+			    return array('code'=>-3, 'message'=>trans('user.USER_NOT_ACTIVATED'));
+			}
+
+			catch (\Cartalyst\Sentry\Throttling\UserSuspendedException $e)
+			{
+			    $time = $throttle->getSuspensionTime();
+
+			    return array('code'=>-4, 'message'=>trans('user.USER_SUSPENDED ').$time.trans('common.MINUTES'));
+			}
+			catch (\Cartalyst\Sentry\Throttling\UserBannedException $e)
+			{
+			    return array('code'=>-5, 'message'=> trans('user.USER_BANNED'));
+			}
+		}
+
+		return view('website::user.user.load');
 	}
 }

@@ -1,0 +1,21 @@
+body{
+	background-color: #f0f0f0;
+}
+.footer{
+	border-top: 1px solid;
+}
+.containers{
+	min-height: 500px;
+	background-color: #fff;
+	padding: 50px;
+}
+.title{
+	display: block;
+	float: left;
+	width: 100px;
+	text-align: right;
+	margin-right: 20px;
+}
+.right_part_cell{
+	margin-top: 20px;
+}

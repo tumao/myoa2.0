@@ -15,9 +15,9 @@
 		</div>
 		<div class="nav-right">
 			<ul>
-				<li><a href="#" title="注册">注册</a></li>
+				<li><a href="/user/register" title="注册">注册</a></li>
 				<li><a href="#">/</a></li>
-				<li><a href="#" title="登录">登录</a></li>
+				<li><a href="/user/load" title="登录">登录</a></li>
 			</ul>
 		</div>
 	</div>
