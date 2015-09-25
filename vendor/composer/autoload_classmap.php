@@ -36,6 +36,7 @@ return array(
     'App\\Http\\Middleware\\RedirectIfAuthenticated' => $baseDir . '/app/Http/Middleware/RedirectIfAuthenticated.php',
     'App\\Http\\Middleware\\SentryAuthMiddleware' => $baseDir . '/app/Http/Middleware/SentryAuthMiddleware.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
+    'App\\Http\\Middleware\\WebsiteMiddleware' => $baseDir . '/app/Http/Middleware/WebsiteMiddleware.php',
     'App\\Http\\Requests\\Request' => $baseDir . '/app/Http/Requests/Request.php',
     'App\\Menu_catelogue' => $baseDir . '/app/Model/Menu_catelogue.php',
     'App\\Merchandise' => $baseDir . '/app/Model/Merchandise.php',

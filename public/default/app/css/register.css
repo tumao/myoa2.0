@@ -8,6 +8,7 @@ body{
 	min-height: 500px;
 	background-color: #fff;
 	padding: 50px;
+	width: 780px;
 }
 .title{
 	display: block;
