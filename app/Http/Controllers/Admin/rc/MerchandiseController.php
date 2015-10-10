@@ -20,6 +20,28 @@ class MerchandiseController extends ABaseController
 	public function lists()
 	{
 		$mer = \DB::select('SELECT * FROM `merchandise` ORDER BY id desc');
+		foreach($mer as & $x)
+		{
+			$area = $this->getArea($x->from_area_id);	//起始地
+			$city = $this->getCity($area->father);
+			$province  = $this->getProvince($city->father);
+			$x->from['area'] = $area->area;
+			$x->from['city'] = $city->city;
+			$x->from['province'] = $province->province;
+
+			$area = $this->getArea($x->to_area_id);	// 目的地
+			$city = $this->getCity($area->father);
+			$province  = $this->getProvince($city->father);
+			$x->to['area'] = $area->area;
+			$x->to['city'] = $city->city;
+			$x->to['province'] = $province->province;
+
+			$merchandise_type = $this->getMerchandiseType($x->merchandise_type);	//货物类型
+			$x->merchandise_type = $merchandise_type->type_name;
+
+			$merchandise_shipping_method = $this->getMerchandiseShippiingMethod($x->merchandise_shipping_method);
+			$x->merchandise_shipping_method = $merchandise_shipping_method->shipping_method;
+		}
 		return view('default.rc.merchandise.lists')->with('lists', $mer);
 	}
 
@@ -61,6 +83,7 @@ class MerchandiseController extends ABaseController
 		$place['city'] = $cities;
 		$place['area'] = $areas;
 		$data_frame['place'] = $place;
+		$this->areaSelectPlugin();	//级联地址插件
 
 		return view('default.rc.merchandise.form')->with('mer', $data_frame);
 
@@ -91,7 +114,8 @@ class MerchandiseController extends ABaseController
 			Merchandise::where('id','=', $id)->update($input_arr);
 			return array('code'=> 1, 'message'=> '数据更新成功');
 		}
-
+		$data->merchandise_type = $this->getAllMerchandiseType();
+		$data->merchandise_shipping_method = $this->getAllMerchandiseSM();
 		return view('default.rc.merchandise.form')->with('mer', $data);
 	}
 

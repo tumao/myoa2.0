@@ -24,9 +24,22 @@
 				@endforeach
 			</select>
 		</div>
-		<div class="right_part_cell"><span class='title'>车身长度:</span><span><input id="vehicle_length" type="text" value="" /></span></div>
-		<div class="right_part_cell"><span class='title'>车辆载重:</span><span><input id="vehicle_weight" type="text" value="" /></span></div>
-		<div class="right_part_cell"><span class='title'>常驻地址:</span><span><input id="location_id" type="text" value="" /></span></div>
+		<div class="right_part_cell"><span class='title'>车身长度:</span><span><input id="vehicle_length" type="text" value="" /></span>米</div>
+		<div class="right_part_cell"><span class='title'>车辆载重:</span><span><input id="vehicle_weight" type="text" value="" /></span>吨</div>
+		<div class="right_part_cell location"><span class='title'>常住地:</span>
+			<select name="province" class="province">
+				<option value="000">省份</option>
+				@foreach($area['province'] as $item)
+				<option value="{{$item->provinceID}}">{{$item->province}}</option>
+				@endforeach
+			</select>
+			<select name="city" class="city">
+				<option>城市</option>
+			</select>
+			<select name="area" class="area">
+				<option value="000">区</option>
+			</select>
+		</div>
 		<div class="right_part_cell"><span class='title'>备注信息:</span><span><input id="info" type="text" value="" /></span></div>
 		<button onclick="Vehicle.add()" class="submit">保存</button>
 	</div>

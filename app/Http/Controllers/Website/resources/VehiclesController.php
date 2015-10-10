@@ -19,6 +19,7 @@ class VehiclesController extends BaseController
 		$this->validate = $this->vehicle->fillable;
 	}
 
+	// 列表
 	public function lists()
 	{
 		$vali = array('vehicle_type', 'vehicle_body_type', 'vehicle_length', 'vehicle_weight','page');
@@ -98,6 +99,7 @@ class VehiclesController extends BaseController
 		return view('website::resources.vehicles.lists')->with('data',$data);
 	}
 
+	// 添加
 	public function add()
 	{
 		$method = \Request::method();
@@ -132,17 +134,45 @@ class VehiclesController extends BaseController
 		return view('website::resources.vehicles.publish')->with('vehicle', $data_frame);
 	}
 
-	public function edit()
+	// 详情
+	public function detail($id)
+	{
+		$data = array();
+		$detail = Vehicle::find($id);
+		$vehicle_type = $this->getAllVehicleTypes(); //所有的货车类型
+		$vehicle_body_type = $this->getAllVehicleBodyTypes(); //获取所有的货车车身类型
+		$data['vehicle_type'] = $vehicle_type;
+		$data['vehicle_body_type'] = $vehicle_body_type;
+		$data['vehicle_length'] = $this->vehicle_length_formate();	// 顶端搜索过滤项
+		$data['vehicle_weight'] = $this->vehicle_weight_formate();	// 顶端搜索过滤项
+
+		$vehicle_type = $this->getVehicleType($detail->vehicle_type);
+		$vehicle_body_type = $this->getVehicleBodyType($detail->vehicle_body_type);
+		$detail->vehicle_type = $vehicle_type->type_name;
+		$detail->vehicle_body_type = $vehicle_body_type->body_type_name;
+
+		$detail->from_area_id = $this->getDetailAreaName($detail->from_area_id);
+		$detail->to_area_id = $this->getDetailAreaName($detail->to_area_id);
+
+
+		$area = $this->getArea($detail->location_id);
+		$city = $this->getCity($area->father);
+		$province = $this->getProvince($city->father);
+
+		$data['location']['province'] = $province->province;
+		$data['location']['city'] = $city->city;
+		$data['location']['area'] = $area->area;
+
+		$data['detail'] = $detail;
+		return view('website::resources.vehicles.detail')->with('data',$data);
+	}
+
+	// 修改
+	public function edit($id = '')
 	{
 		$method = \Request::method();
-		if(isset($id))
-		{
-			$data = Vehicle::find($id);
-		}
-		else
-		{
-			return array('code'=> -1, 'message' => '缺少参数id');
-		}
+		$data = array();
+
 		if($method == 'POST')
 		{
 			$input_arr = array();
@@ -154,10 +184,56 @@ class VehiclesController extends BaseController
 					$input_arr[$x] = \Request::input($x);
 				}
 			}
-			Vehicle::where('id', '=', $id)->update($input_arr);
+			\DB::table('vehicle')->where('id',$id)->update($input_arr);
 			return array('code'=> 1, 'message'=> '数据更新成功');
 		}
-		return view('website::resources.vehicles.lists')->with('vehicle', $data);
+		$user = \Sentry::getUser();
+		$vehicle = \DB::select('SELECT * FROM `vehicle` WHERE `id`=:id AND `user_id`=:uid' ,['id'=>$id,'uid'=>$user->id]);
+		$data['vehicle'] = $vehicle[0];
+		if($data['vehicle'])
+		{
+			$from_area_id =  $data['vehicle']->from_area_id;
+			$to_area_id = $data['vehicle']->to_area_id;
+
+			$area = $this->getArea($from_area_id);
+			$city = $this->getCity($area->father);
+			$province = $this->getProvince($city->father);
+			$from['province'] = $province->provinceID;
+			$from['city'] = $city->cityID;
+			$from['area'] = $area->areaID;
+			$this->areaSelectPlugin($province->provinceID, $city->cityID);	// 起始地
+
+			$area = $this->getArea($to_area_id);
+			$city = $this->getCity($area->father);
+			$province = $this->getProvince($city->father);
+
+			$to['province'] = $province->provinceID;
+			$to['city'] = $city->cityID;
+			$to['area'] = $area->areaID;
+
+			$this->areaSelectPlugin_2($province->provinceID, $city->cityID);	// 目的地
+
+			$location_id = $data['vehicle']->location_id;
+
+			$area = $this->getArea($location_id);
+			$city = $this->getCity($area->father);
+			$province = $this->getProvince($city->father);
+			$location['province'] = $province->provinceID;
+			$location['city'] = $city->cityID;
+			$location['area'] = $area->areaID;
+			$this->areaSelectPlugin_3($province->provinceID, $city->cityID);	// 常住地
+
+			$data['vehicle']->from = $from;
+			$data['vehicle']->to = $to;
+			$data['vehicle']->location = $location;
+		}
+		
+		$vehicle_type = $this->getAllVehicleType();
+		$vehicle_body_type = $this->getAllVehicleBodyType();
+		$data['vehicle_type'] = $vehicle_type;
+		$data['vehicle_body_type'] = $vehicle_body_type;
+
+		return view('website::user.user.edit_vehicle')->with('data', $data);
 	}
 
 	public function delete()

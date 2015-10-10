@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\Website\BaseController;
 use App\Http\Controllers\Controller;
+use App\User;
 
 // 车源
 class UserController extends BaseController
 {
+	private $page_limit = 10;
 
 	public function __construct()
 	{
@@ -21,24 +23,170 @@ class UserController extends BaseController
 
 	public function self()
 	{
-		return view('website::user.user.self');
+
+		if(\Session::has('currentUser'))
+		{
+			$user = \Session::get('currentUser');
+			$user = User::find($user->id);
+		}
+		else
+		{
+			return \Redirect::to('/user/load');
+		}
+		$method = \Request::method();
+		if($method == 'POST')
+		{
+			$input = \Request::only('username', 'phone','email');
+			// \DB::update('update `users` set username =? ,phone =? WHERE email =?', [$input['username'],$input['phone'],$input['email']]);
+			\DB::table('users')	->where('email',$input['email'])
+								->update(['username'=>$input['username'],'phone'=>$input['phone']]);
+			return array('code'=> 1, 'message' => '用户信息修改成功','url'=>'/');
+		}
+		return view('website::user.user.self')->with('user', $user);
 	}
 
 	public function secret()
 	{
+		$method = \Request::method();
+		if($method == 'POST'){
+			$input =  \Request::only('old_password','password');
+			try
+			{
+			    $currentUser = \Sentry::getUser();		//获取当前登录的用户
+			    try
+				{
+				    // Find the user using the user id
+				    $user = \Sentry::findUserById($currentUser->id);
+
+				    if($user->checkPassword($input['old_password']))	// 旧密码正确
+				    {
+				    	$user->password = $input['password'];
+				    	if($user->save())
+				    	{
+				    		return array('code' => 1, 'message' => '新密码设置成功!', 'url' => '/user/self');
+				    	}
+				    }
+				    else 		// 旧密码不正确
+				    {
+				    	return array('code' => -2, 'message' => '旧密码不正确，请重新输入!');
+				    }
+				}
+				catch (\Cartalyst\Sentry\Users\UserNotFoundException $e)
+				{
+				    return array('code'=> -3, 'message' => '当前用户不存在，请重新登陆再试');
+				}
+			}
+			catch (\Cartalyst\Sentry\Users\UserNotFoundException $e)
+			{
+			    return array('code'=> -1, 'message' => '当前用户不存在，请重新登陆再试');
+			}
+		}
 		return view('website::user.user.secret');
 	}
 
 	public function vehicle()
 	{
-		$vehicle = \DB::select('SELECT * FROM `vehicle` ORDER BY id DESC');
-		return view('website::user.user.vehicle')->with('vehicle', $vehicle);
+		$page_limit = $this->page_limit; //每页显示数据的条数
+		$data['vehicle'] = array();
+		if(\Request::input('page'))
+		{
+			$page = \Request::input('page');
+		}
+		else
+		{
+			$page = 1;
+		}
+
+		$offset = ($page - 1) * $page_limit;
+
+		$limit = "LIMIT $offset, $page_limit ";
+
+		try
+		{
+		    $user = \Sentry::getUser();	//获取当前已经登陆的用户
+		}
+		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+		{
+			return array('code'=> -1, 'message' => '用户信息获取失败，请重新登陆！');
+		}
+		$sql = 'SELECT * FROM `vehicle` WHERE user_id =:id ORDER BY id DESC ';
+		$vehicle = \DB::select($sql ,['id'=> $user->id]);
+		$sum_page = ceil(count($vehicle)/$page_limit);
+		$sql = $sql.$limit;
+		$vehicle = \DB::select($sql, ['id' => $user->id]);
+
+		foreach($vehicle as & $item)
+		{
+			$area = $this->getArea($item->from_area_id);
+			$city = $this->getCity($area->father);
+			$province = $this->getProvince($city->father);
+			$item->from['area'] =  $area->area;
+			$item->from['city'] = $city->city;
+			$item->from['province'] = $province->province;
+
+			$area = $this->getArea($item->to_area_id);
+			$city = $this->getCity($area->father);
+			$province = $this->getProvince($city->father);
+			$item->to['area'] =  $area->area;
+			$item->to['city'] = $city->city;
+			$item->to['province'] = $province->province;
+		}
+		$checked['page'] = $page;
+		$data['sum_page'] = $sum_page;
+		$data['vehicle'] = $vehicle;
+		$data['checked'] = $checked;
+		return view('website::user.user.vehicle')->with('data', $data);
 	}
 
 	public function merchandise()
 	{
-		$merchandise = \DB::select('SELECT * FROM `merchandise` ORDER BY id DESC');
-		return view('website::user.user.merchandise')->with('merchandise', $merchandise);
+		$page_limit = $this->page_limit;
+		$data = array();
+		try
+		{
+		    $user = \Sentry::getUser();	//获取当前已经登陆的用户
+		}
+		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+		{
+			return array('code'=> -1, 'message' => '用户信息获取失败，请重新登陆！');
+		}
+		if(\Request::input('page'))	// 获取页码
+		{
+			$page = \Request::input('page');
+		}
+		else 	// 默认的页码
+		{
+			$page = 1;
+		}
+		$sql = 'SELECT * FROM `merchandise` WHERE `user_id`=:user_id ORDER BY id DESC ';
+		$merchandise = \DB::select($sql, ['user_id'=>$user->id]);
+		$sum_page = ceil(count($merchandise) / $page_limit);
+		$offset = ($page -1) * $page_limit;
+		$limit = " LIMIT $offset, $page_limit";
+		$sql = $sql.$limit;
+		$merchandise = \DB::select($sql, ['user_id'=>$user->id]);
+		foreach($merchandise as & $item)
+		{
+			$area = $this->getArea($item->from_area_id);
+			$city = $this->getCity($area->father);
+			$province = $this->getProvince($city->father);
+			$item->from['area'] =  $area->area;
+			$item->from['city'] = $city->city;
+			$item->from['province'] = $province->province;
+
+			$area = $this->getArea($item->to_area_id);
+			$city = $this->getCity($area->father);
+			$province = $this->getProvince($city->father);
+			$item->to['area'] =  $area->area;
+			$item->to['city'] = $city->city;
+			$item->to['province'] = $province->province;			
+
+		}
+		$checked['page'] = $page;
+		$data['sum_page'] = $sum_page;
+		$data['merchandise'] = $merchandise;
+		$data['checked'] = $checked;
+		return view('website::user.user.merchandise')->with('data', $data);
 	}
 
 	// 用户注册
@@ -115,12 +263,10 @@ class UserController extends BaseController
 		}
 		catch (\Cartalyst\Sentry\Users\UserNotFoundException $e)
 		{
-		    // echo 'User was not found.';
 		    return array('code' => '-1', 'message' => '未找到用户');
 		}
 		catch (\Cartalyst\Sentry\Users\UserAlreadyActivatedException $e)
 		{
-		    // echo 'User is already activated.';
 		    return array('code'=> -2, 'message' => '用户已经被激活');
 		}
 	}
@@ -130,6 +276,13 @@ class UserController extends BaseController
 	{
 		$method = \Request::method();
 
+		// if(\Sentry::check())
+		// {
+		// 	if(\Session::has('last_uri'))
+		// 	{
+		// 		return \Redirect::to(\Session::get('last_uri'));
+		// 	}
+		// }
 		if($method == 'POST')
 		{
 			$input = \Request::only('email','password','remember');
@@ -142,9 +295,18 @@ class UserController extends BaseController
 					);
 				$result = \Sentry::authenticate( $auths, $remember);
 				if($result)
-				{
+				{	
 					\Session::put('currentUser', $result);		//对象存入sesson
-					return array('code'=>1, 'message'=>trans("user.LOGIN_SUCCESS"), 'redirect_url' => '/admin/dashboard');
+					if(\Session::has('last_uri'))
+					{
+						$redirect_url = \Session::get('last_uri');
+						\Session::forget('last_uri');	//删除key对应的value
+					}
+					else
+					{
+						$redirect_url = '/';
+					}
+					return array('code'=>1, 'message'=>trans("user.LOGIN_SUCCESS"), 'redirect_url' => $redirect_url);
 				}
 			}
 			catch (\Cartalyst\Sentry\Users\LoginRequiredException $e)
@@ -174,4 +336,5 @@ class UserController extends BaseController
 
 		return view('website::user.user.load');
 	}
+
 }

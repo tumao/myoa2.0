@@ -71,8 +71,8 @@ var User = {
 			data : data,
 			success : function(rp){
 				if(rp.code > 0){
-					alert(rp.message);
-					// window.location.href = ''；
+					window.location.href = rp.redirect_url;
+					console.log(rp);
 				}else{
 					alert(rp.message);
 				}

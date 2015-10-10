@@ -31,6 +31,31 @@ class VehicleController extends ABaseController
 		$vehicle = \DB::table('vehicle')
 						->orderBy('id','desc')
 						->get();
+		foreach($vehicle as & $x)
+		{
+			$area = $this->getArea($x->from_area_id);	//起始地址
+			$city = $this->getCity($area->father);
+			$province = $this->getProvince($city->father);
+
+			$x->from['area'] = $area->area;
+			$x->from['city'] = $city->city;
+			$x->from['province'] = $province->province;
+
+			$area = $this->getArea($x->to_area_id);		// 目的地址
+			$city = $this->getCity($area->father);
+			$province = $this->getProvince($city->father);
+
+			$x->to['area'] = $area->area;
+			$x->to['city'] = $city->city;
+			$x->to['province'] = $province->province;
+
+			$vehicle_type = $this->getVehicleType($x->vehicle_type);	//车辆类型
+			$x->vehicle_type = $vehicle_type->type_name;
+
+			$vehicle_body_type = $this->getVehicleBodyType($x->vehicle_body_type);	// 车身状况
+			$x->vehicle_body_type = $vehicle_body_type->body_type_name;
+
+		}
 		return view('default.rc.vehicle.lists')->with('lists', $vehicle);
 	}
 
@@ -61,6 +86,9 @@ class VehicleController extends ABaseController
 				return array('code'=>-1, 'message'=> '添加失败');
 			}
 		}
+		$data_frame['vehicle_type'] = $this->getAllVehicleType();
+		$data_frame['vehicle_body_type'] = $this->getAllVehicleBodyType();
+
 		return view('default.rc.vehicle.form')->with('vehicle', $data_frame);
 
 	}
@@ -91,6 +119,26 @@ class VehicleController extends ABaseController
 			Vehicle::where('id', '=', $id)->update($input_arr);
 			return array('code'=> 1, 'message'=> '数据更新成功');
 		}
+		$data->vehicle_types = $this->getAllVehicleType();
+		$data->vehicle_body_types = $this->getAllVehicleBodyType();
+
+		$area = $this->getArea($data->from_area_id);	//起始地
+		$city = $this->getCity($area->father);
+		$province = $this->getProvince($city->father);
+		$this->areaSelectPlugin($province->provinceID, $city->cityID);
+		$from['province'] = $province->provinceID;
+		$from['city'] = $city->cityID;
+		$from['area'] = $area->areaID;
+		$data->from = $from;
+
+		$area = $this->getArea($data->to_area_id);		// 目的地
+		$city = $this->getCity($area->father);
+		$province = $this->getProvince($city->father);
+		$to['province'] = $province->provinceID;
+		$to['city'] = $city->cityID;
+		$to['area'] = $area->areaID;
+		$data->to = $to;
+		$this->areaSelectPlugin_2($province->provinceID, $city->cityID);
 		return view('default.rc.vehicle.form')->with('vehicle', $data);
 	}
 

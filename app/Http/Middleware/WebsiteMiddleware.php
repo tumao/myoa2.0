@@ -2,7 +2,8 @@
 
 use Closure;
 
-class WebsiteMiddleware {
+class WebsiteMiddleware
+{
 
 	/**
 	 * Handle an incoming request.
@@ -13,12 +14,17 @@ class WebsiteMiddleware {
 	 */
 	public function handle($request, Closure $next)
 	{
+
 		if(!\Sentry::check())
 		{
-			// $last_url = trim($_SERVER['HTTP_REFERER']);
+			if(\Session::has('last_uri'))
+			{
+				\Session::forget('last_uri');
+			}
+			$last_uri = trim($_SERVER['REQUEST_URI']);
+			\Session::put('last_uri', $last_uri);
 			return \Redirect::to('user/load');
 		}
 		return $next($request);
 	}
-
 }

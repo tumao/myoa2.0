@@ -1,6 +1,11 @@
 @extends('website::main')
 @section('content')
 <!-- scroll start -->
+<style type="text/css">
+	.list-cell:hover{
+		cursor: pointer;
+	}
+</style>
 <div class="scroll container-fluid">
 	<div class="row clearfix">
 		<div class="col-md-12 column">
@@ -48,7 +53,7 @@
 			</div>
 			<div class="shortcut-content-list">
 				@foreach($data['merchandise'] as $x)
-				<div class="list-cell">
+				<div class="list-cell merchandise" data-merchandise-id="{{$x->id}}">
 					<div class="cell-title">
 						<span class="cell-title">{{$x->merchandise_name}}</span>
 						<span class="cell-date">{{$x->create_time}}</span>
@@ -58,42 +63,6 @@
 					</div>
 				</div>
 				@endforeach
-				<div class="list-cell">
-					<div class="cell-title">
-						<span class="cell-title">海鲜</span>
-						<span class="cell-date">2015-07-23 17:06</span>
-					</div>
-					<div class="cell-content">
-						<span>从 江苏-南京市-玄武区 到 黑龙江省-哈尔滨市-道里区</span>
-					</div>
-				</div>
-				<div class="list-cell">
-					<div class="cell-title">
-						<span class="cell-title">海鲜</span>
-						<span class="cell-date">2015-07-23 17:06</span>
-					</div>
-					<div class="cell-content">
-						<span>从 江苏-南京市-玄武区 到 黑龙江省-哈尔滨市-道里区</span>
-					</div>
-				</div>
-				<div class="list-cell">
-					<div class="cell-title">
-						<span class="cell-title">海鲜</span>
-						<span class="cell-date">2015-07-23 17:06</span>
-					</div>
-					<div class="cell-content">
-						<span>从 江苏-南京市-玄武区 到 黑龙江省-哈尔滨市-道里区</span>
-					</div>
-				</div>
-				<div class="list-cell">
-					<div class="cell-title">
-						<span class="cell-title">海鲜</span>
-						<span class="cell-date">2015-07-23 17:06</span>
-					</div>
-					<div class="cell-content">
-						<span>从 江苏-南京市-玄武区 到 黑龙江省-哈尔滨市-道里区</span>
-					</div>
-				</div>
 			</div>
 		</div>
 		<div class="content-right-part">
@@ -103,7 +72,7 @@
 			</div>
 			<div class="shortcut-content-list">
 				@foreach($data['vehicle'] as $x)
-				<div class="list-cell">
+				<div class="list-cell vehicle" data-vehicle-id="{{$x->id}}">
 					<div class="cell-title">
 						<span class="cell-title">{{$x->plate_number}}</span>
 						<span class="cell-date">{{$x->create_time}}</span>
@@ -113,48 +82,20 @@
 					</div>
 				</div>
 				@endforeach
-				<div class="list-cell">
-					<div class="cell-title">
-						<span class="cell-title">京A-88888</span>
-						<span class="cell-date">2015-07-23 17:06</span>
-					</div>
-					<div class="cell-content">
-						<span>从 江苏-南京市-玄武区 到 黑龙江省-哈尔滨市-道里区</span>
-					</div>
-				</div>
-
-				<div class="list-cell">
-					<div class="cell-title">
-						<span class="cell-title">京A-88888</span>
-						<span class="cell-date">2015-07-23 17:06</span>
-					</div>
-					<div class="cell-content">
-						<span>从 江苏-南京市-玄武区 到 黑龙江省-哈尔滨市-道里区</span>
-					</div>
-				</div>
-
-				<div class="list-cell">
-					<div class="cell-title">
-						<span class="cell-title">京A-88888</span>
-						<span class="cell-date">2015-07-23 17:06</span>
-					</div>
-					<div class="cell-content">
-						<span>从 江苏-南京市-玄武区 到 黑龙江省-哈尔滨市-道里区</span>
-					</div>
-				</div>
-
-				<div class="list-cell">
-					<div class="cell-title">
-						<span class="cell-title">京A-88888</span>
-						<span class="cell-date">2015-07-23 17:06</span>
-					</div>
-					<div class="cell-content">
-						<span>从 江苏-南京市-玄武区 到 黑龙江省-哈尔滨市-道里区</span>
-					</div>
-				</div>
-
 			</div>
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.list-cell.merchandise').click(function(){
+			var merchandise = $(this).attr('data-merchandise-id');
+			window.location.href = '/merchandise/detail/'+merchandise;
+		});
+		$('.list-cell.vehicle').click(function(){
+			var vehicle = $(this).attr('data-vehicle-id');
+			window.location.href = '/vehicles/detail/'+vehicle;
+		});
+	})
+</script>
 @stop

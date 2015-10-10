@@ -10,7 +10,10 @@
 		<div class="right_part_cell"><span class='title'>*密&nbsp;&nbsp;码:</span><span><input id="password" type="password" value="" /></span></div>
 		<div class="right_part_cell"><span class='title'>*确认密码:</span><span><input id="password_make_sure" type="password" value="" /></span></div>
 		<div class="right_part_cell"><span class='title'>联系电话:</span><span><input id="phone" type="text" value="" /></span></div>
-		<button onclick="Register.add()" class="submit" style="margin-top:20px;">保存</button>
+		<button onclick="Register.add()" class="submit" style="margin-top:20px;">提交</button>
+	</div>
+	<div class="qrcode">
+		<img src="/default/app/img/qrcode.png">
 	</div>
 
 

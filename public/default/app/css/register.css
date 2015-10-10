@@ -20,3 +20,19 @@ body{
 .right_part_cell{
 	margin-top: 20px;
 }
+.submit{
+	width: 133px;
+	height: 33px;
+	background-color: #ff6600;
+	color: white;
+	border: none;
+	border-radius: 8px;
+	margin-left: 40px;
+}
+.right_part{
+	float: left;
+}
+.qrcode{
+	float: left;
+	margin-left: 80px;
+}

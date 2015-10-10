@@ -5,7 +5,7 @@ $(document).ready(function(){
 
 	merchandise_type = $('.merchandise_type .check').attr('data-merchandise-type');
 	merchandise_shipping_method = $('.merchandise_shipping_method .check').attr('data-merchandise-shipping-method');
-	// page= $('.checkedon').attr('data-page');
+	page= $('.checkedon').attr('data-page');
 
 	$('.merchandise_type li').click(function(){
 		merchandise_type = $(this).attr('data-merchandise-type');
@@ -18,23 +18,23 @@ $(document).ready(function(){
 		$(this).addClass('check');
 	});
 
-	// $('.page .npage').click(function(){
-	// 	page = $(this).attr('data-page');
-	// 	leap_page(page);
-	// });
+	$('.page .npage').click(function(){
+		page = $(this).attr('data-page');
+		leap_page(page);
+	});
 
-	// $('.page .up_page').click(function(){
-	// 	page = page -1;
-	// 	if(page<1){
-	// 		return false;
-	// 	}
-	// 	leap_page(page);
-	// });
-	// $('.page .down_page').click(function(){
-	// 	var sum_page = $('#')
-	// 	page = parseInt(page)+1;
-	// 	leap_page(page);
-	// });
+	$('.page .up_page').click(function(){
+		page = page -1;
+		if(page<1){
+			return false;
+		}
+		leap_page(page);
+	});
+	$('.page .down_page').click(function(){
+		// var sum_page = $('#')
+		page = parseInt(page)+1;
+		leap_page(page);
+	});
 
 	$('#search').click(function(){
 		var from = $('#from').val();
@@ -49,16 +49,75 @@ $(document).ready(function(){
 		window.location.href = url;
 	});
 
+	$(".sr_cell").click(function(){
+		var id = $(this).attr('data-cell-id');
+		window.location.href = '/merchandise/detail/'+id;
+	});
+
+	// 级联地址开始
+
+	$('.from #province').change(function(){	//更换省份
+			var pro_id = $('.from #province').val();
+			changeArea('province',pro_id, 'from');
+		});
+
+		$('.from #city').change(function(){
+			var city_id = $('.from #city').val();
+			changeArea('city', city_id, 'from');
+		});
+
+		$('.to #province').change(function(){
+			var pro_id = $('.to #province').val();
+			changeArea('province', pro_id,'to');
+		});
+
+		$('.to #city').change(function(){
+			var city_id = $('.to #city').val();
+			changeArea('city', city_id, 'to');
+		});
+		function changeArea(region, id, location){	//region (province, city), location ()
+			var data ={};
+			if(region == 'province'){
+				data['provinceID'] = id;
+			}else if(region == 'city'){
+				data['cityID'] = id;
+			}else{
+				return false;
+			}
+			$.ajax({
+				url  : '/get_areas',
+				type : 'POST',
+				dataType: 'json',
+				data : data,
+				success : function(rp){
+					if(region == 'province')	// 返回的数据是城市
+					{
+						var tag = '.'+location+' #city';
+						$(tag).empty();
+						for(var i=0; i<rp.length; i++){
+							$(tag).append("<option value='"+rp[i].cityID+"'>"+rp[i].city+"</option>");
+						}
+					}else if(region == 'city'){	//返回的数据是地区
+						var tag = '.'+location+' #area';
+						$(tag).empty();
+						for(var i=0; i<rp.length; i++){
+							$(tag).append("<option value='"+rp[i].areaID+"'>"+rp[i].area+"</option>");
+						}
+					}
+				}
+			})
+		}
+
+		//end 级联地址
+
 	function leap_page(page){
 		var from = $('#from').val();
 		var to = $('#to').val();
 
 		var url;
 		url = '/merchandise?';
-		url = url + 'vehicle_type=' + vehicle_type;
-		url = url + '&vehicle_body_type=' + vehicle_body_type;
-		url = url + '&vehicle_length=' + vehicle_length;
-		url = url + '&vehicle_weight=' + vehicle_weight;
+		url = url + 'merchandise_type=' + merchandise_type;
+		url = url + '&merchandise_shipping_method=' + merchandise_shipping_method;
 		url = url + '&from=' + from;
 		url = url + '&to=' + to;
 		url = url + '&page=' + page;
@@ -67,13 +126,17 @@ $(document).ready(function(){
 });
 
 var Merchandise = {
-	add : function(){
+	add : function(id){
+		var url = '/publish/merchandise';
+		if(id){
+			url = '/user/merchandise/edit/'+id;
+		}
 		var formData = {};
 		var fields = [
-				// 'from_area_id',
-				// 'to_area_id',
+				'from_area_id',
+				'to_area_id',
 				'contact_name',
-				// 'merchandise_date',
+				'merchandise_date',
 				'phone',
 				'merchandise_name',
 				'merchandise_weight',
@@ -95,9 +158,9 @@ var Merchandise = {
 			alert('请选择目的地');
 			return false;
 		}
-		console.log(formData);
+
 		$.ajax({
-			url 	: '/publish/merchandise',
+			url 	: url,
 			type 	: 'POST',
 			dataType : 'json',
 			data 	: formData,
@@ -112,4 +175,7 @@ var Merchandise = {
 			}
 		});
 	},
+	edit : function(id){
+		Merchandise.add(id);
+	}
 }

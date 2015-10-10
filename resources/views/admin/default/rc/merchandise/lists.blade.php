@@ -3,7 +3,7 @@
 <script src="/default/app/js/merchandise.js"></script>
 <div class="box-inner">
     <div class="box-header well" data-original-title="">
-        <h2><a href="javascript:void(0)" onclick="Merchandise.form()"><i class="glyphicon glyphicon-plus-sign"></i>添加</a></h2>
+        <!-- <h2><a href="javascript:void(0)" onclick="Merchandise.form()"><i class="glyphicon glyphicon-plus-sign"></i>添加</a></h2> -->
     </div>
     <div class="box-content">
         <table class="table table-striped table-bordered bootstrap-datatable datatable responsive">
@@ -22,7 +22,7 @@
                     <th>货物体积</th>
                     <th>货物状态</th>
                     <th>备注</th>
-                    <th>账户id</th>
+                    <!-- <th>账户id</th> -->
                     <th>发布时间</th>
                     <th>操作</th>
                 </tr>
@@ -31,8 +31,8 @@
                 @foreach($lists as $x)
                 <tr id='row_{{$x->id}}'>
                     <td>{{$x->id}}</td>
-                    <td>{{$x->from_area_id}}</td>
-                    <td>{{$x->to_area_id}}</td>
+                    <td>{{$x->from['province']}}-{{$x->from['city']}}-{{$x->from['area']}}</td>
+                    <td>{{$x->to['province']}}-{{$x->to['city']}}-{{$x->to['area']}}</td>
                     <td>{{$x->merchandise_date}}</td>
                     <td>{{$x->contact_name}}</td>
                     <td>{{$x->phone}}</td>
@@ -43,7 +43,7 @@
                     <td>{{$x->merchandise_volume}}</td>
                     <td>{{$x->merchandise_status}}</td>
                     <td>{{$x->info}}</td>
-                    <td>{{$x->user_id}}</td>
+                    <!-- <td>{{$x->user_id}}</td> -->
                     <td>{{$x->create_time}}</td>
                     <td class="center">
                         <a class="btn btn-info" href="#" onclick="Merchandise.edit({{$x->id}})">

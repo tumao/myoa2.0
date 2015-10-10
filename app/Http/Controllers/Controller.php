@@ -45,96 +45,123 @@ abstract class Controller extends BaseController {
 		return $pic;
 	}
 
+	// 获取图片的扩展名
 	private function get_pic_ext($picname)
 	{
 		$ext = substr($picname, strpos($picname, '.')+1);
 		return $ext;
 	}
 
+	// 获取所有的省份
 	public function getAllProvinces()
 	{
 		$province = \DB::select("SELECT * FROM `province`");
 		return $province;
 	}
 
+	// 获取省份对应的所有城市
 	public function getAllCities($province_id)
 	{
 		$cities = \DB::select("SELECT * FROM `city` WHERE `father` = $province_id ");
 		return $cities;
 	}
 
+	// 获取 城市对应的 所有的地区
 	public function getAllAreas($city_id)
 	{
 		$areas = \DB::select("SELECT * FROM `area` WHERE `father` = $city_id");
 		return $areas;
 	}
 
+	// 获取地区
 	public function getArea($id)
 	{
 		$area = \DB::select('SELECT * FROM `area` WHERE `areaID` = :areaID LIMIT 1', ['areaID'=>$id]);
 		return $area[0];
 	}
 
+	// 获取城市
 	public function getCity($id)
 	{
 		$city = \DB::select('SELECT * FROM `city` WHERE `cityID` = :cityID ', ['cityID'=> $id]);
 		return $city[0];
 	}
 
+	// 获取省份
 	public function getProvince($id)
 	{
 		$province = \DB::select('SELECT * FROM `province` WHERE `provinceID`=:provinceID', ['provinceID'=> $id]);
 		return $province[0];
 	}
 
+	// 根据areaID 获取 详细的地址 ： 省份-城市-地区
+	public function getDetailAreaName($areaID)
+	{
+		$area = $this->getArea($areaID);
+		$city = $this->getCity($area->father);
+		$province = $this->getProvince($city->father);
+
+		$location = $province->province .'-'. $city->city. '-' . $area->area;
+		return $location;
+	}
+
+	// 获取商品类型
 	public function getMerchandiseType($id)
 	{
 		$type = \DB::select('SELECT * FROM `merchandise_type` WHERE `id`=:id', ['id'=> $id]);
 		return $type['0'];
 	}
 
+	// 获取 货物 当前的状态
 	public function getMerchandiseStatus($id)
 	{
 		$status = \DB::select('SELECT * FROM `merchandise_status` WHERE `id` =:id', ['id'=>$id]);
 		return $status['0'];
 	}
 
+	// 获取 货物的 运输方式
 	public function getMerchandiseShippiingMethod($id)
 	{
 		$shipping_method = \DB::select('SELECT * FROM `merchandise_shipping_method` WHERE `id`=:id', ['id'=>$id]);
 		return $shipping_method[0];
 	}
 
+	// 获取所有的货物类型
 	public function getAllMerchandiseType()
 	{
 		$merchandise_type = \DB::select('SELECT * FROM `merchandise_type`');
 		return $merchandise_type;
 	}
 
+	// 获取所有的 货物运输方式
 	public function getAllMerchandiseSM()
 	{
 		$m_shipping_method = \DB::select('SELECT * FROM `merchandise_shipping_method`');
 		return $m_shipping_method;
 	}
 
+	// 车体状况
 	public function getVehicleBodyType($id)
 	{
 		$type = \DB::select('SELECT * FROM `vehicle_body_type` WHERE `id` =:id', ['id'=> $id]);
 		return $type['0'];
 	}
 
+	// 车身类型
 	public function getVehicleType($id)
 	{
 		$type = \DB::select('SELECT * FROM `vehicle_type` WHERE `id` =:id', ['id'=>$id]);
 		return $type['0'];
 	}
 
+	// 获取所有的车身类型
 	public function getAllVehicleType()
 	{
 		$vehicleType = \DB::select('SELECT * FROM `vehicle_type` ORDER BY id ASC');
 		return $vehicleType;
 	}
 
+	// 获取所有的称体状况
 	public function getAllVehicleBodyType()
 	{
 		$vbodyType = \DB::select('SELECT * FROM `vehicle_body_type` ORDER BY id ASC');
@@ -142,17 +169,136 @@ abstract class Controller extends BaseController {
 	}
 
 	// 地址级联选选项
-	public function areaSelectPlugin()
+	public function areaSelectPlugin($default_provinceID = '', $default_cityID = '')
 	{
 		$province = $this->getAllProvinces();
-		$default_pro = $province['0'];
-		$city = $this->getAllCities($default_pro->provinceID);
-		$default_city = $city['0'];
-		$area = $this->getAllAreas($default_city->id);
+		if($default_provinceID != '')	// 默认的省份
+		{
+			foreach($province as $item)
+			{
+				// echo $item->provinceID, $default_provinceID;
+				if($item->provinceID == $default_provinceID)
+				{
+					$default_pro = $item;
+				}
+			}
+		}
+		else
+		{
+			$default_pro = $province['0'];
+		}
+		$city = $this->getAllCities($default_pro->provinceID);	// 获取省对应的市
+
+		if($default_cityID != '')
+		{
+			foreach($city as $item)
+			{
+				if($item->cityID == $default_cityID)
+				{
+					$default_city = $item;
+				}
+			}
+		}
+		else
+		{
+			$default_city = $city['0'];
+		}
+		
+		
+		
+		$area = $this->getAllAreas($default_city->cityID);
 		$select['province'] = $province;
 		$select['city'] = $city;
 		$select['area'] = $area;
 		\View::share('area', $select);
+	}
+
+	// 地址级联选选项(需要进一步修改的地方)
+	public function areaSelectPlugin_2($default_provinceID = '', $default_cityID = '')
+	{
+		$province = $this->getAllProvinces();
+		if($default_provinceID != '')	// 默认的省份
+		{
+			foreach($province as $item)
+			{
+				if($item->provinceID == $default_provinceID)
+				{
+					$default_pro = $item;
+				}
+			}
+		}
+		else
+		{
+			$default_pro = $province['0'];
+		}
+
+		$city = $this->getAllCities($default_pro->provinceID);	// 获取省对应的市
+
+		if($default_cityID != '')
+		{
+			foreach($city as $item)
+			{
+				if($item->cityID == $default_cityID)
+				{
+					$default_city = $item;
+				}
+			}
+		}
+		else
+		{
+			$default_city = $city['0'];
+		}
+		
+		
+		$area = $this->getAllAreas($default_city->cityID);
+		$select['province'] = $province;
+		$select['city'] = $city;
+		$select['area'] = $area;
+		\View::share('area_2', $select);
+	}
+
+	// 地址级联选选项(需要进一步修改的地方)
+	public function areaSelectPlugin_3($default_provinceID = '', $default_cityID = '')
+	{
+		$province = $this->getAllProvinces();
+		if($default_provinceID != '')	// 默认的省份
+		{
+			foreach($province as $item)
+			{
+				if($item->provinceID == $default_provinceID)
+				{
+					$default_pro = $item;
+				}
+			}
+		}
+		else
+		{
+			$default_pro = $province['0'];
+		}
+
+		$city = $this->getAllCities($default_pro->provinceID);	// 获取省对应的市
+
+		if($default_cityID != '')
+		{
+			foreach($city as $item)
+			{
+				if($item->cityID == $default_cityID)
+				{
+					$default_city = $item;
+				}
+			}
+		}
+		else
+		{
+			$default_city = $city['0'];
+		}
+		
+		
+		$area = $this->getAllAreas($default_city->cityID);
+		$select['province'] = $province;
+		$select['city'] = $city;
+		$select['area'] = $area;
+		\View::share('area_3', $select);
 	}
 
 	// 发送电子邮件

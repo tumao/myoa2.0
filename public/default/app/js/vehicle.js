@@ -22,8 +22,8 @@ var Vehicle = {
 
 				var formData = {};
 				var fields = [
-					'from_area_id',
-					'to_area_id',
+					// 'from_area_id',
+					// 'to_area_id',
 					'driver_name',
 					'phone',
 					'plate_number',
@@ -39,6 +39,10 @@ var Vehicle = {
 
 				var vehicle_type = iframe.document.getElementById('vehicle_type').value;
 				var vehicle_body_type = iframe.document.getElementById('vehicle_body_type').value;
+				var from_area_id = iframe.document.getElementById('from_area_id').value;
+				var to_area_id = iframe.document.getElementById('to_area_id').value;
+				formData['from_area_id'] = from_area_id;
+				formData['to_area_id'] = to_area_id;
 				formData['vehicle_type'] = vehicle_type;
 				formData['vehicle_body_type'] = vehicle_body_type;
 

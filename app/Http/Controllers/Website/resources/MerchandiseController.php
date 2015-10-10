@@ -11,6 +11,7 @@ class MerchandiseController extends BaseController
 		parent::__construct();
 	}
 
+	// 列表
 	public function lists()
 	{
 		$merchandise = new Merchandise;
@@ -55,6 +56,7 @@ class MerchandiseController extends BaseController
 		$merchandise_shipping_method = $this->getAllMerchandiseSM();
 		$xdata = $merchandise->search($checked['from'],$checked['to'],$checked['merchandise_type'],$checked['merchandise_shipping_method'],$checked['page']);
 		$mer = $xdata['mer'];
+		$sum_page = $xdata['sum_page'];
 		foreach($mer as & $x)
 		{
 			$mt = $this->getMerchandiseType($x->merchandise_type);
@@ -79,9 +81,32 @@ class MerchandiseController extends BaseController
 		$data['mer_shipping_type'] = $merchandise_shipping_method;
 		$data['mer'] = $mer;
 		$data['checked'] = $checked;
+		$data['sum_page'] = $sum_page;
 		return view('website::resources.merchandise.lists')->with('data', $data);
 	}
 
+	// 详情
+	public function detail($id)
+	{
+		$detail = Merchandise::find($id);
+		$merchandise_type = $this->getAllMerchandiseType();
+
+		$detail->from_area_id = $this->getDetailAreaName($detail->from_area_id);
+		$detail->to_area_id = $this->getDetailAreaName($detail->to_area_id);
+		
+		$merchandise_shipping_method = $this->getAllMerchandiseSM();
+		$data['detail'] = $detail;
+		$data['mer_type'] = $merchandise_type;
+		$data['mer_shipping_type'] = $merchandise_shipping_method;
+
+		$merchandise_type = $this->getMerchandiseType($detail->merchandise_type);
+		$merchandise_shipping_method = $this->getMerchandiseShippiingMethod($detail->merchandise_shipping_method);
+		$detail->merchandise_type = $merchandise_type->type_name;
+		$detail->merchandise_shipping_method = $merchandise_shipping_method->shipping_method;
+		return view('website::resources.merchandise.detail')->with('data', $data);
+	}
+
+	// 添加
 	public function add()
 	{
 		$method = \Request::method();
@@ -116,30 +141,22 @@ class MerchandiseController extends BaseController
 			}
 		}
 		$place = array();
-		// $provinces = $this->getProvinces();
-		// $cities = $this->getAllCities($provinces[0]->provinceID);
-		// $areas = $this->getAreas($cities[0]->cityID);	//城市
-		// $place['province'] = $provinces;
-		// $place['city'] = $cities;
-		// $place['area'] = $areas;
-		// $data_frame['place'] = $place;
 		$data_frame['merchandise_type'] = $this->getAllMerchandiseType();
 		$data_frame['merchandise_shipping_method'] = $this->getAllMerchandiseSM();
 
 		return view('website::resources.merchandise.publish')->with('mer', $data_frame);
 	}
 
-	public function edit()
+	// 修改
+	public function edit($id)
 	{
 		$method = \Request::method();
-		if(isset( $id))
-		{
-			$data = Merchandise::find($id);
-		}
-		else
-		{
-			return array('code' => -1, 'message'=> '找不到参数id');
-		}
+		$user = \Sentry::getUser();
+		$merchandise = \DB::select('SELECT * FROM `merchandise` WHERE `id`=:id AND `user_id`=:uid', ['id'=>$id, 'uid'=>$user->id]);
+		$data['merchandise'] = $merchandise[0];
+		$data['merchandise_type'] = $this->getAllMerchandiseType();
+		$data['merchandise_shipping_method'] = $this->getAllMerchandiseSM();
+
 		if($method == 'POST')
 		{
 			$input_arr = array();
@@ -155,9 +172,37 @@ class MerchandiseController extends BaseController
 			return array('code'=> 1, 'message'=> '数据更新成功');
 		}
 
-		return view('default.rc.merchandise.form')->with('mer', $data);
+		if($data['merchandise'])
+		{
+			$from_area_id = $data['merchandise']->from_area_id;
+			$to_area_id = $data['merchandise']->to_area_id;
+
+			$area = $this->getArea($from_area_id);
+			$city = $this->getCity($area->father);
+			$province = $this->getProvince($city->father);
+			$from['province'] = $province->provinceID;
+			$from['city'] = $city->cityID;
+			$from['area'] = $area->areaID;
+			$this->areaSelectPlugin($province->provinceID, $city->cityID);	// 起始地
+
+			$area = $this->getArea($to_area_id);
+			$city = $this->getCity($area->father);
+			$province = $this->getProvince($city->father);
+
+			$to['province'] = $province->provinceID;
+			$to['city'] = $city->cityID;
+			$to['area'] = $area->areaID;
+
+			$this->areaSelectPlugin_2($province->provinceID, $city->cityID);	// 目的地
+
+			$data['merchandise']->from = $from;
+			$data['merchandise']->to = $to;
+		}
+
+		return view('website::user.user.edit_merchandise')->with('data', $data);
 	}
 
+	// 删除
 	public function delete()
 	{
 		if($id)

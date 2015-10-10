@@ -94,7 +94,7 @@
 		<div class="search_result">
 		@if(!empty($data['vehicles']))
 			@foreach($data['vehicles'] as $item)
-			<div class="sr_cell">
+			<div class="sr_cell" data-cell-id="{{$item->id}}">
 				<div class="sr_title"><span>{{$item->plate_number}}</span></div>
 				<div class="add_from_to">从 <span class="from">{{$item->from['province']}}-{{$item->from['city']}}-{{$item->from['area']}}</span> 到 <span class="to">{{$item->to['province']}}-{{$item->to['city']}}-{{$item->to['area']}}</span></div>
 				<div class="sr_status">

@@ -78,7 +78,9 @@ Route::match(['get','post'], 'user/register', "Website\User\UserController@regis
 Route::match(['get','post'], 'user/load', "Website\User\UserController@load");	// 用户登录
 
 Route::get('vehicles', 'Website\Resources\VehiclesController@lists');	//搜索车源,车源列表
+Route::get('vehicles/detail/{id}', 'Website\Resources\VehiclesController@detail');	// 详情
 Route::get('merchandise', 'Website\Resources\MerchandiseController@lists'); //搜索货源，货源列表
+Route::get('merchandise/detail/{id}', 'Website\Resources\MerchandiseController@detail'); //搜索货源，货源列表
 
 Route::group(['middleware' => ['website.auth']],function(){
 	Route::match(['get','post'], 'publish/merchandise', 'Website\Resources\MerchandiseController@add');	// 发布信息--货源
@@ -89,4 +91,7 @@ Route::group(['middleware' => ['website.auth']],function(){
 	Route::match(['get', 'post'], 'user/secret', 'Website\User\UserController@secret');
 	Route::match(['get', 'post'], 'user/vehicle', 'Website\User\UserController@vehicle');
 	Route::match(['get', 'post'], 'user/merchandise', 'Website\User\UserController@merchandise');
+	Route::match(['get', 'post'], 'user/vehicle/edit/{id}', 'Website\Resources\VehiclesController@edit');	// 编辑货车
+	Route::match(['get', 'post'], 'user/merchandise/edit/{id}', 'Website\Resources\MerchandiseController@edit');	// 编辑货物
+
 });

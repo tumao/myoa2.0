@@ -95,3 +95,47 @@
 .check{
 	color: #ff6600;
 }
+.sr_cell:hover{
+	cursor: pointer;
+}
+.search_result_left{
+	width: 595px;
+	float: left;
+	padding-top: 30px;
+}
+.search_result_left .cell{
+	margin-left: 40px;
+}
+.cell{
+	font-size: 24px;
+}
+.cell.plate_number{
+	font-size: 36px;
+}
+.cell.create_date{
+	color: #999999;
+}
+.cell.contact_user{
+	margin-top: 30px;
+	font-family: 黑体;
+	font-weight: bold;
+}
+.cell.contact_phone{
+	font-family: 黑体;
+	font-weight: bold;
+}
+.order_button{
+	margin-top: 10px;
+	width: 212px;
+	height : 52px;
+	font-size: 24px;
+	color: #ffffff;
+	background: #ff6600;
+	/*padding: 5px 50px;*/
+	border: 0px;
+	border-radius: 10px;
+}
+.search_result_right > img{
+	margin-left: 90px;
+	margin-top: 115px;
+}

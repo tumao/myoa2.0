@@ -22,8 +22,8 @@ var Merchandise = {
 
 				var formData = {};
 				var fields = [
-					'from_area_id',
-					'to_area_id',
+					// 'from_area_id',
+					// 'to_area_id',
 					'contact_name',
 					// 'merchandise_date',
 					'phone',
