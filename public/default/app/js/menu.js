@@ -28,7 +28,7 @@ var Menu = {
 				for(var x in fields){
 					formData[fields[x]] = $.trim(form[fields[x]].value);
 				}
-				if(rid != '' && id == ''){		//rid 位 rootid
+				if(rid != '' && id == ''){		//rid is rootid
 					formData['root'] = rid;
 				}else{
 					formData['root'] = 0;
@@ -37,12 +37,18 @@ var Menu = {
 				if( id != ''){
 					formData['id'] = id;
 				}
-
-				formData['level'] = level + 1;
-				if(rid !='' && rid != 0)
+				if(level){
+					formData['level'] = level + 1;	
+				}else{
+					formData['level'] = 1;
+				}
+				if(rid && rid != 0)
 				{
 					formData['group'] = rid;
+				}else{
+					formData['group'] = 0;
 				}
+				formData['cat'] = document.getElementById('menu_cat').value;
 
 				if(Check.menu_form(formData, form)){
 					$.ajax({
@@ -124,13 +130,13 @@ var Check = {
 	},
 };
 
-$(document).ready(function(){
-	$.ajax({
-		type 	: 'GET',
-		url 	: '/admin/conf/menu',
-		dataType: 'json',
-		success : function(data){
-			Menu.init(data);
-		}
-	});
-});
+// $(document).ready(function(){
+// 	$.ajax({
+// 		type 	: 'GET',
+// 		url 	: '/admin/conf/menu',
+// 		dataType: 'json',
+// 		success : function(data){
+// 			Menu.init(data);
+// 		}
+// 	});
+// });

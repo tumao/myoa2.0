@@ -19,6 +19,11 @@ class VehiclesController extends BaseController
 		$this->validate = $this->vehicle->fillable;
 	}
 
+	public function index()
+	{
+		return \Redirect::to('publish/vehicle');
+	}
+
 	// 列表
 	public function lists()
 	{

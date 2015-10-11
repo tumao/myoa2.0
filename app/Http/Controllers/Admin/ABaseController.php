@@ -25,7 +25,7 @@ abstract class ABaseController extends Controller {
 	 */
 	private function _do_system_page_init()
 	{
-		$menu = Menu_catelogue::all();		//从数据库中输出所有菜单项
+		$menu = Menu_catelogue::where('cat','=','back')->get();		//从数据库中输出所有菜单项
 		$menu = $this->_find_main_menu($menu);
 		\View::share('menu', $menu);			//将数据分享到视图
 	}

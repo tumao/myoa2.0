@@ -6,18 +6,22 @@
 		</div>
 		<div class="nav">
 			<ul>
-				<li><a href="/" title="">首页</a></li>
-				<li><a href="/vehicles" title="">搜索车源</a></li>
-				<li><a href="/merchandise" title="">搜索货源</a></li>
-				<li><a href="/publish/vehicle" title="">发布信息</a></li>
-				<li><a href="/user/self" title="">个人信息</a></li>
+				@foreach($menu['main_menu'] as $item)
+				<li  @if($item['active']) class="active" @endif><a href="{{$item['path']}}" title="">{{$item['name']}}</a></li>
+				@endforeach
 			</ul>
 		</div>
 		<div class="nav-right">
 			<ul>
+				@if(!$menu['user'])
 				<li><a href="/user/register" title="注册">注册</a></li>
 				<li><a href="#">/</a></li>
 				<li><a href="/user/load" title="登录">登录</a></li>
+				@else
+				<li><a href="javascript:void(0)">{{$menu['user']->email}}</a></li>
+				<li><a href="#">/</a></li>
+				<li><a href="/logout">退出</a></li>
+				@endif
 			</ul>
 		</div>
 	</div>

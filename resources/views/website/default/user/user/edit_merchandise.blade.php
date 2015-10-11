@@ -96,8 +96,8 @@
 				@endforeach
 			</select>
 		</div>
-		<div class="right_part_cell"><span class='title'>货物重量:</span><span><input id="merchandise_weight" type="text" value="{{$data['merchandise']->merchandise_weight}}" /></span></div>
-		<div class="right_part_cell"><span class='title'>货物体积:</span><span><input id="merchandise_volume" type="text" value="{{$data['merchandise']->merchandise_volume}}" /></span></div>
+		<div class="right_part_cell"><span class='title'>货物重量:</span><span><input id="merchandise_weight" type="text" value="{{$data['merchandise']->merchandise_weight}}" /></span>吨</div>
+		<div class="right_part_cell"><span class='title'>货物体积:</span><span><input id="merchandise_volume" type="text" value="{{$data['merchandise']->merchandise_volume}}" /></span>立方米</div>
 		<div class="right_part_cell"><span class='title'>备注:</span><span><input id="info" type="text" value="{{$data['merchandise']->info}}" /></span></div>
 		<button onclick="Merchandise.edit({{$data['merchandise']->id}})" class="submit">保存</button>
 	</div>

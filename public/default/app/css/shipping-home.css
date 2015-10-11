@@ -57,6 +57,9 @@
 .nav a:hover{
 	color:#ffff66;
 }
+.active > a{
+	color: #ffff66;
+}
 .nav-right ul{
 	list-style: none;
 }

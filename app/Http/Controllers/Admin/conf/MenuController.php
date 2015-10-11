@@ -16,7 +16,7 @@ class MenuController extends ABaseController {
 	public function index()
 	{
 		//
-		return \Redirect::to('admin/conf/menu');
+		return \Redirect::to('admin/conf/menu/back');
 	}
 
 
@@ -25,12 +25,12 @@ class MenuController extends ABaseController {
 	 *
 	 * @return Response
 	 */
-	public function show()
+	public function show($cat='back')
 	{
 		//
 		$menu = new Menu_catelogue();
-		$menuList = $menu->menuGroup();
-		return view('default.conf.menu.menu')->with('menuList', $menuList);
+		$menuList = $menu->menuGroup($cat);
+		return view('default.conf.menu.menu')->with('menuList', $menuList)->with('cat',$cat);
 	}
 
 	/**
@@ -66,7 +66,7 @@ class MenuController extends ABaseController {
 	*/
 	public function saveMenuForm()
 	{
-		$vali = array('name', 'icon', 'path', 'root', 'sort', 'group', 'level');
+		$vali = array('name', 'icon', 'path', 'root', 'sort', 'group', 'level','cat');
 		$menuArr = \Input::only($vali);
 		if($menuArr['name'] == '')
 		{
@@ -75,6 +75,10 @@ class MenuController extends ABaseController {
 		elseif($menuArr['path'] == '')
 		{
 			return array('message'=> '路径不可以为空!', 'code' => -2);
+		}
+		if(!$menuArr['group'])
+		{
+			$menuArr['gtoup'] = 1;
 		}
 		$menu = Menu_catelogue::create($menuArr);
 		if($menu)

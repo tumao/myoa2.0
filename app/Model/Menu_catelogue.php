@@ -7,7 +7,7 @@ class Menu_catelogue extends Model {
 	//
 	protected $table = 'menu_catelogue';
 
-	protected $fillable = array('name', 'icon', 'root', 'sort', 'path','group','level');
+	protected $fillable = array('name', 'icon', 'root', 'sort', 'path','group','level','cat');
 
 	public $timestamps = false;
 
@@ -15,9 +15,9 @@ class Menu_catelogue extends Model {
 
 	private $menuG = array();		//菜单分组列表
 
-	public function menuGroup()
+	public function menuGroup($cat)
 	{
-		$menuList = Menu_catelogue::all();
+		$menuList = Menu_catelogue::where('cat','=',$cat)->get();
 		$this->sep_menu($menuList, 0);
 		return $this->menuG;
 	}

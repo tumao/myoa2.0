@@ -51,7 +51,7 @@ $(document).ready(function(){
 
 	$(".sr_cell").click(function(){
 		var id = $(this).attr('data-cell-id');
-		window.location.href = '/merchandise/detail/'+id;
+		window.location.href = '/merchandises/detail/'+id;
 	});
 
 	// 级联地址开始

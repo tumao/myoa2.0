@@ -15,6 +15,11 @@ class UserController extends BaseController
 
 	}
 
+	public function index()
+	{
+		return \Redirect::to('user/self');
+	}
+
 	public function lists()
 	{
 		$vehicles = \DB::table('vehicle')->get();

@@ -27,10 +27,6 @@
         <ul class="collapse navbar-collapse nav navbar-nav top-menu">
         @foreach( $menu['main_menu'] as $item)
             <li @if($item['active']) class="active" @endif> <a href="{{$item['path']}}"><i class="{{$item['icon']}}"></i>{{$item['name']}}</a></li>
-           <!--  <li class="active"><a href="#"><i class="glyphicon glyphicon-sound-5-1"></i> 仪表盘</a></li>
-            <li><a href="#"><i class="glyphicon glyphicon-user"></i> 用户</a></li>
-            <li><a href="#"><i class="glyphicon glyphicon-tint"></i> 资源</a></li>
-            <li><a href="#"><i class="glyphicon glyphicon-cog"></i> 配置</a></li> -->
         @endforeach
         </ul>
        <!--  <form class="navbar-form navbar-right" role="search">

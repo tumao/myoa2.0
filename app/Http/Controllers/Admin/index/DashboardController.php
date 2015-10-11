@@ -11,7 +11,8 @@ class DashboardController extends ABaseController {
 	 */
 	public function index()
 	{
-		//
-		return view('default.index.census.index');
+		//系统信息
+		// return view('default.index.census.index');
+		return \Redirect::to('admin/dashboard/sys');
 	}
 }

@@ -74,6 +74,7 @@
             </div>
         </div> -->
         <!-- 分页结束 -->
+        <input type="hidden" id="menu_cat" value="{{$cat}}">
     </div>
 </div>
 @stop

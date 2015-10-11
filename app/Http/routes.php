@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/','Website\Home\IndexController@index');
+Route::get('/home','Website\Home\IndexController@index');
 
 Route::get('admin', 'Admin\User\UserController@show');	//登录页
 Route::get('admin/login', array('uses'=>'Admin\User\UserController@show', 'as'=>'login'));
@@ -64,7 +64,7 @@ Route::match(['get','post'],'admin/rc/add', 'Admin\Resource\RcController@add');
 
 #conf
 Route::get('admin/conf', 'Admin\Menu\MenuController@index');
-Route::get('admin/conf/menu', 'Admin\Menu\MenuController@show');	//显示菜单列表
+Route::get('admin/conf/menu/{cat}', 'Admin\Menu\MenuController@show');	//显示菜单列表
 Route::get('admin/conf/add_menu_form/{id?}', 'Admin\Menu\MenuController@addMenuForm' );
 Route::get('admin/conf/save_menu_form', 'Admin\Menu\MenuController@saveMenuForm');
 Route::get('admin/conf/del_menu_item/{id}', 'Admin\Menu\MenuController@delMenuItem');
@@ -79,14 +79,16 @@ Route::match(['get','post'], 'user/load', "Website\User\UserController@load");	/
 
 Route::get('vehicles', 'Website\Resources\VehiclesController@lists');	//搜索车源,车源列表
 Route::get('vehicles/detail/{id}', 'Website\Resources\VehiclesController@detail');	// 详情
-Route::get('merchandise', 'Website\Resources\MerchandiseController@lists'); //搜索货源，货源列表
-Route::get('merchandise/detail/{id}', 'Website\Resources\MerchandiseController@detail'); //搜索货源，货源列表
+Route::get('merchandises', 'Website\Resources\MerchandiseController@lists'); //搜索货源，货源列表
+Route::get('merchandises/detail/{id}', 'Website\Resources\MerchandiseController@detail'); //搜索货源，货源列表
 
 Route::group(['middleware' => ['website.auth']],function(){
+	Route::get('publish', 'Website\Resources\VehiclesController@index');
 	Route::match(['get','post'], 'publish/merchandise', 'Website\Resources\MerchandiseController@add');	// 发布信息--货源
 	Route::match(['get','post'], 'publish/vehicle', 'Website\Resources\VehiclesController@add');		//发布信息--车源
 	Route::match(['get','post'], 'publish/vehicle/edit', 'Website\Resources\VehiclesController@edit');	//修改信息--车源
 
+	Route::get('/user', 'Website\User\UserController@index');
 	Route::match(['get', 'post'], 'user/self', 'Website\User\UserController@self');
 	Route::match(['get', 'post'], 'user/secret', 'Website\User\UserController@secret');
 	Route::match(['get', 'post'], 'user/vehicle', 'Website\User\UserController@vehicle');
