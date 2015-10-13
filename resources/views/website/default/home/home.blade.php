@@ -53,7 +53,7 @@
 		<div class="content-left-part">
 			<div class="shortcut-top">
 				<span>最新货源信息</span>
-				<a href="/merchandise" title="">更多>></a>
+				<a href="/merchandises" title="">更多>></a>
 			</div>
 			<div class="shortcut-content-list">
 				@foreach($data['merchandise'] as $x)
