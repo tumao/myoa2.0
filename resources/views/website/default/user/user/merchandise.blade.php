@@ -3,7 +3,9 @@
 <link rel="stylesheet" type="text/css" href="/default/app/css/vehicles.css">
 <link rel="stylesheet" type="text/css" href="/default/app/css/user.css">
 <div class="containers">
-	@include('website::_shared.user_left_menu')
+	@if($menu['sub_menu'])
+		@include('website::_shared.left_menu')
+	@endif
 	<div class="right_part" style="margin-bottom:20px;">
 	@foreach($data['merchandise'] as $item)
 		<div class="right_vehcile_cell">

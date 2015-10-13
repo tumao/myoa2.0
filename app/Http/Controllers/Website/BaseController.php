@@ -25,7 +25,6 @@ abstract class BaseController extends Controller
 	{
 		$menu = Menu_catelogue::where('cat','=','front')->get();		//从数据库中输出所有菜单项
 		$menu = $this->_find_main_menu($menu);
-		// var_dump( $menu);exit;
 		\View::share('menu', $menu);			//将数据分享到视图
 	}
 

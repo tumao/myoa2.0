@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Website\Home;
 
 use App\Http\Controllers\Website\BaseController;
+use App\Picture;
 
 // 首页
 class IndexController extends BaseController
@@ -13,6 +14,8 @@ class IndexController extends BaseController
 	public function index()
 	{
 		$data = array();
+		$Pic = new Picture;
+		$pics = $Pic->getJm();
 		$merchandise = \DB::select('SELECT * FROM `merchandise` ORDER BY id DESC LIMIT 5');
 		$vehicle = \DB::select('SELECT * FROM `vehicle` ORDER BY id DESC LIMIT 5');
 		foreach($merchandise as & $x)
@@ -59,7 +62,7 @@ class IndexController extends BaseController
 		}
 		$data['merchandise'] = $merchandise;
 		$data['vehicle'] = $vehicle;
-		return view('website::home.home')->with('data', $data);
+		return view('website::home.home')->with('data', $data)->with('pic', $pics);
 	}
 
 }

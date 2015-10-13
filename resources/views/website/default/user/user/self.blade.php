@@ -4,7 +4,9 @@
 <link rel="stylesheet" type="text/css" href="/default/app/css/user.css">
 <script type="text/javascript" src="/default/app/js/website-user.js"></script>
 <div class="containers">
-		@include('website::_shared.user_left_menu')
+	@if($menu['sub_menu'])
+		@include('website::_shared.left_menu')
+	@endif
 	<div class="right_part">
 		<input id="email" type="hidden" value="{{$user->email}}" />
 		<div class="right_part_cell"><span class='title'>用户邮箱:</span><span>{{$user->email}}</span></div>

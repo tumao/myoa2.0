@@ -25,9 +25,14 @@
     <link href='/default/framework/css/animate.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="/default/framework/css/artDialog.default.css">
     <link rel="stylesheet" type="text/css" href="/default/app/css/common.css">
+    <link href='/default/framework/css/uploadify.css' rel='stylesheet'>
+
 
     <!-- jQuery -->
     <script src="/default/framework/bower_components/jquery/jquery.min.js"></script>
+    <!-- multiple file upload plugin -->
+    <script src="/default/framework/js/jquery.uploadify.min.js"></script>
+
     <script src="/default/framework/js/artDialog.source.js"></script>
     <script src="/default/framework/js/iframeTools.source.js"></script>
     <script src="/default/app/js/ajaxcsrf.js"></script>

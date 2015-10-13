@@ -4,7 +4,9 @@
 <link rel="stylesheet" type="text/css" href="/default/app/css/user.css">
 <script type="text/javascript" src="/default/app/js/website-vehicle.js"></script>
 <div class="containers">
-		@include('website::_shared.publish_left_menu')
+		@if($menu['sub_menu'])
+			@include('website::_shared.left_menu')
+		@endif
 	<div class="right_part">
 		@include('default._shared.areaSelect')
 		<div class="right_part_cell"><span class='title'>联系人:</span><span><input id="driver_name" type="text" value="" /></span></div>
@@ -33,10 +35,10 @@
 				<option value="{{$item->provinceID}}">{{$item->province}}</option>
 				@endforeach
 			</select>
-			<select name="city" class="city">
+			<select name="city" id="city">
 				<option>城市</option>
 			</select>
-			<select name="area" class="area">
+			<select name="area" id="area">
 				<option value="000">区</option>
 			</select>
 		</div>

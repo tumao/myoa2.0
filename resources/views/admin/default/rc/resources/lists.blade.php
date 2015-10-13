@@ -26,9 +26,9 @@
                 <tr>
                     <td>{{$pic->id}}</td>
                     <td><img src="{{$pic->path}}" style="width:100px;"></td>
-                    <td>{{$pic->time}}</td>
+                    <td>{{$pic->create_time}}</td>
                     <td class="center">
-                        <a class="btn btn-danger" href="#" onclick="Pic.del({{$pic->id}})">
+                        <a class="btn btn-danger" href="#" onclick="Picture.del({{$pic->id}})">
                             <i class="glyphicon glyphicon-trash icon-white"></i>
                             删除
                         </a>

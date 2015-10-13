@@ -26,8 +26,6 @@
 <script src="/default/framework/js/jquery.iphone.toggle.js"></script>
 <!-- autogrowing textarea plugin -->
 <script src="/default/framework/js/jquery.autogrow-textarea.js"></script>
-<!-- multiple file upload plugin -->
-<script src="/default/framework/js/jquery.uploadify.min.js"></script>
 <!-- history.js for cross-browser state change on ajax -->
 <script src="/default/framework/js/jquery.history.js"></script>
 <!-- application script for Charisma demo -->

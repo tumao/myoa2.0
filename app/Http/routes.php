@@ -11,7 +11,10 @@
 |
 */
 
-Route::get('/home','Website\Home\IndexController@index');
+Route::get('/',function(){
+	return \Redirect::to('home');
+});
+Route::get('home','Website\Home\IndexController@index');
 
 Route::get('admin', 'Admin\User\UserController@show');	//登录页
 Route::get('admin/login', array('uses'=>'Admin\User\UserController@show', 'as'=>'login'));
@@ -60,7 +63,9 @@ Route::match(['get', 'post'], 'admin/vehicle/edit/{id}', 'Admin\Resource\Vehicle
 Route::get('admin/vehicle/delete/{id}', 'Admin\Resource\VehicleController@delete');
 
 Route::get('admin/rc/lists', 'Admin\Resource\RcController@lists');
-Route::match(['get','post'],'admin/rc/add', 'Admin\Resource\RcController@add');
+Route::match(['get','post'],'admin/rc/add', 'Admin\Resource\RcController@add');	// 添加图片
+Route::get('admin/rc/picture', 'Admin\Resource\RcController@picture'); 			// 图片列表
+Route::get('admin/rc/delete/{id}', 'Admin\Resource\RcController@delPic' ); 	// 删除图片
 
 #conf
 Route::get('admin/conf', 'Admin\Menu\MenuController@index');

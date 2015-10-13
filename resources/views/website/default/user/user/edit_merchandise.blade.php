@@ -4,7 +4,9 @@
 <link rel="stylesheet" type="text/css" href="/default/app/css/user.css">
 <script type="text/javascript" src="/default/app/js/website-merchandise.js"></script>
 <div class="containers">
-	@include('website::_shared.user_left_menu')
+	@if($menu['sub_menu'])
+		@include('website::_shared.left_menu')
+	@endif
 	<div class="right_part">
 		<div class="right_part_cell from"><span class='title'>起始地:</span>
 			<select name="province" id="province">

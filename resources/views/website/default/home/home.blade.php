@@ -11,17 +11,21 @@
 		<div class="col-md-12 column">
 			<div class="carousel slide" id="mycarousel">
 				<ol class="carousel-indicators">
-					<li class="active" data-slide-to="0" data-target="#mycarousel">
-					</li>
-					<li data-slide-to="1" data-target="#mycarousel">
-					</li>
-					<li data-slide-to="2" data-target="#mycarousel">
-					</li>
-					<li data-slide-to="3" data-target="#mycarousel">
-					</li>
+					<!-- <li class="active" data-slide-to="0" data-target="#mycarousel"></li>
+					<li data-slide-to="1" data-target="#mycarousel"></li>
+					<li data-slide-to="2" data-target="#mycarousel"></li>
+					<li data-slide-to="3" data-target="#mycarousel"></li> -->
+					@foreach($pic as $k => $v)
+						<li @if($k== 0) class="active" @endif data-slide-to="{{$k}}" data-target="#mycarousel"></li>
+					@endforeach
 				</ol>
 				<div class="carousel-inner">
-					<div class="item active">
+					@foreach($pic as $k => $v)
+					<div class="item @if($k==0) active @endif">
+						<img alt="" src="{{$v->path}}" style="width:100%">
+					</div>
+					@endforeach
+					<!-- <div class="item active">
 						<img alt="" src="/default/app/img/jm.jpg" style="width:100%">
 					</div>
 					<div class="item">
@@ -32,7 +36,7 @@
 					</div>
 					<div class="item">
 						<img alt="" src="/default/app/img/jm.jpg">
-					</div>
+					</div> -->
 				</div>
 				<a class="left carousel-control" href="#mycarousel" data-slide="prev">
 					<span class="glyphicon glyphicon-chevron-left"></span>
