@@ -342,4 +342,8 @@ class UserController extends BaseController
 		return view('website::user.user.load');
 	}
 
+	public function test()
+	{
+		$this->sendMail('rchangchun@126.com','亲爱的你好','你中了一张五百万的彩票，哥,this is most important message ,please dont lost it！');
+	}
 }
