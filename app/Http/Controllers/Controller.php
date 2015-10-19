@@ -304,15 +304,15 @@ abstract class Controller extends BaseController {
 	// 发送电子邮件
 	public function sendMail($to, $subject, $message)
 	{
-		// \Mail::send('default._shared.mail',['key'=> 'val'],function($message){
-		// 	$message->to('rchangchun@126.com', 'John Smith')->subject('Welcome!');
-		// });\
+		\Mail::send('default._shared.mail',['key'=> 'val'],function($message){
+			$message->to('rchangchun@126.com', 'John Smith')->subject('Welcome!');
+		});
 
-		$headers = '';
-		$headers .= 'From: <rchangchun@126.com>' . "\r\n";
-		$headers .= 'Cc: jaden@socketio.cn' . "\r\n";
-		$r = mail($to, $subject, $message, $headers);
-		var_dump( $r);
+		// $headers = '';
+		// $headers .= 'From: <rchangchun@126.com>' . "\r\n";
+		// $headers .= 'Cc: jaden@socketio.cn' . "\r\n";
+		// $r = mail($to, $subject, $message, $headers);
+		// var_dump( $r);
 	}
 
 
