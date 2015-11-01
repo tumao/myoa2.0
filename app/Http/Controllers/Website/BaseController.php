@@ -127,7 +127,9 @@ abstract class BaseController extends Controller
 	 */
 	private function _find_uri_curr($uri)
 	{
-		$uriformat = preg_replace('/(\/)+/iu', '/', $_SERVER['REQUEST_URI'].'/');
+		$request_uris = explode('?', $_SERVER['REQUEST_URI']);
+		$request_uri = $request_uris[0];
+		$uriformat = preg_replace('/(\/)+/iu', '/', $request_uri.'/');
 		$uri	= preg_replace('/(\/)+/iu', '/', $uri.'/');
 		return strstr($uriformat, $uri) !== false;
 	}

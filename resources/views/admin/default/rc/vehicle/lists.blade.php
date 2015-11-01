@@ -57,6 +57,29 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="row">
+            <div class="col-md-12 center-block">
+                <div class="dataTables_paginate paging_bootstrap pagination">
+                    <ul class="pagination">
+                        @if($cur_page-1 > 0)
+                        <li class="prev">
+                            <a href="/admin/rc/vehicle?page={{$cur_page-1}}">← Previous</a>
+                        </li>
+                        @endif
+                        @for($i=1; $i <= $sum_page; $i++ )
+                        <li @if($i== $cur_page) class="active" @endif>
+                            <a href="/admin/rc/vehicle?page={{$i}}">{{$i}}</a>
+                        </li>
+                        @endfor
+                        @if($cur_page +1 <= $sum_page )
+                        <li class="next">
+                            <a href="/admin/rc/vehicle?page={{$cur_page+1}}">Next → </a>
+                        </li>
+                        @endif
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @stop

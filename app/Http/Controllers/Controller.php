@@ -305,7 +305,7 @@ abstract class Controller extends BaseController {
 	public function sendMail($to, $subject, $message)
 	{
 		\Mail::send('default._shared.mail',['key'=> 'val'],function($message){
-			$message->to('rchangchun@126.com', 'John Smith')->subject('Welcome!');
+			$message->to('384331197@qq.com', 'John Smith')->subject('Welcome!');
 		});
 
 		// $headers = '';

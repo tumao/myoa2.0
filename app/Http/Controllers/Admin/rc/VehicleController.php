@@ -28,7 +28,18 @@ class VehicleController extends ABaseController
 
 	public function lists()
 	{
+		$page = \Request::input('page');	//获取当前的页码
+		if(!$page)
+		{
+			$page = 1;
+		}
+		$page_limit = 10;		// 每页显示信息的条数
+		$offset = ($page -1) * $page_limit; // 当前页码的第一条的id
+		$count_vehicle = \DB::table('vehicle')->count();
+		$sum_page = ceil($count_vehicle/$page_limit); //总页数
 		$vehicle = \DB::table('vehicle')
+						->skip($offset)
+						->take($page_limit)
 						->orderBy('id','desc')
 						->get();
 		foreach($vehicle as & $x)
@@ -56,7 +67,7 @@ class VehicleController extends ABaseController
 			$x->vehicle_body_type = $vehicle_body_type->body_type_name;
 
 		}
-		return view('default.rc.vehicle.lists')->with('lists', $vehicle);
+		return view('default.rc.vehicle.lists')->with('lists', $vehicle)->with('sum_page', $sum_page)->with('cur_page',$page);
 	}
 
 	// 添加货车信息

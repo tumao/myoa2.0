@@ -4,53 +4,7 @@
 <script type="text/javascript" src="/default/app/js/website-merchandise.js"></script>
 <div class="containers">
 	<div class="tag">
-		<div class="search_box">
-			<span>从</span>	<input id="from" type="text" placeholder="起运地" value="{{$data['checked']['from']}}">
-			<span>到</span> <input id="to" type="text" placeholder="目的地" value="{{$data['checked'][
-			'to']}}">
-			<button id="search" class="btn btn-default search_it" type="button">搜索货源</button>
-		</div>
-		<div class="tags">
-			<div class="att">
-				<div class="att_key">货物类型:</div>
-				<div class="att_val merchandise_type">
-					<ul>
-						<li data-merchandise-type="0"
-							@if(empty($data['checked']['merchandise_type']))
-								class="check"
-							@endif
-						>不限</li>
-						@foreach($data['mer_type'] as $item)
-						<li data-merchandise-type="{{$item->id}}"
-							@if(!empty($data['checked']['merchandise_type']) && $data['checked']['merchandise_type'] == $item->id)
-								class="check"
-							@endif
-
-						>{{$item->type_name}}</li>
-						@endforeach
-					</ul>
-				</div>
-			</div>
-			<div class="att">
-				<div class="att_key">运输类型:</div>
-				<div class="att_val merchandise_shipping_method">
-					<ul>
-						<li data-merchandise-shipping-method="0"
-							@if(empty($data['checked']['merchandise_shipping_method']))
-								class="check"
-							@endif
-						>不限</li>
-						@foreach($data['mer_shipping_type'] as $item)
-						<li data-merchandise-shipping-method="{{$item->id}}"
-							@if(!empty($data['checked']['merchandise_shipping_method']) && $data['checked']['merchandise_shipping_method'] == $item->id)
-								class="check"
-							@endif
-						>{{$item->shipping_method}}</li>
-						@endforeach
-					</ul>
-				</div>
-			</div>
-		</div>
+		@include('website::_shared.hy_validate')
 		<div class="search_tag">
 			<span>搜索结果</span>
 		</div>

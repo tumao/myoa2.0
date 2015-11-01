@@ -41,7 +41,7 @@ $(document).ready(function(){
 		var to = $('#to').val();
 
 		var url;
-		url = '/merchandise?';
+		url = '/merchandises?';
 		url = url + 'merchandise_type=' + merchandise_type;
 		url = url + '&merchandise_shipping_method=' + merchandise_shipping_method;
 		url = url + '&from=' + from;
@@ -115,7 +115,7 @@ $(document).ready(function(){
 		var to = $('#to').val();
 
 		var url;
-		url = '/merchandise?';
+		url = '/merchandises?';
 		url = url + 'merchandise_type=' + merchandise_type;
 		url = url + '&merchandise_shipping_method=' + merchandise_shipping_method;
 		url = url + '&from=' + from;

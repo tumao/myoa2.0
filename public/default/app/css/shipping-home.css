@@ -178,3 +178,90 @@
 	margin: 0px auto;
 	margin-top: 30px;
 }
+.search_form{
+	width: 1247px;
+	height: 468px;
+	margin-left: auto;
+	margin-right: auto;
+	margin: 10px auto 5px auto;
+}
+.search_button{
+	background-color: #cccccc;
+	float: left;
+}
+.search_button div{
+	width: 182px;
+	height: 150px;
+	background-color: #ff6600;
+	text-align: center;
+	font-size: 36px;
+	font-family: 黑体;
+}
+.search_button > a{
+	font-color: #ffffff;
+	display: block;
+	height: 68px;
+	width: 77px;
+}
+.search_button img{
+	display: block;
+	width: 76px;
+	margin:	5px auto 5px auto;
+}
+.button span{
+	color: #ffffff;
+	text-decoration: none;
+}
+.button> span{
+	margin-top: 80px;
+	display: block;
+}
+/*.button span:hover{
+	margin-top: 80px;
+	display: block;
+	color: #ff6600;
+}*/
+.button.cy{
+	background: url('/default/app/img/sscy.png') no-repeat;
+	background-color: #ff6600;
+	color: #fff;
+	padding-top: 80px;
+}
+.button.fbxx{
+	background: url('/default/app/img/fbxx.png') no-repeat;
+	background-color: #ff6600;
+	color: #fff;
+	padding-top: 80px;
+}
+.button.hy{
+	background: url('/default/app/img/sshy.png') no-repeat;
+	background-color: #ff6600;
+	color: #fff;
+	padding-top: 80px;
+}
+.button.cy:hover,.button.active{
+	background: url('/default/app/img/sscy_color.png') no-repeat;
+	padding-top: 80px;
+	background-color: #cccccc;
+	color: #ff6600;
+}
+.button.fbxx:hover,.button.active{
+	background: url('/default/app/img/fbxx_color.png') no-repeat;
+	padding-top: 80px;
+	background-color: #cccccc;
+	color: #ff6600;
+}
+.button.hy:hover,.button.active{
+	background: url('/default/app/img/sshy_color.png') no-repeat;
+	padding-top: 80px;
+	background-color: #cccccc;
+	color: #ff6600;
+}
+.search_value{
+	float: left;
+	width: 1000px;
+	height: 450px;
+	background-color: #cccccc;
+/*	padding-top: 108px;
+	padding-left: 60px;
+*/}

@@ -14,7 +14,7 @@
 Route::get('/',function(){
 	return \Redirect::to('home');
 });
-Route::get('home','Website\Home\IndexController@index');
+Route::get('home/{tag?}','Website\Home\IndexController@index');
 
 Route::get('admin', 'Admin\User\UserController@show');	//登录页
 Route::get('admin/login', array('uses'=>'Admin\User\UserController@show', 'as'=>'login'));

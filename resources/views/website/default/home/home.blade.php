@@ -5,16 +5,13 @@
 	.list-cell:hover{
 		cursor: pointer;
 	}
+	
 </style>
 <div class="scroll container-fluid">
 	<div class="row clearfix">
 		<div class="col-md-12 column">
 			<div class="carousel slide" id="mycarousel">
 				<ol class="carousel-indicators">
-					<!-- <li class="active" data-slide-to="0" data-target="#mycarousel"></li>
-					<li data-slide-to="1" data-target="#mycarousel"></li>
-					<li data-slide-to="2" data-target="#mycarousel"></li>
-					<li data-slide-to="3" data-target="#mycarousel"></li> -->
 					@foreach($pic as $k => $v)
 						<li @if($k== 0) class="active" @endif data-slide-to="{{$k}}" data-target="#mycarousel"></li>
 					@endforeach
@@ -25,18 +22,6 @@
 						<img alt="" src="{{$v->path}}" style="width:100%">
 					</div>
 					@endforeach
-					<!-- <div class="item active">
-						<img alt="" src="/default/app/img/jm.jpg" style="width:100%">
-					</div>
-					<div class="item">
-						<img alt="" src="/default/app/img/jm.jpg">
-					</div>
-					<div class="item">
-						<img alt="" src="/default/app/img/jm.jpg">
-					</div>
-					<div class="item">
-						<img alt="" src="/default/app/img/jm.jpg">
-					</div> -->
 				</div>
 				<a class="left carousel-control" href="#mycarousel" data-slide="prev">
 					<span class="glyphicon glyphicon-chevron-left"></span>
@@ -48,6 +33,28 @@
 		</div>
 	</div>
 </div><!-- scroll end -->
+<div class="search_form">
+	<div class="search_button">
+		<div class="button hy @if($data['checked']['tag'] == 'default') active @endif">
+			搜索货源
+		</div>
+		<div class="button cy  @if($data['checked']['tag'] == 'cy') active @endif" style="border-top:1px solid">
+			搜索车源
+		</div>
+		<div class="button fbxx" style="border-top:1px solid">
+			发布信息
+		</div>
+	</div>
+	<div class="search_value">
+	@if($data['checked']['tag'] == 'default')
+ 		@include('website::_shared.hy_validate')
+ 		<button id="search" class="btn btn-default search_it" type="button">搜索货源</button>
+ 	@elseif($data['checked']['tag'] == 'cy')
+ 		@include('website::_shared.cy_validate')
+ 		<button id="search" class="btn btn-default search_it" type="button">搜索车源</button>
+ 	@endif
+	</div>
+</div>
 <div id="shortcut">
 	<div class="shortcut-content">
 		<div class="content-left-part">
@@ -94,12 +101,22 @@
 	$(document).ready(function(){
 		$('.list-cell.merchandise').click(function(){
 			var merchandise = $(this).attr('data-merchandise-id');
-			window.location.href = '/merchandise/detail/'+merchandise;
+			window.location.href = '/merchandises/detail/'+merchandise;
 		});
 		$('.list-cell.vehicle').click(function(){
 			var vehicle = $(this).attr('data-vehicle-id');
 			window.location.href = '/vehicles/detail/'+vehicle;
 		});
-	})
+		$('.hy').click(function(){
+			window.location.href = '/home/default';
+		});
+		$('.cy').click(function(){
+			window.location.href = '/home/cy';
+		});
+		$('.fbxx').click(function(){
+			window.location.href = '/publish/vehicle';
+		});
+	});
+
 </script>
 @stop
