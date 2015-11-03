@@ -307,12 +307,6 @@ abstract class Controller extends BaseController {
 		\Mail::send('default._shared.mail',['key'=> 'val'],function($message){
 			$message->to('384331197@qq.com', 'John Smith')->subject('Welcome!');
 		});
-
-		// $headers = '';
-		// $headers .= 'From: <rchangchun@126.com>' . "\r\n";
-		// $headers .= 'Cc: jaden@socketio.cn' . "\r\n";
-		// $r = mail($to, $subject, $message, $headers);
-		// var_dump( $r);
 	}
 
 
