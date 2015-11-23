@@ -306,7 +306,7 @@ abstract class Controller extends BaseController {
 	{
 		header("content-type:text/html;charset=utf-8"); 
 		ini_set("magic_quotes_runtime",0);
-		$view = view('efault._shared.mail')->with('link', 'www.socketio.cn');
+		$view = view('default._shared.mail')->with('link', 'www.socketio.cn');
 		try 
 		{ 
 			$mail = new \PHPMailer(true); 
