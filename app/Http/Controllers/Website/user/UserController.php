@@ -197,6 +197,7 @@ class UserController extends BaseController
 	// 用户注册
 	public function register()
 	{
+		$method = \Request::method();
 		if($method == 'POST')
 		{
 			$input = array();
