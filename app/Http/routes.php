@@ -82,6 +82,7 @@ Route::post('get_areas', "Website\Resources\VehiclesController@getAreas");	//获
 Route::match(['get','post'], 'user/register', "Website\User\UserController@register");	// 用户注册
 Route::match(['get','post'], 'user/load', "Website\User\UserController@load");	// 用户登录
 Route::get('test', "Website\User\UserController@test");
+Route::get('active_user/{active_code}', "Website\User\UserController@active");
 
 Route::get('vehicles', 'Website\Resources\VehiclesController@lists');	//搜索车源,车源列表
 Route::get('vehicles/detail/{id}', 'Website\Resources\VehiclesController@detail');	// 详情

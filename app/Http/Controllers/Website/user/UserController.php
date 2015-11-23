@@ -197,8 +197,6 @@ class UserController extends BaseController
 	// 用户注册
 	public function register()
 	{
-		$this->sendMail('384331197@qq.com', '用户激活', "激活链接");
-		$method = \Request::method();
 		if($method == 'POST')
 		{
 			$input = array();
@@ -227,7 +225,9 @@ class UserController extends BaseController
 			    // Let's get the activation code
 			    $activationCode = $user->getActivationCode();
 			    // Send activation code to the user so he can activate the account
-			    return array('code' => 1, 'message'=> '注册成功!');
+			    $active_url = "http://socketio.cn/active_user/{$activationCode}";
+			    $this->sendMail($email, '货运大师账号激活', $active_url);
+			    return array('code' => 1, 'message'=> '注册成功,请到邮箱进行激活!');
 			}
 			catch (\Cartalyst\Sentry\Users\LoginRequiredException $e)
 			{
@@ -305,7 +305,7 @@ class UserController extends BaseController
 					if(\Session::has('last_uri'))
 					{
 						$redirect_url = \Session::get('last_uri');
-						\Session::forget('last_uri');	//删除key对应的value
+						\Session::forget('last_uri');		//删除key对应的value
 					}
 					else
 					{
@@ -344,6 +344,7 @@ class UserController extends BaseController
 
 	public function test()
 	{
-		$this->sendMail('rchangchun@126.com','亲爱的你好','你中了一张五百万的彩票，哥,this is most important message ,please dont lost it！');
+		$content = '连接';
+		$this->sendMail('rchangchun@126.com','货运大师账号激活', $content);
 	}
 }
