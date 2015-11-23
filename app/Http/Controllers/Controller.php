@@ -306,6 +306,7 @@ abstract class Controller extends BaseController {
 	{
 		header("content-type:text/html;charset=utf-8"); 
 		ini_set("magic_quotes_runtime",0);
+		$view = view('efault._shared.mail')->('link', 'www.socketio.cn');
 		try 
 		{ 
 			$mail = new \PHPMailer(true); 
@@ -322,7 +323,8 @@ abstract class Controller extends BaseController {
 			$mail->FromName = "shipping_master"; 
 			$mail->AddAddress($to); 
 			$mail->Subject = $subject; 
-			$mail->Body = "<h1>phpmail演示</h1>这是php点点通（<font color=red>www.socketio.cn</font>）对phpmailer的发布的内容更内容"; 
+			// $mail->Body = "<h1>phpmail演示</h1>这是php点点通（<font color=red>www.socketio.cn</font>）对phpmailer的发布的内容更内容"; 
+			$mail->Body = $view;
 			$mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; //当邮件不支持html时备用显示，可以省略 
 			$mail->WordWrap = 80; // 设置每行字符串的长度 
 			$mail->IsHTML(true); 
