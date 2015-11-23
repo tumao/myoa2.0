@@ -329,11 +329,13 @@ abstract class Controller extends BaseController {
 			$mail->WordWrap = 80; // 设置每行字符串的长度 
 			$mail->IsHTML(true); 
 			$mail->Send(); 
-			echo '邮件已发送'; 
+			// echo '邮件已发送'; 
+			return 1;
 		} 
 		catch (\phpmailerException $e) 
 		{ 
-			echo "邮件发送失败：".$e->errorMessage();
+			// echo "邮件发送失败：".$e->errorMessage();
+			return 0;
 		}
 	}
 
