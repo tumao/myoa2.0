@@ -256,6 +256,7 @@ class UserController extends BaseController
 		$active_code = base64_decode($active_code);
 		$active = explode('_user_', $active_code);
 		list($uid, $code) = $active;
+		var_dump( $uid, $code);exit;
 		try
 		{
 		    // Find the user using the user id
