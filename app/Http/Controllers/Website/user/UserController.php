@@ -230,7 +230,7 @@ class UserController extends BaseController
 			    $activationCode = $user->id.'_user_'.$activationCode;
 			    $activationCode = base64_encode($activationCode);
 			    // Send activation code to the user so he can activate the account
-			    $active_url = "http://socketio.cn/active_user/{$activationCode}";
+			    $active_url = "http://master.socketio.cn/active_user/{$activationCode}";
 			    $this->sendMail($email, '货运大师账号激活', $active_url);
 			    return array('code' => 1, 'message'=> '注册成功,请到邮箱进行激活!');
 			}
@@ -256,7 +256,6 @@ class UserController extends BaseController
 		$active_code = base64_decode($active_code);
 		$active = explode('_user_', $active_code);
 		list($uid, $code) = $active;
-		var_dump( $uid, $code);exit;
 		try
 		{
 		    // Find the user using the user id
