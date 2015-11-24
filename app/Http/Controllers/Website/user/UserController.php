@@ -265,10 +265,13 @@ class UserController extends BaseController
 		    if ($user->attemptActivation($code))
 		    {
 		        // User activation passed
+		        echo "账号激活成功<br/>";
+		        echo "<a href='/user/load'>点击跳转并登录</a>";
 		    }
 		    else
 		    {
 		        // User activation failed
+		        echo "激活是失败，请重新注册，或者联系管理员";
 		    }
 		}
 		catch (\Cartalyst\Sentry\Users\UserNotFoundException $e)
