@@ -259,7 +259,7 @@ class UserController extends BaseController
 		try
 		{
 		    // Find the user using the user id
-		    $user = Sentry::findUserById($uid);
+		    $user = \Sentry::findUserById($uid);
 
 		    // Attempt to activate the user
 		    if ($user->attemptActivation($code))
