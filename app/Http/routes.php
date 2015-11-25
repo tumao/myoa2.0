@@ -104,7 +104,8 @@ Route::group(['middleware' => ['website.auth']],function(){
 	Route::match(['get', 'post'], 'user/merchandise/edit/{id}', 'Website\Resources\MerchandiseController@edit');	// 编辑货物
 
 	Route::get('/user/order/list/{page?}', 'Website\Order\OrderController@lists'); 	// 订单列表
-	Route::get('/user/order/detail/{oid}', 'Website\Order\OrderController@detail'); // 订单详情
+	Route::get('/user/order/mdetail/{oid}', 'Website\Resources\MerchandiseController@merchandiseOrderDetail'); // 订单详情
+	Route::get('/user/order/vdetail/{oid}', 'Website\Resources\VehiclesController@vehicleOrderDetail');
 
 
 	//  order

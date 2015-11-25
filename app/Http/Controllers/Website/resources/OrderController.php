@@ -68,9 +68,15 @@ class OrderController extends BaseController
 	 */
 	public function detail($oid)
 	{
-		$order = \DB::table('orders')->where('id', '=', $oid)->get();
+		$order = \DB::table('orders')->where('id', '=', $oid)->first();
+		if($order->order_type == 'merchandise')
+		{
+
+		}
+		elseif($order->order_type == 'vehicle')
+		{
+			
+		}
 	}
-
-
 
 }

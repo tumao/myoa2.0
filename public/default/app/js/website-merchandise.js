@@ -190,7 +190,7 @@ var Merchandise = {
 			success : function(rp){
 				if(rp.code > 0){
 					alert(rp.message);
-					window.location.href="/home";	//跳转到我的订单
+					window.location.href="/user/order/list";	//跳转到我的订单
 				}
 			}
 		});

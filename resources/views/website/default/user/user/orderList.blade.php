@@ -11,12 +11,12 @@
 		@if($item->order_type == 'merchandise')
 		<div class="right_vehcile_cell">
 			<span class="plate_number">货源</span> <span class="area">从 {{$item->merchandiseInfo->from_area_id}} 到 {{$item->merchandiseInfo->to_area_id}}</span><span style="margin-left:5px; font-size:12px; color:#ff6600;">({{$item->order_status}})</span>
-			<a href="/user/order/detail/{{$item->id}}">详情</a>
+			<a href="/user/order/mdetail/{{$item->merchandise_id}}">详情</a>
 		</div>
 		@elseif($item->order_type== 'vehicle')
 		<div class="right_vehcile_cell">
 			<span class="plate_number">车源</span> <span class="area">从 {{$item->vehicleInfo->from_area_id}} 到 {{$item->vehicleInfo->to_area_id}}</span> <span style="margin-left:5px; font-size:12px; color:#ff6600;">({{$item->order_status}})</span>
-			<a href="/user/order/detail/{{$item->id}}">详情</a>
+			<a href="/user/order/vdetail/{{$item->vehicle_id}}">详情</a>
 		</div>
 		@endif
 	@endforeach

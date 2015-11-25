@@ -436,4 +436,49 @@ class VehiclesController extends BaseController
 
 	}
 
+	// 选车下单
+	public function vehicleOrderDetail($vehicleId)
+	{
+		$method = \Request::method();
+		if($method == 'POST')	// 存储数据
+		{
+
+		}
+		else 					// 展示信息
+		{
+			$data = array();
+			$userInfo = $this->getUserInfo(); 	//获取当前用户信息
+			$detail = Vehicle::find($vehicleId);
+			$vehicle_type = $this->getAllVehicleTypes(); //所有的货车类型
+			$vehicle_body_type = $this->getAllVehicleBodyTypes(); //获取所有的货车车身类型
+			$data['vehicle_type'] = $vehicle_type;
+			$data['vehicle_body_type'] = $vehicle_body_type;
+			$data['vehicle_length'] = $this->vehicle_length_formate();	// 顶端搜索过滤项
+			$data['vehicle_weight'] = $this->vehicle_weight_formate();	// 顶端搜索过滤项
+
+			$vehicle_type = $this->getVehicleType($detail->vehicle_type);
+			$vehicle_body_type = $this->getVehicleBodyType($detail->vehicle_body_type);
+			$detail->vehicle_type = $vehicle_type->type_name;
+			$detail->vehicle_body_type = $vehicle_body_type->body_type_name;
+
+			$detail->from_area_id = $this->getDetailAreaName($detail->from_area_id);
+			$detail->to_area_id = $this->getDetailAreaName($detail->to_area_id);
+
+
+			$area = $this->getArea($detail->location_id);
+			$city = $this->getCity($area->father);
+			$province = $this->getProvince($city->father);
+
+			$data['location']['province'] = $province->province;
+			$data['location']['city'] = $city->city;
+			$data['location']['area'] = $area->area;
+
+			$data['detail'] = $detail;
+			$data['merchandise_user'] = $userInfo->username;
+			$data['merchandise_phone'] = $userInfo->phone;
+			return view('website::resources.order.vorderDetail')->with('data',$data);;
+		}
+
+	}
+
 }

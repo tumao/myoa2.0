@@ -229,7 +229,7 @@ var Vehicle = {
 			success : function(rp){
 				if(rp.code>0){
 					alert(rp.message);
-					// window.location.href = "/";
+					window.location.href = "/user/order/list";
 				}
 			}
 		})

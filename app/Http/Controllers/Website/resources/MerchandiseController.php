@@ -316,4 +316,39 @@ class MerchandiseController extends BaseController
 		}
 	}
 
+	// 接货下单
+	public function merchandiseOrderDetail($merchandiseId)
+	{
+		$method = \Request::method();
+		$merchandise = Merchandise::find($merchandiseId);
+		
+		if($method == 'POST')	// 存储数据
+		{
+			
+		}
+		else 	// 展示信息
+		{
+			$user = $this->getUserInfo();
+			$detail = Merchandise::find($merchandiseId);
+			$merchandise_type = $this->getAllMerchandiseType();
+
+			$detail->from_area_id = $this->getDetailAreaName($detail->from_area_id);
+			$detail->to_area_id = $this->getDetailAreaName($detail->to_area_id);
+			
+			$merchandise_shipping_method = $this->getAllMerchandiseSM();
+			$data['detail'] = $detail;
+			$data['mer_type'] = $merchandise_type;
+			$data['mer_shipping_type'] = $merchandise_shipping_method;
+			$data['driver_name'] = $user->username;
+			$data['phone'] = $user->phone;
+			$data['driver_id'] = $user->id;
+
+			$merchandise_type = $this->getMerchandiseType($detail->merchandise_type);
+			$merchandise_shipping_method = $this->getMerchandiseShippiingMethod($detail->merchandise_shipping_method);
+			$detail->merchandise_type = $merchandise_type->type_name;
+			$detail->merchandise_shipping_method = $merchandise_shipping_method->shipping_method;
+			return view('website::resources.order.morderDetail')->with('data', $data);
+		}
+	}
+
 }
