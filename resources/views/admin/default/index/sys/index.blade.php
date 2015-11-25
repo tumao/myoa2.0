@@ -20,7 +20,6 @@
 		<span class="title">php版本：</span><span>{{$data['phpversion']}}</span>
 	</div>
 	<div class="list_cell">
-		<span class="title">HOME:</span><span>{{$data['home']}}</span>
 	</div>
 	<div class="list_cell">
 		<span class="title">入口文件:</span><span>{{$data['file_root']}}</span>
