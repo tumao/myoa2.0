@@ -15,7 +15,7 @@ class SysController extends ABaseController {
 		$data['server'] = $_SERVER['SERVER_SOFTWARE'];
 		$data['os'] = PHP_OS;
 		$data['phpversion'] = phpversion();
-		$data['home'] = $_SERVER['HOME'];
+		// $data['home'] = $_SERVER['HOME'];
 		$data['file_root'] = $_SERVER['SCRIPT_FILENAME'];
 		// var_dump($_SERVER);exit;
 		return view('default.index.sys.index')->with('data', $data);
