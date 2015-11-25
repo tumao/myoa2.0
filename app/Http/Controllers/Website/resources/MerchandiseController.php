@@ -106,6 +106,17 @@ class MerchandiseController extends BaseController
 		return view('website::resources.merchandise.detail')->with('data', $data);
 	}
 
+	// 详情
+	public function getMerchandiseInfo($id)
+	{
+		$detail = Merchandise::find($id);
+
+		$detail->from_area_id = $this->getDetailAreaName($detail->from_area_id);
+		$detail->to_area_id = $this->getDetailAreaName($detail->to_area_id);
+		
+		return $detail;
+	}
+
 	// 添加
 	public function add()
 	{

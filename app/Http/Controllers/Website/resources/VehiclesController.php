@@ -172,6 +172,23 @@ class VehiclesController extends BaseController
 		return view('website::resources.vehicles.detail')->with('data',$data);
 	}
 
+	// vehicle 详情
+	public function getVehicleInfo($id)
+	{
+		$data = array();
+		$detail = Vehicle::find($id);
+
+		$vehicle_type = $this->getVehicleType($detail->vehicle_type);
+		$vehicle_body_type = $this->getVehicleBodyType($detail->vehicle_body_type);
+		$detail->vehicle_type = $vehicle_type->type_name;
+		$detail->vehicle_body_type = $vehicle_body_type->body_type_name;
+
+	 	$detail->from_area_id = $this->getDetailAreaName($detail->from_area_id);
+		$detail->to_area_id = $this->getDetailAreaName($detail->to_area_id);
+
+		return $detail;
+	}
+
 	// 修改
 	public function edit($id = '')
 	{
@@ -355,7 +372,7 @@ class VehiclesController extends BaseController
 		$method = \Request::method();
 		if($method == 'POST')	// 存储数据
 		{
-			$merUserId = $this->userId; //当前用户的id	,(角色-货主)
+			$merUserId = $this->getUserId(); //当前用户的id	,(角色-货主)
 			$vehicleUserId = \Request::input('vehicleUserId');
 
 			$order_type = 'vehicle';

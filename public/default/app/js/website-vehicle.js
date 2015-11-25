@@ -227,7 +227,10 @@ var Vehicle = {
 			dataType: 'json',
 			data 	:  {vehicleUserId : vehicleUserId},
 			success : function(rp){
-
+				if(rp.code>0){
+					alert(rp.message);
+					// window.location.href = "/";
+				}
 			}
 		})
 	}

@@ -202,4 +202,5 @@ class Vehicle extends Model {
 		$data['sum_page'] = $sum_pages;
 		return $data;
 	}
+
 }

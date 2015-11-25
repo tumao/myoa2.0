@@ -41,6 +41,7 @@ return array(
     'App\\Http\\Requests\\Request' => $baseDir . '/app/Http/Requests/Request.php',
     'App\\Menu_catelogue' => $baseDir . '/app/Model/Menu_catelogue.php',
     'App\\Merchandise' => $baseDir . '/app/Model/Merchandise.php',
+    'App\\Order' => $baseDir . '/app/Model/order.php',
     'App\\Permission' => $baseDir . '/app/Model/Permission.php',
     'App\\Picture' => $baseDir . '/app/Model/Picture.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',

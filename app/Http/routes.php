@@ -103,6 +103,10 @@ Route::group(['middleware' => ['website.auth']],function(){
 	Route::match(['get', 'post'], 'user/vehicle/edit/{id}', 'Website\Resources\VehiclesController@edit');	// 编辑货车
 	Route::match(['get', 'post'], 'user/merchandise/edit/{id}', 'Website\Resources\MerchandiseController@edit');	// 编辑货物
 
+	Route::get('/user/order/list/{page?}', 'Website\Order\OrderController@lists'); 	// 订单列表
+	Route::get('/user/order/detail/{oid}', 'Website\Order\OrderController@detail'); // 订单详情
+
+
 	//  order
 	Route::match(['get', 'post'], 'vehicle/order/{vehicleId}', 'Website\Resources\VehiclesController@addVehicleOrder');	// 选车下单
 	Route::match(['get', 'post'], 'merchandises/order/{merchandiseId}', 'Website\Resources\MerchandiseController@addMerchandiseOrder');
