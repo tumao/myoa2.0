@@ -9,7 +9,7 @@
 </style>
 <div class="containers">
 	<div class="tag">
-		<div class="search_box">
+	<!-- <div class="search_box">
 			<span>从</span>	<input id="from" type="text" placeholder="起运地" value="">
 			<span>到</span> <input id="to" type="text" placeholder="目的地"  value="">
 			<button id="search" class="btn btn-default search_it" type="button">搜索车源</button>
@@ -59,9 +59,9 @@
 					</ul>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<div class="search_tag">
-			<span>车源信息</span>
+			<span>订单详情</span>
 		</div>
 		<div class="search_result">
 			<div class="search_result_left">
@@ -113,10 +113,17 @@
 					<span class="s_title">联系电话：</span>
 					<span class="s_value">{{$data['detail']->phone}}</span>
 				</div>
-				<div class="cell">
-					<button class="order_button" onclick="Vehicle.generateOrder({{$data['detail']->id}})">选车下单</button>
+				<div class="cell contact_user">
+					<span class="s_title">货主：</span>
+					<span class="s_value">{{$data['merchandise_user']}}</span>
 				</div>
-
+				<div class="cell contact_phone">
+					<span class="s_title">货主联系电话：</span>
+					<span class="s_value">{{$data['merchandise_phone']}}</span>
+				</div>
+				<div class="cell">
+					<button class="order_button" onclick="Vehicle.addOrder({{$data['detail']->id}},{{$data['detail']->user_id}})">确认订单</button>
+				</div>
 			</div>
 			<div class="search_result_right">
 				<img src="/default/app/img/qrcode.png">

@@ -216,6 +216,20 @@ var Vehicle = {
 	},
 	edit : function(id){
 		Vehicle.add(id);
+	},
+	generateOrder : function(id){
+		window.location.href = '/vehicle/order/'+id;
+	},
+	addOrder : function(vehicleId, vehicleUserId){
+		$.ajax({
+			url 	: '/vehicle/order/'+vehicleId,
+			type 	: 'POST',
+			dataType: 'json',
+			data 	:  {vehicleUserId : vehicleUserId},
+			success : function(rp){
+
+			}
+		})
 	}
 }
 

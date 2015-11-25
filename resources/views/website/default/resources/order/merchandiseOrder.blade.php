@@ -4,7 +4,7 @@
 <script type="text/javascript" src="/default/app/js/website-merchandise.js"></script>
 <div class="containers">
 	<div class="tag">
-		<div class="search_box">
+		<!-- <div class="search_box">
 			<span>从</span>	<input id="from" type="text" placeholder="起运地" value="">
 			<span>到</span> <input id="to" type="text" placeholder="目的地" value="">
 			<button id="search" class="btn btn-default search_it" type="button">搜索货源</button>
@@ -35,10 +35,10 @@
 						@endforeach
 					</ul>
 				</div>
-			</div>
+			</div> -->
 		</div>
 		<div class="search_tag">
-			<span>货物信息</span>
+			<span>订单详情</span>
 		</div>
 		<div class="search_result">
 			<div class="search_result_left">
@@ -90,8 +90,19 @@
 					<span class="s_title">联系电话：</span>
 					<span class="s_value">{{$data['detail']->phone}}</span>
 				</div>
+				<div class="cell contact_user">
+					<span class="s_title">司机：</span>
+					<span class="s_value">{{$data['driver_name']}}</span>
+				</div>
+				<div class="cell contact_phone">
+					<span class="s_title">司机联系电话：</span>
+					<span class="s_value">{{$data['phone']}}</span>
+				</div>
+				<input type="hidden" id="user_id" value="{{$data['detail']->id}}" />
+				<input type="hidden" id="driver_id" value="{{$data['driver_id']}}" />
+
 				<div class="cell">
-					<button class="order_button" onclick="Merchandise.generateOrder({{$data['detail']->id}})">接货下单</button>
+					<button class="order_button" onclick="Merchandise.addOrder({{$data['detail']->id}},{{$data['detail']->id}},{{$data['driver_id']}})">确认订单</button>
 				</div>
 
 			</div>

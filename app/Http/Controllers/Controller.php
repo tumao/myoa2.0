@@ -339,6 +339,34 @@ abstract class Controller extends BaseController {
 		}
 	}
 
+	// 获取当前用户id
+	public function getUserId()
+	{
+		if(\Sentry::check())
+		{
+			$user = \Sentry::getUser();
+			return $user->id;
+		}
+		else
+		{
+			return 0;	// 当前用户未登录
+		}
+	}
+
+	// 获取当前用户信息
+	public function getUserInfo()
+	{
+		if(\Sentry::check())
+		{
+			$user = \Sentry::getUser();
+			return $user;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
 
 
 

@@ -246,4 +246,63 @@ class MerchandiseController extends BaseController
 		return $data_frame;
 	}
 
+	// 接货下单
+	public function addMerchandiseOrder($merchandiseId)
+	{
+		$method = \Request::method();
+		$merchandise = Merchandise::find($merchandiseId);
+		
+		if($method == 'POST')	// 存储数据
+		{
+			// $userId = $this->getUserId(); // 获取当前用户的id
+			// $arr = 
+			$from_account_id = \Request::input('driverId');	//下单者的id
+			$to_account_id = \Request::input('userId'); 	// 被下单者的id
+			$order_status = 1;	// 订单状态
+			$merchandise_id  = $merchandiseId;
+			$order_type = 'merchandise';
+			$insertData = array(
+					'from_account_id' 	=> $from_account_id,
+					'to_account_id'		=> $to_account_id,
+					'order_status'		=> $order_status,
+					'order_type'		=> $order_type,
+					'merchandise_id'	=> $merchandise_id,
+					);
+			$result = \DB::table('orders')->insert($insertData);	// 将数据插入数据库
+			if($result)
+			{
+				return array('code' => 1,'message' => '订单已生成，订单需车主与货主双方共同确认生效，等待货主确认！');
+				// echo "<script>alert('订单已生成，订单需车主与货主双方共同确认生效，等待货主确认！');</script>";
+				// return \Redirect::to('\');
+			}
+			else
+			{
+				return array('code' => -1, 'message' => '订单生成失败!');
+			}
+		}
+		else 	// 展示信息
+		{
+			$user = $this->getUserInfo();
+			$detail = Merchandise::find($merchandiseId);
+			$merchandise_type = $this->getAllMerchandiseType();
+
+			$detail->from_area_id = $this->getDetailAreaName($detail->from_area_id);
+			$detail->to_area_id = $this->getDetailAreaName($detail->to_area_id);
+			
+			$merchandise_shipping_method = $this->getAllMerchandiseSM();
+			$data['detail'] = $detail;
+			$data['mer_type'] = $merchandise_type;
+			$data['mer_shipping_type'] = $merchandise_shipping_method;
+			$data['driver_name'] = $user->username;
+			$data['phone'] = $user->phone;
+			$data['driver_id'] = $user->id;
+
+			$merchandise_type = $this->getMerchandiseType($detail->merchandise_type);
+			$merchandise_shipping_method = $this->getMerchandiseShippiingMethod($detail->merchandise_shipping_method);
+			$detail->merchandise_type = $merchandise_type->type_name;
+			$detail->merchandise_shipping_method = $merchandise_shipping_method->shipping_method;
+			return view('website::resources.order.merchandiseOrder')->with('data', $data);
+		}
+	}
+
 }

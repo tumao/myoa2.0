@@ -177,5 +177,22 @@ var Merchandise = {
 	},
 	edit : function(id){
 		Merchandise.add(id);
-	}
+	},
+	generateOrder : function(id){	//生成订单详情
+		window.location.href = '/merchandises/order/'+id;
+	},
+	addOrder : function(mid,userId,driverId){	//货物id,货方id,运方id
+		$.ajax({
+			url 	: '/merchandises/order/'+mid,
+			type 	:　'POST',
+			data 	: {userId:userId, driverId:driverId},
+			dataType: 'json',
+			success : function(rp){
+				if(rp.code > 0){
+					alert(rp.message);
+					window.location.href="/home";	//跳转到我的订单
+				}
+			}
+		});
+	},
 }

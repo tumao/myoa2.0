@@ -104,6 +104,6 @@ Route::group(['middleware' => ['website.auth']],function(){
 	Route::match(['get', 'post'], 'user/merchandise/edit/{id}', 'Website\Resources\MerchandiseController@edit');	// 编辑货物
 
 	//  order
-	Route::match(['get', 'post'], 'vehicle/order/{vehicleId}', 'Website\Order\OrderController@addVehicleOrder');	// 选车下单
-	Route::match(['get', 'post'], 'merchandises/order/{merchandiseId}', 'Website\Order\OrderController@addMerchandiseOrder');
+	Route::match(['get', 'post'], 'vehicle/order/{vehicleId}', 'Website\Resources\VehiclesController@addVehicleOrder');	// 选车下单
+	Route::match(['get', 'post'], 'merchandises/order/{merchandiseId}', 'Website\Resources\MerchandiseController@addMerchandiseOrder');
 });
